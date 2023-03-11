@@ -3,25 +3,37 @@ let sky, sal;
 let matrix;
 let img;
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(500, 500, WEBGL);
+  //ortho();
+  noStroke();
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
 
-  slider = createSlider(-20,20,0);
+  slider = createSlider(-31,31,0);
   checkbox = createCheckbox('info', false);
   img = createImage(250,250);
-  
-  var a = PI/4;
-  //matrix = [[cos(a),-sin(a),0],[sin(a),cos(a),0],[0,0,1]];
-  matrix = [[cos(a),0,sin(a)],[0,1,0],[-sin(a),0,cos(a)]];
-  p = {x:1,y:0,z:0};
-  print(matrixMult(p,matrix));
 }
 
 function draw() {
-  background(220);
-  calcImage();
-  image(img,0,0,width,height);
+  // debug view
+  if (checkbox.checked()) {
+    push();
+    directionalLight(255, 255, 255,1,1,-2);
+    ambientLight(70);
+    fill(sky);
+    plane(500,500);
+    fill(250, 128, 114, 100);
+    rotateZ(7*PI/18);
+    rotateX(slider.value()/20.0);
+    cylinder(100,300, 32,1);
+    pop();
+  } else {
+    background(200);
+    calcImage();
+    texture(img);
+    textureMode(NORMAL);
+    plane(500,500);
+  }
 }
 
 function matrixMult(p,m) {
@@ -52,7 +64,7 @@ function rotate_c(cx, cy, x, y, angle) {
 function calcImage() {
   img.loadPixels();
   val = slider.value();
-  var a = PI/2 + val/10.0;
+  var a = PI/2 + val/20.0;
   matrix = [[cos(a),0,sin(a)],[0,1,0],[-sin(a),0,cos(a)]];
   for (let i = 0; i < img.width; i++) {
     for (let j = 0; j < img.height; j++) {
@@ -62,15 +74,14 @@ function calcImage() {
       var rp = matrixMult(rp,matrix);
       var d = cylinderDist(rp);
       // debug view
-      if (checkbox.checked()) {
-        img.set(i,j, color(255-abs(d)));
-      } else {
-        if (d>0)
+      // if (checkbox.checked()) {
+      //   img.set(i,j, color(255-abs(d)));
+      // } else {
+      if (d>0)
         img.set(i, j, sky);
       else
         img.set(i, j, sal);
-      }
-        
+      // }
     }
   }
   img.updatePixels();
