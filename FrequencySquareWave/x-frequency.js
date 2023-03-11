@@ -1,6 +1,6 @@
 // https://github.com/turbomaze/JS-Fourier-Image-Analysis
 
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let img;
 let pim;
@@ -16,6 +16,8 @@ function setup() {
     sky = color(135, 206, 235);
     sal = color(250, 128, 114);
     slider = createSlider(1,77,77);
+    button = createButton('reset');
+    button.mousePressed(init);
     
     img.loadPixels();
     let data = [];
@@ -80,4 +82,8 @@ function draw() {
     }
     pim.updatePixels();
     image(pim,-3,-3,512,512);
+}
+
+function init() {
+    slider.value(77);
 }

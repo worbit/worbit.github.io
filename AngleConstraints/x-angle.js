@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let rot;
 function setup() {
@@ -10,6 +10,9 @@ function setup() {
   textSize(16);
   slider = createSlider(-30,30,0);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
+
   rot = 340.0/360.0*TWO_PI;
 }
 
@@ -72,4 +75,8 @@ function draw() {
     noStroke();
     fill(sal);
   }
+}
+
+function init() {
+  slider.value(0);
 }

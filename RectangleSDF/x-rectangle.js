@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let img;
 let val;
@@ -8,6 +8,9 @@ function setup() {
   sal = color(250, 128, 114);
   slider = createSlider(0,100,50);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
+
   img = createImage(250,250);
 }
 
@@ -46,15 +49,20 @@ function calcImage() {
   
   for (let i = 0; i < img.width; i++) {
     for (let j = 0; j < img.height; j++) {
-      var px = (i-125)*2;
-      var py = (j-125)*2;
-      var rp = rotate_c(0,0,px,py,-20);
-      var d = rectDist(rp[0],rp[1]) + val;
+      let px = (i-125)*2;
+      let py = (j-125)*2;
+      let rp = rotate_c(0,0,px,py,-20);
+      let d = rectDist(rp[0],rp[1]);
+      let dof = d + val;
       // debug view
       if (checkbox.checked()) {
-        img.set(i,j, color(255-abs(d)));
+        let f = abs(sin(d/8));
+        if (dof > 0)
+          img.set(i,j, color(135*f, 206*f, 235*f));
+        else
+          img.set(i,j, color(250*f, 128*f, 114*f));
       } else {
-        if (d>0)
+        if (dof > 0)
           img.set(i, j, sky);
         else
           img.set(i, j, sal);
@@ -62,4 +70,8 @@ function calcImage() {
     }
   }
   img.updatePixels();
+}
+
+function init() {
+  slider.value(50);
 }

@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let p1, p2, v;
 function setup() {
@@ -7,6 +7,8 @@ function setup() {
   sal = color(250, 128, 114);
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
   
   strokeCap(SQUARE);
   strokeWeight(200);
@@ -53,4 +55,8 @@ function draw() {
     strokeWeight(200);
     noFill();
   }
+}
+
+function init() {
+  slider.value(0);
 }

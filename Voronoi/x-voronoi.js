@@ -1,6 +1,6 @@
 //https://github.com/gorhill/Javascript-Voronoi
 
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let voronoi;
 let diagram;
@@ -14,6 +14,8 @@ function setup() {
   fill(sal);
   slider = createSlider(150,350,250);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
   
   voronoi = new Voronoi();
   bbox = {xl: 0, xr: width, yt: 0, yb: height};
@@ -68,4 +70,9 @@ function draw() {
 function mousePressed() {
   if (mouseY<500 && mouseX<500)
     sites.push({x:mouseX, y:mouseY});
+}
+
+function init() {
+  slider.value(250);
+  sites = sites.slice(0,5);
 }

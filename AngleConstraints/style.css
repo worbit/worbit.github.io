@@ -5,3 +5,8 @@ html, body {
 canvas {
   display: block;
 }
+
+input, div, button {
+  display: inline;
+  margin-right: 20px;
+}

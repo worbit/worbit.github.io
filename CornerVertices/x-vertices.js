@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 function setup() {
   createCanvas(500, 500);
@@ -16,6 +16,8 @@ function setup() {
 
   slider = createSlider(300,500,395.272);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
 }
 
 function draw() {
@@ -42,4 +44,8 @@ function draw() {
     noStroke();
     fill(sal);
   }
+}
+
+function init() {
+  slider.value(395.272);
 }

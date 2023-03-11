@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let img;
 let pim;
@@ -12,6 +12,8 @@ function setup() {
     sky = color(135, 206, 235);
     sal = color(250, 128, 114);
     slider = createSlider(0,100,0);
+    button = createButton('reset');
+    button.mousePressed(init);
     
     img.loadPixels();
     bools = [];
@@ -45,4 +47,8 @@ function draw() {
     }
     pim.updatePixels();
     image(pim,0,0,width,height);
+}
+
+function init() {
+    slider.value(0);
 }

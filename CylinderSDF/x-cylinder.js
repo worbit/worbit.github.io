@@ -1,4 +1,4 @@
-let slider, checkbox;
+let slider, checkbox, button;
 let sky, sal;
 let matrix;
 let img;
@@ -11,6 +11,8 @@ function setup() {
 
   slider = createSlider(-31,31,0);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(init);
   img = createImage(250,250);
 }
 
@@ -85,4 +87,8 @@ function calcImage() {
     }
   }
   img.updatePixels();
+}
+
+function init() {
+  slider.value(0);
 }
