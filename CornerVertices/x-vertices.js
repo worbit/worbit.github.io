@@ -6,6 +6,7 @@ function setup() {
   sal = color(250, 128, 114);
   noStroke();
   fill(sal);
+  textSize(16);
 
   pts = [];
   pts.push(createVector(74.844,207.334));
@@ -32,11 +33,11 @@ function draw() {
   if (checkbox.checked()) {
     //debug view
     let d = 15;
-    stroke(1);
+    stroke(0);
     fill(255);
     for (let p of pts) {
       ellipse(p.x,p.y, d,d);
-      text(round(p.x)+"/"+round(p.y),p.x+d,p.y);
+      text(round(p.x)+" / "+round(p.y),p.x+d,p.y);
     }
     noStroke();
     fill(sal);

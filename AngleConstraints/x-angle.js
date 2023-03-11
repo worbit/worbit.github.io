@@ -7,6 +7,7 @@ function setup() {
   sal = color(250, 128, 114);
   fill(sal);
   noStroke();
+  textSize(16);
   slider = createSlider(-30,30,0);
   checkbox = createCheckbox('info', false);
   rot = 340.0/360.0*TWO_PI;
