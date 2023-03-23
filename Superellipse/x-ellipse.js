@@ -20,7 +20,7 @@ function setup() {
 function draw() {
   background(sky);
   translate(width / 2, height / 2);
-  rotate(-1/6*PI);
+  rotate(-1/9*PI);
 
   let n = slider.value();
   let na = 2 / n;
