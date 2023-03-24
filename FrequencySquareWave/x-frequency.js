@@ -81,7 +81,7 @@ function draw() {
         }
     }
     pim.updatePixels();
-    image(pim,-3,-3,512,512);
+    image(pim,-6,-6,512,512);
 }
 
 function init() {
