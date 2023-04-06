@@ -39,7 +39,11 @@ function draw() {
     let d = 15;
     stroke(0);
     fill(255);
+    line(0,height/2,width,height/2);
+    line(width/2,0,width/2,height);
     for (let p of pts) {
+      line(p.x,height/2,p.x,p.y);
+      line(width/2,p.y,p.x,p.y);
       ellipse(p.x,p.y, d,d);
       text(round(p.x)+" / "+round(p.y),p.x+d,p.y);
     }

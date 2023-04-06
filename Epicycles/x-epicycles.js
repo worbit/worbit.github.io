@@ -72,6 +72,7 @@ function draw() {
   if (checkbox.checked()) {
     noFill();
     stroke(0);
+    strokeWeight(1);
   } else {
     noStroke();
     fill(sal);
@@ -127,21 +128,17 @@ function draw() {
   }
   pop();
 
+  if (checkbox.checked()) {
+    //debug view
+    stroke(sal);
+    strokeWeight(3);
+  }
+
   beginShape();
   for (let p of rlist) {
     vertex(p.x,p.y);
   }
   endShape(CLOSE);
-
-  if (checkbox.checked()) {
-    //debug view
-    let d = 8;
-    stroke(0);
-    fill(255);
-    
-    noStroke();
-    fill(sal);
-  }
 }
 
 // push();
