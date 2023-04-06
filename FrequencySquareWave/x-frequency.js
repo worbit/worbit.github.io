@@ -7,6 +7,8 @@ let pim;
 let out;
 let dims;
 let mod, ix;
+let singleline;
+
 function preload() {
     img = loadImage("rect_256.png");
 }
@@ -16,15 +18,22 @@ function setup() {
     sky = color(135, 206, 235);
     sal = color(250, 128, 114);
     slider = createSlider(1,77,77);
+    checkbox = createCheckbox('info', false);
     button = createButton('reset');
-    button.mousePressed(init);
+    button.mousePressed(resetstate);
+    noFill();
     
     img.loadPixels();
     let data = [];
     out = [];
+    singleline = [];
     for (let i = 0; i < img.height; i++) {
         for (let j = 0; j < img.width; j++) {
-            data.push(100*int(red(img.get(j,i))>240));
+            let v = 100*int(red(img.get(j,i))>240);
+            data.push(v);
+            if (i==256) {
+                singleline.push(v);
+            }
         }
     }
     dims = [256,256];
@@ -82,8 +91,18 @@ function draw() {
     }
     pim.updatePixels();
     image(pim,-6,-6,512,512);
+
+    if (checkbox.checked()) {
+        beginShape();
+        line(0,height/2, width, height/2);
+        for (let i=0; i<pim.width; i++) {
+            let v = (sig[128*pim.width + i] - 95) * -1;
+            vertex(i*2, height/2 + v);
+        }
+        endShape();
+    }
 }
 
-function init() {
+function resetstate() {
     slider.value(77);
 }
