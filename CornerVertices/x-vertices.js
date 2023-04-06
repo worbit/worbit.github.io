@@ -19,7 +19,7 @@ function setup() {
   slider = createSlider(300,500,395.272);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
-  button.mousePressed(init);
+  button.mousePressed(resetinitial);
 }
 
 function draw() {
@@ -48,6 +48,6 @@ function draw() {
   }
 }
 
-function init() {
+function resetinitial() {
   slider.value(395.272);
 }
