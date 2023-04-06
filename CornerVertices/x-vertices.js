@@ -1,5 +1,7 @@
 let slider, checkbox, button;
 let sky, sal;
+let pts;
+
 function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
