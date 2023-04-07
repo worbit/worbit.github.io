@@ -3,7 +3,14 @@ let sky, sal;
 let pts;
 
 function setup() {
-  createCanvas(500, 500);
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  let h = createElement('h2', dir);
+  h.parent('title');
+
+  let c = createCanvas(500, 500);
+  c.parent('canvas');
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   noStroke();
@@ -20,6 +27,9 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
+  slider.parent('gui');
+  checkbox.parent('gui');
+  button.parent('gui');
 }
 
 function draw() {
