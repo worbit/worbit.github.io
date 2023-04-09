@@ -7,7 +7,7 @@ canvas {
   display: block;
 }
 
-input, div, button {
+input, button, div {
   display: inline;
   margin-right: 20px;
 }

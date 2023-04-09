@@ -15,8 +15,13 @@ function setup() {
   slider = createSlider(150,350,250);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
-  button.mousePressed(init);
-  
+  button.mousePressed(resetinitial);
+
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);  
+
   voronoi = new Voronoi();
   bbox = {xl: 0, xr: width, yt: 0, yb: height};
   sites = [ {x: 250, y: 250}, 
@@ -72,7 +77,7 @@ function mousePressed() {
     sites.push({x:mouseX, y:mouseY});
 }
 
-function init() {
+function resetinitial() {
   slider.value(250);
   sites = sites.slice(0,5);
 }

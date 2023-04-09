@@ -11,7 +11,12 @@ function setup() {
   slider = createSlider(-30,30,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
-  button.mousePressed(init);
+  button.mousePressed(resetinitial);
+
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);
 
   rot = 340.0/360.0*TWO_PI;
 }
@@ -77,6 +82,6 @@ function draw() {
   }
 }
 
-function init() {
+function resetinitial() {
   slider.value(0);
 }

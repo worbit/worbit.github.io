@@ -11,6 +11,13 @@ function setup() {
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   slider = createSlider(0.1, 50, 50, 0.1);
+  checkbox = createCheckbox('info', false);
+  
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);  
+
   noStroke();
   fill(sal);
   a = 150;

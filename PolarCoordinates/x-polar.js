@@ -20,6 +20,11 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
+
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);  
 }
 
 function draw() {

@@ -20,7 +20,13 @@ function setup() {
     slider = createSlider(1,77,77);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
-    button.mousePressed(resetstate);
+    button.mousePressed(resetinitial);
+
+    let loc = window.location.pathname;
+    let elems = loc.split('/');
+    let dir = elems[elems.length-2];
+    createElement('label', dir);
+  
     noFill();
     
     img.loadPixels();
@@ -103,6 +109,6 @@ function draw() {
     }
 }
 
-function resetstate() {
+function resetinitial() {
     slider.value(77);
 }

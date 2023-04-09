@@ -62,6 +62,11 @@ function setup() {
   button = createButton('reset');
   button.mousePressed(resetinitial);
 
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);
+
   // fft from here: https://www.nayuki.io/page/free-small-fft-in-multiple-languages
   // previously done here: https://codepen.io/worbit/embed/YaLNWv
 

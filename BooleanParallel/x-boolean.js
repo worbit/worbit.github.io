@@ -10,6 +10,11 @@ function setup() {
   noStroke();
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);
+
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  createElement('label', dir);
   
   cen = createVector(250,250);
   w1 = createVector(150,0);
