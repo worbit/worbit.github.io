@@ -1,0 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+
+input, div, button {
+  display: inline;
+  margin-right: 20px;
+}

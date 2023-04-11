@@ -50,11 +50,13 @@ function draw() {
     for (let i = 0; i < pim.width; i++) {
         for (let j = 0; j < pim.height; j++) {
             // max 31'250, half: 15'625 (125^2)
-            // let dsq = sq(i-pim.width/2) + sq(j-pim.height/2);
-            // let mod = abs(dsq-4900)/4900;
+            let dsq = sq(i-pim.width/2) + sq(j-pim.height/2);
+            let mod = abs(dsq-4900)/4900;
             let dice = random();
-            // r is some combination of dist mod, val and dice
             let r = val > dice;
+            // r is some combination of dist mod, val and dice
+
+            // let r = val > dice * mod/2;
             let c1 = sky;
             let c2 = sal;
             if (!r) {
