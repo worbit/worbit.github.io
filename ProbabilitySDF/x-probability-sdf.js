@@ -2,7 +2,7 @@ let slider, checkbox, button;
 let sky, sal;
 let img;
 let val;
-let debug;
+// let debug;
 function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
@@ -11,7 +11,7 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-  debug = createP('');
+  // debug = createP('');
 
   let loc = window.location.pathname;
   let elems = loc.split('/');
@@ -53,8 +53,8 @@ function rotate_c(cx, cy, x, y, angle) {
 function calcImage() {
   img.loadPixels();
   val = slider.value()/100.0;
-  let influence = abs((val-0.5) * 2);
-  debug.html(influence);
+  let influence = (val-0.5) * 2;
+  // debug.html(influence);
 
   randomSeed(658);
   
@@ -65,8 +65,7 @@ function calcImage() {
       let rp = rotate_c(0,0,px,py,-20);
       let d = rectDist(rp[0],rp[1]);
       let dice = random();
-      // for val >= 0.5 correct, before wrong :/
-      let r = influence * sqrt(abs(d)/200.0) + val > dice;
+      let r = val + influence * pow(abs(d)/220.0, 0.8) > dice;
       let c1 = sal;
       let c2 = sky;
       if (!r) {
@@ -75,6 +74,8 @@ function calcImage() {
       }
       // debug view
       if (checkbox.checked()) {
+        let c = (abs(d)/220.0);
+        img.set(i,j, color(c*255));
         // let f = abs(sin(d/8));
         // if (d > 0)
         //   img.set(i,j, color(135*f, 206*f, 235*f));
