@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+input, button, div {
+  display: inline;
+  margin-right: 20px;
+}
