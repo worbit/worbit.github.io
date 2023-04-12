@@ -3,7 +3,8 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 141.73 141.73" style="enable-background:new 0 0 141.73 141.73;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFFFFF;stroke:#010101;stroke-width:0.5;}
+	.st0{fill:rgb(135,206,235);stroke:#000000;}
+	.st1{fill:rgb(250,128,114);stroke:#000000;}
 </style>
 <polygon class="st0" points="66.59,130.12 52.52,141.73 72.88,141.73 "/>
 <polygon class="st0" points="128.5,140.38 101.09,136.86 95.19,141.73 127.77,141.73 "/>
@@ -28,7 +29,7 @@
 <polygon class="st0" points="96.52,29.16 117.84,11.56 131.01,35.9 122.29,62.18 100.97,44.59 "/>
 <polygon class="st0" points="141.61,27.15 131.01,35.9 141.61,44.65 "/>
 <polygon class="st0" points="70.87,53.27 69.11,25.64 42.4,32.68 29.22,57.02 56.63,60.54 "/>
-<polygon class="st0" points="70.87,53.27 92.24,70.87 70.87,88.47 43.46,84.89 56.63,60.54 "/>
+<polygon class="st1" points="70.87,53.27 92.24,70.87 70.87,88.47 43.46,84.89 56.63,60.54 "/>
 <polygon class="st0" points="15,29.16 10.54,13.73 0.12,5.13 0.12,41.41 "/>
 <path class="st0" d="M42.41,32.68L40.59,5.05L34.48,0H15.1l-4.56,13.73L15,29.16L42.41,32.68z"/>
 <polygon class="st0" points="10.54,13.73 15.1,0 0.12,0 0.12,5.13 "/>

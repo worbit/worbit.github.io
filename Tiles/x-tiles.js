@@ -3,11 +3,11 @@ let sky, sal;
 let pent;
 
 function preload() {
-  pent = loadImage('pentagon_tiles.svg');
+  pent = loadSVG('pentagon_tiles.svg');
 }
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(500, 500, SVG);
 
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
@@ -33,10 +33,17 @@ function draw() {
   background(sky);
   
   let val = slider.value();
-  translate(width/2, height/2);
-  rotate(radians(-20));
+  if ([3,4,6].includes(val)) {
+    translate(width/2, height/2);
+    rotate(radians(-20));
+  }
   switch(val) {
     case 3:
+      for (let i=-3; i<6; i++) {
+        for (let j=-3; j<6; j++) {
+          tile_3(i,j);
+        }
+      }
       break;
     case 4:
       for (let i=-3; i<6; i++) {
@@ -46,7 +53,19 @@ function draw() {
       }
       break;
     case 5:
-      image(pent, 0,0);
+      image(pent, -150,-150, width+300,height+300);
+
+      // https://www.gorillasun.de/blog/working-with-svgs-in-p5js/
+      let sw = 0.0;
+      if (checkbox.checked()) sw = 0.2;
+      let paths = document.getElementsByTagName("polygon");
+      for (let n = 0; n < paths.length; n++){
+        paths[n].setAttribute('stroke-width', sw);
+      }
+      paths = document.getElementsByTagName("path");
+      for (let n = 0; n < paths.length; n++){
+        paths[n].setAttribute('stroke-width', sw);
+      }
       break;
     case 6:
       for (let i=-3; i<6; i++) {
@@ -55,14 +74,6 @@ function draw() {
         }
       }
       break;
-  }
-    
-  
-  
-
-  if (checkbox.checked()) {
-    //debug view
-    
   }
 }
 
@@ -86,7 +97,34 @@ function tile_4(i,j) {
 }
 
 function tile_3(i,j) {
-
+  noStroke();
+  if (checkbox.checked()) stroke(0);
+  fill(sky);
+  if (i==0 && j==0) fill(sal);
+  push();
+  translate(i*300, j*200);
+  if (abs(j%2)) {
+    beginShape();
+    vertex(0,100);
+    vertex(150,-100);
+    vertex(-150,-100);
+    endShape(CLOSE);
+    line(-150,100,150,100);
+  } else {
+    beginShape();
+    vertex(0,-100);
+    vertex(150,100);
+    vertex(-150,100);
+    endShape(CLOSE);
+    line(-150,-100,150,-100);
+  }
+  if (checkbox.checked()) {
+    fill(255);
+    text(2*i+"/"+j, 0,0);
+    text((2*i+1)+"/"+j, 150,0);
+    text((2*i-1)+"/"+j, -150,0);
+  }
+  pop();
 }
 
 function tile_5() {
