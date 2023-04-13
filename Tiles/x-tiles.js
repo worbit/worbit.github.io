@@ -57,7 +57,11 @@ function draw() {
 
       // https://www.gorillasun.de/blog/working-with-svgs-in-p5js/
       let sw = 0.0;
-      if (checkbox.checked()) sw = 0.2;
+      let fc = 'rgba(0,0,0,0)';
+      if (checkbox.checked()) {
+        sw = 0.2;
+        fc = 'rgb(255,255,255)'
+      }
       let paths = document.getElementsByTagName("polygon");
       for (let n = 0; n < paths.length; n++){
         paths[n].setAttribute('stroke-width', sw);
@@ -65,6 +69,10 @@ function draw() {
       paths = document.getElementsByTagName("path");
       for (let n = 0; n < paths.length; n++){
         paths[n].setAttribute('stroke-width', sw);
+      }
+      texts = document.getElementsByClassName("st3");
+      for (let n = 0; n < texts.length; n++){
+        texts[n].setAttribute('fill', fc);
       }
       break;
     case 6:
