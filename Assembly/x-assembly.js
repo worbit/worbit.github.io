@@ -7,7 +7,7 @@ function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
-  slider = createSlider(3,10,5);
+  slider = createSlider(3,10,8);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
@@ -19,7 +19,7 @@ function setup() {
   fill(sal);
   noStroke();
   rectMode(CENTER);
-  textSize(10);
+  textSize(12);
   textAlign(CENTER,CENTER);
 
   tree = new QuadTree(0,0, 500);
