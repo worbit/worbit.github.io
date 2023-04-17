@@ -1,12 +1,13 @@
 let slider, checkbox, button;
 let sky, sal;
 let val;
+let tree;
 
 function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
-  slider = createSlider(0,100,50);
+  slider = createSlider(3,10,5);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
@@ -17,23 +18,31 @@ function setup() {
   createElement('label', dir);  
   fill(sal);
   noStroke();
-  rectMode(CENTER);  
+  rectMode(CENTER);
+  textSize(10);
+  textAlign(CENTER,CENTER);
+
+  tree = new QuadTree(0,0, 500);
 }
 
 function draw() {
-  background(sky);
+  background(0);
   val = slider.value();
   translate(width/2, height/2);
-  rotate(PI/9);
-  rect(0,0,300,200);
+  tree.set_level(val);
+  tree.divide(tree.root);
+  tree.display();
+  // translate(width/2, height/2);
+  // rotate(-PI/9);
+  // rect(0,0,300,200);
 }
 
 class QuadTree {
-  constructor(pt, w) {
+  constructor(x,y, w) {
     this.world = w;
     this.maxlevels = 3;
-    this.pos = pt;
-    self.root = QuadNode(0,0);
+    //this.pos = createVector(x,y);
+    this.root = new QuadNode(x,y, w, 1);
     this.leaves = [];
   }
 
@@ -42,30 +51,69 @@ class QuadTree {
   }
 
   divide(n) {
-    let d = rectDist(n.pos.x, n.pos.y);
-    n.dist = d;
+    let rp = rotate_c(0,0,n.x, n.y, -20);
+    let d = rectDist(rp[0],rp[1]);
 
+    n.dist = d;
+    if (n.level < this.maxlevels) {
+      if (abs(d) < n.edge/2 * sqrt(2)) {
+        n.divide_node();
+        for (let b of n.branches) {
+          this.divide(b);
+        }
+      } else {
+        this.leaves.push(n);
+      }
+    } else {
+      this.leaves.push(n);
+    }
   }
 
   display() {
-
+    for (let l of this.leaves) {
+      // draw box
+      // push();
+      // translate(l.x, l.y);
+      noStroke();
+      if (checkbox.checked()) stroke(0);
+      fill(sal);
+      if (l.dist > 0) fill(sky);
+      rect(l.x, l.y, l.edge, l.edge);
+      if (checkbox.checked() && l.level<7) {
+        fill(255);
+        text(l.level, l.x, l.y);
+      }
+      // pop();
+    }
   }
 }
 
 class QuadNode {
-  constructor(x,y) {
-    self.pos = createVector(x,y);
-    self.dist = 0;
-    self.level = 1;
-    self.branches = [];
+  constructor(x,y, s, l) {
+    this.x = x;
+    this.y = y;
+    this.dist = 0;
+    this.edge = s;
+    this.level = l;
+    this.branches = null;
+  }
+
+  divide_node() {
+    this.branches = [];
+    let qs = this.edge/4.0;
+    let nl = this.level + 1;
+    this.branches.push(new QuadNode(this.x-qs, this.y-qs, qs*2, nl));
+    this.branches.push(new QuadNode(this.x+qs, this.y-qs, qs*2, nl));
+    this.branches.push(new QuadNode(this.x+qs, this.y+qs, qs*2, nl));
+    this.branches.push(new QuadNode(this.x-qs, this.y+qs, qs*2, nl));
   }
 }
 
 function rectDist(x,y) {
   //return max(abs(x)-val/2,abs(y)-200/2);
-  let r = 50;
-  let dx = abs(x) - (200 - r);
-  let dy = abs(y) - (150 - r);
+  let r = 0;
+  let dx = abs(x) - (150 - r);
+  let dy = abs(y) - (100 - r);
   let inside = max(dx, dy) - r;
   dx = max(dx, 0);
   dy = max(dy, 0);
