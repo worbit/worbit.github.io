@@ -65,15 +65,22 @@ function draw() {
     y = 207.334;
     for (let i=0; i<3; i++) {
       var rad = 300 - (i%2)*100;
-      x += rad * cos(rot + i*(PI-a));
-      y += rad * sin(rot + i*(PI-a));
-      if (i==2) {
-        x = p.x;
-        y = p.y;
+      let nx = x + rad * cos(rot + i*(PI-a));
+      let ny = y + rad * sin(rot + i*(PI-a));
+      if (i<2) {
+        line(x,y,nx,ny);
+        text(rad, (x+nx)/2, (y+ny)/2);
       }
-      arc(x,y,40,40,rot + (i+1)*(PI-a),rot + (i+1)*(PI-a) + a);
-      text(round(a/PI*180)+'°', x,y);
+      if (i==2) {
+        nx = p.x;
+        ny = p.y;
+      }
+      arc(nx, ny, 40, 40, rot + (i+1)*(PI-a),rot + (i+1)*(PI-a) + a);
+      text(round(a/PI*180)+'°', nx,ny);
+      x = nx;
+      y = ny;
     }
+    ellipse(74.844,207.334,12,12);
     noStroke();
     fill(sal);
   }
