@@ -11,10 +11,7 @@ function setup() {
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);
 
-  let loc = window.location.pathname;
-  let elems = loc.split('/');
-  let dir = elems[elems.length-2];
-  createElement('label', dir);
+  createElement('label', get_name());
   
   cen = createVector(250,250);
   w1 = createVector(150,0);
@@ -100,4 +97,24 @@ function line_line_intersection(sa, da, sb, db) {
   let y4 = sb.y + db.y;
   let t = ((x1-x3)*(y3-y4) - (y1-y3)*(x3-x4)) / ((x1-x2)*(y3-y4) - (y1-y2)*(x3-x4));
   return [x1+t*(x2-x1), y1+t*(y2-y1)];
+}
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+      save_pic();
+  }
+}
+
+function save_pic() {
+  let n = get_name();
+  let c = str(checkbox.checked());
+  let v = str(slider.value());
+  save(n+'_'+c+'_'+v+'.png');
+}
+
+function get_name() {
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  return dir;
 }

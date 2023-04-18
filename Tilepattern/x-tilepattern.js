@@ -17,10 +17,7 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
-  let loc = window.location.pathname;
-  let elems = loc.split('/');
-  let dir = elems[elems.length-2];
-  createElement('label', dir);
+  createElement('label', get_name());
 
   button.mousePressed(resetinitial);
 }
@@ -98,4 +95,24 @@ function tile_4(i,j) {
     text(i+"/"+j, 0,0);
   }
   pop();
+}
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+      save_pic();
+  }
+}
+
+function save_pic() {
+  let n = get_name();
+  let c = str(checkbox.checked());
+  let v = str(slider.value());
+  save(n+'_'+c+'_'+v+'.png');
+}
+
+function get_name() {
+  let loc = window.location.pathname;
+  let elems = loc.split('/');
+  let dir = elems[elems.length-2];
+  return dir;
 }
