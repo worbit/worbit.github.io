@@ -16,7 +16,7 @@ function setup() {
   pts.push(createVector(425.156,292.666));
   pts.push(createVector(143.248,395.272));
 
-  slider = createSlider(300,500,395.272);
+  slider = createSlider(50,500,395.272);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
