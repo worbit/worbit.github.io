@@ -96,8 +96,10 @@ function draw() {
     image(pim,-6,-6,512,512);
 
     if (checkbox.checked()) {
-        beginShape();
+        stroke(255);
         line(0,height/2, width, height/2);
+        stroke(0);
+        beginShape();
         for (let i=0; i<pim.width; i++) {
             let v = (sig[128*pim.width + i] - 95) * -1;
             vertex(i*2, height/2 + v);
