@@ -3,8 +3,8 @@ let sky, sal;
 let rot;
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
+  sky = color(135, 206, 235); // #87CEEB
+  sal = color(250, 128, 114); // #FA8072
   fill(sal);
   noStroke();
   textSize(16);
