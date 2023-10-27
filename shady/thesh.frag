@@ -1,3 +1,9 @@
+precision mediump float;
+
+varying vec2 pos;
+
 void main() {
-    gl_FragColor = vec4(1.,0,1,1);
+    vec3 circle = vec3(0.5, 0.5, 0.3);
+    float d = length(pos - circle.xy) - circle.z;
+    gl_FragColor = vec4(d,d,d,1);
 }
