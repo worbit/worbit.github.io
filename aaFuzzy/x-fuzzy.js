@@ -3,7 +3,7 @@ let sky,sal;
 let img;
 
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(500, 500, P2D);
   
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
