@@ -28,6 +28,10 @@ function draw() {
   image(img, 0, 0, width, height);
 
   if (checkbox.checked()) {
+    fill("#444653");
+    noStroke();
+    rect(14,14,500-28,500-28);
+    fill("#d2d5da");
     for (let i=0; i<txt.length; i++) {
       let t = txt[i];
       text(t, 16, 32+i*16);
