@@ -14,7 +14,7 @@ function setup() {
   sal = color(250, 128, 114);
 
   textFont('Andale Mono');
-  textSize(8);
+  textSize(10);
   
   slider = createSlider(0,100,0);
   checkbox = createCheckbox('info', false);
@@ -34,7 +34,7 @@ function draw() {
     fill("#d2d5da");
     for (let i=0; i<txt.length; i++) {
       let t = txt[i];
-      text(t, 16, 32+i*16);
+      text(t, 16, 32+i*12);
     }
   }
 }
