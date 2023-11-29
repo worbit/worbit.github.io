@@ -1,14 +1,14 @@
 let sal, sky;
 let slider, checkbox, button;
 let pts;
-let lightsource, planenormal;
+let lightsource, planenormal, planepoint;
 
 function setup() {
     createCanvas(500, 500);
     sky = color(135, 206, 235);
     sal = color(250, 128, 114);
     fill(sal);
-    //noStroke();
+    noStroke();
 
     pts = [];
     // pts.push(createVector(74.844,207.334));
@@ -22,7 +22,8 @@ function setup() {
     pts.push(createVector(217.974436, 293.581685, 100));
 
     lightsource = createVector(width/2, height/2, 142.857143);
-    planenormal = createVector(width/2, height/2, 50);
+    planenormal = createVector(0, 0, 250);
+    planepoint = createVector(width/2, height/2, 0);
   
     slider = createSlider(0,360,0);
     checkbox = createCheckbox('info', false);
@@ -35,21 +36,23 @@ function draw() {
 
     let svalue = slider.value();
     let a = radians(svalue - 180);
-    planenormal.x = 50 + width/2  + 50 * cos(a);
-    planenormal.y = height/2 + 50 * sin(a);
+    planenormal.x = 50 + 50 * cos(a);
+    planenormal.y = 50 * sin(a);
     planenormal.z = 250;
     let pn = p5.Vector.normalize(planenormal);
-    let negls = p5.Vector.sub(createVector(width/2,height/2,0), lightsource);
-    let inv = (negls.dot(pn));
+    let diff = p5.Vector.sub(planepoint, lightsource);
+    let prod1 = (diff.dot(pn));
 
+    let ptsp = [];
     beginShape();
     for (let p of pts) {
         let linedir = p5.Vector.sub(p, lightsource);
         linedir.normalize();
-        let d = inv / linedir.dot(pn);
-        let pp = p5.Vector.add(lightsource, p5.Vector.mult(linedir, d));
-        print(pp.z);
+        let prod2 = linedir.dot(pn);
+        let prod3 = prod1 / prod2;
+        let pp = p5.Vector.sub(lightsource, p5.Vector.mult(linedir, prod3));
         vertex(pp.x,pp.y);
+        ptsp.push(pp);
     }
     endShape(CLOSE);
 
@@ -61,9 +64,23 @@ function draw() {
 
     if (checkbox.checked()) {
         push();
+        stroke(255);
+        for (let p of ptsp) {
+            line(lightsource.x, lightsource.y, p.x, p.y);
+        }
+        noStroke();
         fill(0);
+        for (let p of pts) {
+            ellipse(p.x,p.y, 5,5);
+        }
+        for (let p of ptsp) {
+            ellipse(p.x,p.y, 5,5);
+        }
+        stroke(0);
+        line(width/2, height/2, width/2+planenormal.x, height/2+planenormal.y);
+        noStroke();
         ellipse(width/2, height/2, 5,5);
-        ellipse(planenormal.x, planenormal.y, 5,5);
+        ellipse(width/2+planenormal.x, height/2+planenormal.y, 5,5);
         pop();
     }
 }
