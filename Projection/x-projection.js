@@ -2,6 +2,7 @@ let sal, sky;
 let slider, checkbox, button;
 let pts;
 let lightsource, planenormal, planepoint;
+let grid;
 
 function setup() {
     createCanvas(500, 500);
@@ -21,6 +22,13 @@ function setup() {
     pts.push(createVector(302.546772, 262.799872, 100));
     pts.push(createVector(217.974436, 293.581685, 100));
 
+    grid = [];
+    for (let x=-200; x<201; x+=40) {
+        for (let y=-200; y<201; y+=40) {
+            grid.push(createVector(x,y,-143));
+        }
+    }
+
     lightsource = createVector(width/2, height/2, 142.857143);
     planenormal = createVector(0, 0, 250);
     planepoint = createVector(width/2, height/2, 0);
@@ -39,18 +47,19 @@ function draw() {
     planenormal.x = 50 + 50 * cos(a);
     planenormal.y = 50 * sin(a);
     planenormal.z = 250;
-    let pn = p5.Vector.normalize(planenormal);
-    let diff = p5.Vector.sub(planepoint, lightsource);
-    let prod1 = (diff.dot(pn));
+    // let pn = p5.Vector.normalize(planenormal);
+    // let diff = p5.Vector.sub(planepoint, lightsource);
+    // let prod1 = (diff.dot(pn));
 
     let ptsp = [];
     beginShape();
     for (let p of pts) {
         let linedir = p5.Vector.sub(p, lightsource);
-        linedir.normalize();
-        let prod2 = linedir.dot(pn);
-        let prod3 = prod1 / prod2;
-        let pp = p5.Vector.sub(lightsource, p5.Vector.mult(linedir, prod3));
+        let pp = linePlaneIntersection(planepoint, planenormal, lightsource, linedir);
+        // linedir.normalize();
+        // let prod2 = linedir.dot(pn);
+        // let prod3 = prod1 / prod2;
+        // let pp = p5.Vector.sub(lightsource, p5.Vector.mult(linedir, prod3));
         vertex(pp.x,pp.y);
         ptsp.push(pp);
     }
@@ -81,8 +90,24 @@ function draw() {
         noStroke();
         ellipse(width/2, height/2, 5,5);
         ellipse(width/2+planenormal.x, height/2+planenormal.y, 5,5);
+
+        for (let d of grid) {
+            let pp = linePlaneIntersection(planepoint, planenormal, lightsource, d);
+            ellipse(pp.x,pp.y, 2,2);
+        }
         pop();
     }
+}
+
+function linePlaneIntersection(plpt, plno, lipt, lidi) {
+    let plnon = p5.Vector.normalize(plno);
+    let diff = p5.Vector.sub(plpt, lipt);
+    let prod1 = (diff.dot(plnon));
+    lidi.normalize();
+    let prod2 = lidi.dot(plnon);
+    let prod3 = prod1 / prod2;
+    let pp = p5.Vector.sub(lipt, p5.Vector.mult(lidi, prod3));
+    return pp;
 }
 
 function keyPressed() {
