@@ -1,11 +1,13 @@
-let m1, m2;
+let m1, m2, txt;
+let verts;
 let sky, sal;
 let slider, checkbox, button;
 let cam;
 
 function preload() {
-    m1 = loadModel('rect.obj');
-    m2 = loadModel('sphere.obj');
+    m1 = loadModel('rect_250.obj');
+    m2 = loadModel('sphere_250.obj');
+    txt = loadStrings('sphere_250.obj');
 }
 
 function setup() {
@@ -21,14 +23,25 @@ function setup() {
     button.mousePressed(resetinitial);
 
     createElement('label', get_name());
+
+    verts = [];
+    for (let i=0; i<txt.length; i++) {
+      let t = txt[i];
+      if (t.startsWith('v ')) {
+        let coords = t.split(' ');
+        verts.push(createVector(float(coords[1]), float(coords[2]),float(coords[3])));
+      }
+    }
 }
 
 function draw() {
     let v = slider.value();
-    rotateX(HALF_PI + v/100.0 * PI);
+    let a = v/100.0 * PI;
+    push();
+    rotateX(a);
     background(sky);
     if (checkbox.checked()) {
-        stroke(0);
+        stroke(220);
         // directionalLight(color(255), createVector(1.0,1.0,-1.0));
     } else {
         noStroke();
@@ -37,6 +50,57 @@ function draw() {
     model(m1);
     fill(sky);
     model(m2);
+    pop();
+
+    if (checkbox.checked()) {
+      stroke(0);
+      strokeWeight(1.8);
+      let rad = 250;
+      for (let v of verts) {
+        let vr = rotatePointAroundXAxis(v, a);
+        let pol = polar(vr.x, vr.y, vr.z, rad);
+        let az = azimuth(vr.x, vr.y, vr.z, Math.sqrt(vr.x**2 + vr.y**2));
+        point(az*75, (pol-Math.PI/2)*75, 300);
+      }
+      noStroke();
+    }
+}
+
+function rotatePointAroundXAxis(p, a) {
+  let matrix = [[1,0,0],[0,cos(a),-sin(a)],[0,sin(a),cos(a)]];
+  return matrixMult(p, matrix);
+}
+
+function matrixMult(p,m) {
+  var rx = p.x*m[0][0]+p.y*m[1][0]+p.z*m[2][0];
+  var ry = p.x*m[0][1]+p.y*m[1][1]+p.z*m[2][1];
+  var rz = p.x*m[0][2]+p.y*m[1][2]+p.z*m[2][2];
+  return {x:rx,y:ry,z:rz};
+}
+
+function sgn(a) {
+  if (a<0) {
+    return -1;
+  } else if (a>0) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+function polar(x,y,z, r) {
+  return Math.acos(z/r);
+}
+
+function azimuth(x,y,z, xy) {
+  if (x==0) {
+    if (y>0) {
+      return Math.PI/2.0;
+    } else {
+      return -Math.PI/2.0;
+    }
+  }
+  return sgn(y) * Math.acos(x / xy);
 }
 
 function resetinitial() {
