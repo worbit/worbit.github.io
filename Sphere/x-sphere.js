@@ -126,3 +126,12 @@ function resetinitial() {
     let dir = elems[elems.length-2];
     return dir;
   }
+  
+  // written with the help of github copilot
+  // https://stackoverflow.com/questions/11870910/proper-spherical-mapping-of-a-rectangular-texture
+  function mercator(x,y,z) {
+    let r = Math.sqrt(x**2 + y**2 + z**2);
+    let lat = Math.asin(z/r);
+    let lon = Math.atan2(y,x);
+    return {lat:lat,lon:lon};
+  }
