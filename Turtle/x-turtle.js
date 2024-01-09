@@ -59,23 +59,36 @@ function draw() {
 
   if (checkbox.checked()) {
     //debug view
-    let d = 15;
+    let d = 50;
+    noFill();
     stroke(0);
+    strokeWeight(2);
+    setLineDash([7,7]);
     // fill(255);
     line(0,0,startpoint.x,startpoint.y);
+    setLineDash([]);
     beginShape();
     for (let p of ps) {
       vertex(p.x,p.y);
     }
     endShape();
+    translate(ps[ps.length-1].x, ps[ps.length-1].y);
+    for (let a of angles) {
+      rotate(radians(a));
+    }
+    image(trtl,-d/2,-d/2, d,d);
+
     noStroke();
-    image(trtl,0,0,50,50);
-    // fill(sal);
+    fill(sal);
   }
 }
 
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
 function resetinitial() {
-  slider.value(250);
+  slider.value(90);
 }
 
 function keyPressed() {
