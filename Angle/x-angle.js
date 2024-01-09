@@ -26,14 +26,15 @@ function draw() {
   // remaining angle
   let ra = TWO_PI - (3*a);
   
-  beginShape();
   let x = 74.844;
   let y = 207.334;
-
+  
   let as = createVector(x,y);
   let ad = createVector(cos(rot+ra),sin(rot+ra));
   ad.normalize();
   let bs,bd;
+  
+  beginShape();
   for (let i=0; i<3; i++) {
     vertex(x,y);
     var rad = 300 - (i%2)*100;
@@ -53,7 +54,6 @@ function draw() {
   v = (dy * ad.x - dx * ad.y) / det;
   p = createVector(as.x + ad.x*u, as.y + ad.y*u);
   vertex(p.x,p.y);
-
   endShape(CLOSE);
   
   // debug view

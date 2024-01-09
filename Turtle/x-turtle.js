@@ -59,12 +59,11 @@ function draw() {
 
   if (checkbox.checked()) {
     //debug view
-    let d = 50;
+    let d = 40;
     noFill();
     stroke(0);
-    strokeWeight(2);
+    // strokeWeight(2);
     setLineDash([7,7]);
-    // fill(255);
     line(0,0,startpoint.x,startpoint.y);
     setLineDash([]);
     beginShape();
@@ -72,6 +71,13 @@ function draw() {
       vertex(p.x,p.y);
     }
     endShape();
+    
+    // arc
+    fill(255);
+    arc(ps[1].x, ps[1].y, d, d, radians(-20), radians(-20 + angles[1]));
+    text(round(angles[1])+'°', ps[1].x, ps[1].y);
+
+    // turtle
     translate(ps[ps.length-1].x, ps[ps.length-1].y);
     for (let a of angles) {
       rotate(radians(a));
