@@ -12,10 +12,6 @@ function setup() {
     noStroke();
 
     pts = [];
-    // pts.push(createVector(74.844,207.334));
-    // pts.push(createVector(356.752,104.728));
-    // pts.push(createVector(425.156,292.666));
-    // pts.push(createVector(143.248,395.272));
 
     pts.push(createVector(197.453228, 237.200128, 100));
     pts.push(createVector(282.025564, 206.418315, 100));
@@ -35,6 +31,9 @@ function setup() {
   
     slider = createSlider(0,360,0);
     checkbox = createCheckbox('info', false);
+    button = createButton('reset');
+    button.mousePressed(resetinitial);
+  
     createElement('label', get_name());
     // noLoop();
   }
@@ -109,6 +108,10 @@ function linePlaneIntersection(plpt, plno, lipt, lidi) {
     let pp = p5.Vector.sub(lipt, p5.Vector.mult(lidi, prod3));
     return pp;
 }
+
+function resetinitial() {
+    slider.value(0);
+}  
 
 function keyPressed() {
     if (keyCode === UP_ARROW) {

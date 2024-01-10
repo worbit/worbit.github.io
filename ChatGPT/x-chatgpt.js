@@ -17,6 +17,7 @@ function setup() {
   textSize(10);
   
   slider = createSlider(0,100,0);
+  // slider.disabled = true;
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
