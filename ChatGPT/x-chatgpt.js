@@ -1,6 +1,7 @@
 let slider, checkbox, button;
 let sky,sal;
 let img, txt;
+let d;
 
 function preload() {
   img = loadImage('chatgpt.svg');
@@ -14,10 +15,11 @@ function setup() {
   sal = color(250, 128, 114);
 
   textFont('Andale Mono');
-  textSize(10);
+  textSize(11);
+  d = 10;
   
   slider = createSlider(0,100,0);
-  // slider.disabled = true;
+  slider.elt.disabled = true;
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
@@ -31,11 +33,11 @@ function draw() {
   if (checkbox.checked()) {
     fill("#444653");
     noStroke();
-    rect(14,14,500-28,500-28);
+    rect(d,d,500-2*d,500-2*d);
     fill("#d2d5da");
     for (let i=0; i<txt.length; i++) {
       let t = txt[i];
-      text(t, 16, 32+i*12);
+      text(t, d+2, 40+i*16);
     }
   }
 }

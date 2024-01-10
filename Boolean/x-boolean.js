@@ -6,7 +6,6 @@ function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
-  fill(sal);
   noStroke();
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);
@@ -26,32 +25,18 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyblue');
   val = slider.value();
   
   let st = rotate_c(0,0, w1.x, w1.y, val);
   s1 = createVector(st[0], st[1]);
   d1 = createVector(s1.y, -s1.x);
   
-  /*
-  ellipse(cen.x,cen.y,12,12);
-  
-  ellipse(cen.x + s1.x,cen.y + s1.y,12,12);
-  ellipse(cen.x + s2.x,cen.y + s2.y,12,12);
-  ellipse(cen.x + s1.x + d1.x,cen.y + s1.y + d1.y, 12, 12);
-  ellipse(cen.x + s2.x + d2.x,cen.y + s2.y + d2.y, 12, 12);
-  */
-  
   let i1 = line_line_intersection(p5.Vector.add(cen,s1), d1, p5.Vector.add(cen,s2), d2);
   let i2 = line_line_intersection(p5.Vector.sub(cen,s1), d1, p5.Vector.add(cen,s2), d2);
   let i3 = line_line_intersection(p5.Vector.add(cen,s1), d1, p5.Vector.sub(cen,s2), d2);
   let i4 = line_line_intersection(p5.Vector.sub(cen,s1), d1, p5.Vector.sub(cen,s2), d2);
-  /*
-  ellipse(i1[0], i1[1], 12,12);
-  ellipse(i2[0], i2[1], 12,12);
-  ellipse(i3[0], i3[1], 12,12);
-  ellipse(i4[0], i4[1], 12,12);
-  */
+
   if (checkbox.checked()) {
     rectMode(CENTER);
     fill(100,128);
@@ -65,7 +50,7 @@ function draw() {
     rect(0,0,300,1000);
     pop();
   } else {
-    fill(sal);
+    fill('salmon');
     beginShape();
     vertex(i1[0], i1[1]);
     vertex(i2[0], i2[1]);
