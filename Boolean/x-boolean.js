@@ -9,6 +9,8 @@ function setup() {
   noStroke();
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);
+  button = createButton('reset');
+  button.mousePressed(resetinitial);
 
   createElement('label', get_name());
   
@@ -102,4 +104,8 @@ function get_name() {
   let elems = loc.split('/');
   let dir = elems[elems.length-2];
   return dir;
+}
+
+function resetinitial() {
+  slider.value(20);
 }
