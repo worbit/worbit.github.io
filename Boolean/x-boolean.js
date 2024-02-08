@@ -1,11 +1,8 @@
 let cen, w1, w2, s1,s2, d1, d2;
-let sky, sal;
 let slider, checkbox;
 
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
   noStroke();
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);

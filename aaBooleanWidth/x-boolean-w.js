@@ -1,12 +1,9 @@
 let cen, w1, w2, s1,s2, d1, d2;
-let sky, sal;
 let slider, checkbox;
 
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
-  fill(sal);
+  fill('salmon');
   noStroke();
   slider = createSlider(50,250,150);
   checkbox = createCheckbox('info', false);
@@ -26,7 +23,7 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyblue');
   val = slider.value();
   
   w1 = createVector(val,0);
@@ -52,7 +49,7 @@ function draw() {
     rect(0,0,val*2,1000);
     pop();
   } else {
-    fill(sal);
+    fill('salmon');
     beginShape();
     vertex(i1[0], i1[1]);
     vertex(i2[0], i2[1]);

@@ -1,5 +1,4 @@
 let slider, checkbox, button;
-let sky,sal;
 let img, txt;
 let d;
 
@@ -11,9 +10,6 @@ function preload() {
 function setup() {
   createCanvas(500, 500);
   
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
-
   textFont('Andale Mono');
   textSize(11);
   d = 10;
@@ -23,6 +19,7 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
+  button.elt.disabled = true;
 
   createElement('label', get_name());
 }

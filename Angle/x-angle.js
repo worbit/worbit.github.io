@@ -1,11 +1,8 @@
 let slider, checkbox, button;
-let sky, sal;
 let rot;
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235); // #87CEEB
-  sal = color(250, 128, 114); // #FA8072
-  fill(sal);
+  fill('salmon');
   noStroke();
   textSize(16);
   slider = createSlider(-30,30,0);
@@ -19,7 +16,7 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyblue');
   let di = slider.value()/100.0;
   let a = PI/2 + di;
   
@@ -80,9 +77,9 @@ function draw() {
       x = nx;
       y = ny;
     }
-    ellipse(74.844,207.334,12,12);
+    ellipse(74.844,207.334,10,10);
     noStroke();
-    fill(sal);
+    fill('salmon');
   }
 }
 

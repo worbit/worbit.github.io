@@ -1,15 +1,12 @@
 let slider, checkbox, button;
-let sky, sal;
 let plist, cen, num;
 let rlist, gears;
 let res, da;
 
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
   noStroke();
-  fill(sal);
+  fill('salmon');
   textSize(16);
 
   // cen = createVector(250,250);
@@ -70,14 +67,14 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyblue');
   if (checkbox.checked()) {
     noFill();
     stroke(0);
     strokeWeight(1);
   } else {
     noStroke();
-    fill(sal);
+    fill('salmon');
   }
   
   let val = slider.value();
@@ -206,7 +203,7 @@ function draw() {
 //   else endShape();
 
 function resetinitial() {
-  slider.value(0);
+  slider.value(50);
 }
 
 function fourier() {

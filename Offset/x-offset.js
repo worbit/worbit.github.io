@@ -1,10 +1,8 @@
 let slider, checkbox, button;
-let sky, sal;
 let p1, p2, v;
+
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
@@ -14,7 +12,7 @@ function setup() {
   
   strokeCap(SQUARE);
   strokeWeight(200);
-  stroke(sal);
+  stroke('salmon');
   noFill();
   
   p1 = createVector(203.015, 267.101);
@@ -24,7 +22,7 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyblue');
   //bezier(109.046, 301.303, mouseX,mouseY,mouseX,mouseY,390.954, 198.697);
   let val = slider.value();
   beginShape();
@@ -53,7 +51,7 @@ function draw() {
     ellipse(p2.x-val*v.x, p2.y-val*v.y, d,d);
     ellipse(390.954, 198.697, d,d);
     
-    stroke(sal);
+    stroke('salmon');
     strokeWeight(200);
     noFill();
   }
