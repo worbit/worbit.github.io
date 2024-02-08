@@ -1,12 +1,9 @@
 let slider, checkbox, button;
-let sky, sal;
 let val;
 let tree;
 
 function setup() {
   createCanvas(500, 500);
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
   slider = createSlider(3,10,8);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
@@ -15,7 +12,7 @@ function setup() {
   let dir = get_name();
   createElement('label', dir);
 
-  fill(sal);
+  fill('salmon');
   noStroke();
   rectMode(CENTER);
   textSize(12);
@@ -25,15 +22,11 @@ function setup() {
 }
 
 function draw() {
-  background(0);
   val = slider.value();
   translate(width/2, height/2);
   tree.set_level(val);
   tree.divide(tree.root);
   tree.display();
-  // translate(width/2, height/2);
-  // rotate(-PI/9);
-  // rect(0,0,300,200);
 }
 
 class QuadTree {
@@ -75,8 +68,8 @@ class QuadTree {
       // translate(l.x, l.y);
       noStroke();
       if (checkbox.checked()) stroke(0);
-      fill(sal);
-      if (l.dist > 0) fill(sky);
+      fill('salmon');
+      if (l.dist > 0) fill('skyblue');
       rect(l.x, l.y, l.edge, l.edge);
       if (checkbox.checked() && l.level<7) {
         fill(255);
