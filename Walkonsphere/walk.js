@@ -16,11 +16,12 @@ function draw() {
   background('skyblue');
   translate(0,150,0);
   if (r<PI/2) {
-    rotateY(r);
+    rotateX(-r);
   } else {
-    rotateX(r);
+    rotateX(-PI/2);
+    rotateY(r);
   }
   texture(img);
-  sphere(200);
-  r += 0.01;
+  sphere(250);
+  r += 0.005;
 }
