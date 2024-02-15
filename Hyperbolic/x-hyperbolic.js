@@ -7,7 +7,7 @@ let cam;
 function preload() {
     m1 = loadModel('inside.obj');
     m2 = loadModel('outside.obj');
-    //txt = loadStrings('sphere_250.obj');
+    txt = loadStrings('curvepoints.txt');
 }
 
 function setup() {
@@ -24,14 +24,12 @@ function setup() {
 
     createElement('label', get_name());
 
-    // verts = [];
-    // for (let i=0; i<txt.length; i++) {
-    //   let t = txt[i];
-    //   if (t.startsWith('v ')) {
-    //     let coords = t.split(' ');
-    //     verts.push(createVector(float(coords[1]), float(coords[2]),float(coords[3])));
-    //   }
-    // }
+    verts = [];
+    for (let i=0; i<txt.length; i++) {
+      let t = txt[i];
+      let coords = t.split(',');
+      verts.push(createVector(float(coords[0]), float(coords[1]),float(coords[2])));
+    }
 }
 
 function draw() {
@@ -51,20 +49,19 @@ function draw() {
     model(m1);
     fill(sky);
     model(m2);
+
+    if (checkbox.checked()) {
+      stroke(0);
+      strokeWeight(3);
+      beginShape();
+      for (let v of verts) {
+        vertex(v.x, v.y, v.z);
+      }
+      endShape();
+      noStroke();
+    }
     pop();
 
-    // if (checkbox.checked()) {
-    //   stroke(0);
-    //   strokeWeight(1.8);
-    //   let rad = 250;
-    //   for (let v of verts) {
-    //     let vr = rotatePointAroundXAxis(v, a);
-    //     let pol = polar(vr.x, vr.y, vr.z, rad);
-    //     let az = azimuth(vr.x, vr.y, vr.z, Math.sqrt(vr.x**2 + vr.y**2));
-    //     point(az*75, (pol-Math.PI/2)*75, 300);
-    //   }
-    //   noStroke();
-    // }
 }
 
 function rotatePointAroundXAxis(p, a) {
