@@ -23,8 +23,9 @@
     <div>
         <canvas class="rhino3dm" id="canvas" width="640" height="360"></canvas>
     </div>
-    <div id="console"></div>
-
+    <label for="quantity">Degree:</label>
+    <input type="number" id="quantity" name="quantity" min="1" max="5" value="3">
+    <p id="console"></p>
     <script>
         // global variables
         var rhino = null;
@@ -68,6 +69,8 @@
                 _points = new rhino.Point3dList();
             } else {
                 let [x,y] = clientXY(evt);
+                // check if close to existing point
+                // if so move it, if not make new
                 _points.add(x,y,0);
             }
             canvasDraw();
@@ -99,10 +102,13 @@
             let ctx = canvas.getContext('2d');
             ctx.lineWidth = 1;
             ctx.strokeStyle = 'salmon';
+
             let degree = _points.count-1;
+            let qd = document.getElementById("quantity").value;
+            //document.getElementById("console").innerHTML = qd;
             if(degree>3)
                 degree = 3;
-            let curve = rhino.NurbsCurve.create(false, degree, _points);
+            let curve = rhino.NurbsCurve.create(false, qd*1, _points);
             
             const divisions = 300;
             ctx.beginPath();
