@@ -29,6 +29,7 @@
     <script>
         // global variables
         var rhino = null;
+        let activeidx = -1;
 
         // wait for the rhino3dm web assembly to load asynchronously
         rhino3dm().then(function(m) {
@@ -71,14 +72,25 @@
                 let [x,y] = clientXY(evt);
                 // check if close to existing point
                 // if so move it, if not make new
-                _points.add(x,y,0);
+                activeidx = -1;
+                for(i=0; i<_points.count; i++) {
+                    let [px,py,pz] = _points.get(i);
+                    if (Math.abs(px-x) < 15 && Math.abs(py-y) < 15) {
+                        activeidx = i;
+                        document.getElementById("console").innerHTML = activeidx;
+                    }
+                }
+                if (activeidx < 0) {
+                    _points.add(x,y,0);
+                    activeidx = _points.count - 1;
+                }
             }
             canvasDraw();
         }
 
         function onMouseMove(evt) {
             if(evt.buttons==1) {
-                let index = _points.count - 1;
+                let index = activeidx; //_points.count - 1;
                 if(index>=0) {
                     let [x,y] = clientXY(evt);
                     _points.set(index, [x,y,0]);
