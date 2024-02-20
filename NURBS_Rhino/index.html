@@ -100,7 +100,7 @@
                 return;
             let canvas = getCanvas();
             let ctx = canvas.getContext('2d');
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 3;
             ctx.strokeStyle = 'salmon';
 
             let degree = _points.count-1;
@@ -129,6 +129,7 @@
             let canvas = getCanvas();
             let ctx = canvas.getContext('2d');
             ctx.strokeStyle = 'gray';
+            ctx.lineWidth = 1;
             ctx.setLineDash([3,6]);
             ctx.beginPath();
             for(i=0; i<controlPoints.count; i++) {
