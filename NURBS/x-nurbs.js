@@ -39,6 +39,8 @@ function run() {
 }
 
 function drawNurbsCurve(controlPoints) {
+    if (controlPoints==null)
+        return;
     if( controlPoints.count<2 )
         return;
     let degree = slider.value();
