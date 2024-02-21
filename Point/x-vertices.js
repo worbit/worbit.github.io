@@ -40,18 +40,20 @@ function draw() {
   if (checkbox.checked()) {
     //debug view
     let d = 15;
+    push();
     stroke(0);
     fill(255);
     line(0,height/2,width,height/2);
     line(width/2,0,width/2,height);
     for (let p of pts) {
+      setLineDash([7,7]);
       line(p.x,height/2,p.x,p.y);
       line(width/2,p.y,p.x,p.y);
+      setLineDash([]);
       ellipse(p.x,p.y, d,d);
       text(round(p.x)+" / "+round(p.y),p.x+d,p.y);
     }
-    noStroke();
-    fill(sal);
+    pop();
   }
 }
 
@@ -77,4 +79,8 @@ function get_name() {
   let elems = loc.split('/');
   let dir = elems[elems.length-2];
   return dir;
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
 }

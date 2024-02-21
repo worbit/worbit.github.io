@@ -42,10 +42,14 @@ function draw() {
   if (checkbox.checked()) {
     //debug view
     let d = 15;
+    push();
     stroke(0);
     noFill();
+    line(0,-height/2,0,height/2);
+    line(-width/2,0,width/2,0);
     ellipse(0,0,200,200);
     ellipse(0,0,400,400);
+    ellipse(0,0,600,600);
     fill(255);
     for (let i=0; i<angles.length; i++) {
       let a = angles[i];
@@ -53,12 +57,13 @@ function draw() {
       if (i==1) r = r+val;
       let px = r * cos(radians(a));
       let py = r * sin(radians(a));
+      setLineDash([7,7]);
       line(0,0,px,py);
+      setLineDash([]);
       ellipse(px,py, d,d);
-      text(round(r)+" / "+round(a),px+d,py);
+      text("r: "+round(r)+", ɑ: "+round(a),px+d,py);
     }
-    noStroke();
-    fill(sal);
+    pop();
   }
 }
 
@@ -84,4 +89,8 @@ function get_name() {
   let elems = loc.split('/');
   let dir = elems[elems.length-2];
   return dir;
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
 }
