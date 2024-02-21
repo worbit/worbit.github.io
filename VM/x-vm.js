@@ -7,6 +7,8 @@ let mx, mn;
 let cnv;
 let sf;
 let shell = false;
+let mySelect;
+let selected = "";
 
 function setup() {
     cnv = createCanvas(640,360);
@@ -15,19 +17,28 @@ function setup() {
     num = nx * ny;
     sf = 2.0;
 
-    let b1 = createButton('display mode');
+    let p = createP('Combination mode: ');
+    mySelect = createSelect();
+    mySelect.option('union');
+    mySelect.option('subtraction');
+    mySelect.option('intersection');
+    mySelect.option('smooth union');
+    selected = mySelect.selected();
+    mySelect.parent(p)
+
+    let b1 = createButton('toggle display mode');
     b1.mousePressed(switchMode);
-    let b2 = createButton('flip');
+    let b2 = createButton('change object order');
     b2.mousePressed(flipobjs);
-    let b3 = createButton('add');
-    b3.mousePressed(addobjs);
-    let b4 = createButton('subtract');
-    b4.mousePressed(subobjs);
-    let b5 = createButton('intersect');
-    b5.mousePressed(intobjs);
-    let b6 = createButton('smooth');
-    b6.mousePressed(smoothadd);
-    let b7 = createButton('shell');
+    // let b3 = createButton('add');
+    // b3.mousePressed(addobjs);
+    // let b4 = createButton('subtract');
+    // b4.mousePressed(subobjs);
+    // let b5 = createButton('intersect');
+    // b5.mousePressed(intobjs);
+    // let b6 = createButton('smooth');
+    // b6.mousePressed(smoothadd);
+    let b7 = createButton('toggle shell');
     b7.mousePressed(toggleshell);
 
     objects.push(new Circ(120,60,55));
@@ -39,6 +50,23 @@ function setup() {
 }
 
 function draw() {
+    if (mySelect.selected()!=selected) {
+        selected = mySelect.selected();
+        switch (selected) {
+            case 'union': 
+                addobjs();
+                break;
+            case 'subtraction': 
+                subobjs();
+                break;
+            case 'intersection': 
+                intobjs();
+                break;
+            case 'smooth union': 
+                smoothadd();
+                break;
+        }
+    }
     background(img);
 }
 
