@@ -17,26 +17,44 @@
     </style>
 </head>
 <body>
-    <script type="text/javascript" src="https://files.mcneel.com/rhino3dm/js/latest/rhino3dm.js"></script>
-    <script type="text/javascript" src="https://files.mcneel.com/rhino3dm/js/latest/compute.rhino3d.js"></script>
+    <script async src="https://unpkg.com/es-module-shims@1.8.2/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "rhino3dm":"https://unpkg.com/rhino3dm@8.4.0/rhino3dm.module.min.js"
+            }
+        }
+    </script>
+    <script>
+        fetch('https://unpkg.com/es-module-shims@1.8.2/dist/es-module-shims.js', {
+            mode: 'no-cors'
+            })
+            .then(response => console.log("response:"+response))
+            .catch(error => console.error("error:"+error));
+    </script>
+    <!-- <script type="text/javascript" src="https://files.mcneel.com/rhino3dm/js/latest/rhino3dm.js"></script>
+    <script type="text/javascript" src="https://files.mcneel.com/rhino3dm/js/latest/compute.rhino3d.js"></script> -->
 
     <div>
         <canvas class="rhino3dm" id="canvas" width="640" height="360"></canvas>
     </div>
+
     <label for="quantity">Degree:</label>
     <input type="number" id="quantity" name="quantity" min="1" max="5" value="3" oninput="canvasDraw()">
     <p id="console"></p>
-    <script>
+    <script type="module">
         // global variables
-        var rhino = null;
+        // var rhino = null;
         let activeidx = -1;
 
         // wait for the rhino3dm web assembly to load asynchronously
-        rhino3dm().then(function(m) {
-            rhino = m; // global
-            run();
-        });
-
+        // rhino3dm().then(function(m) {
+        //     rhino = m; // global
+        //     run();
+        // });
+        import rhino3dm from 'rhino3dm'
+        const rhino = await rhino3dm()
 
         function getCanvas() { return document.getElementById('canvas'); }
 
