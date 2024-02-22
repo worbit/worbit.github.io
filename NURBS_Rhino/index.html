@@ -55,8 +55,12 @@
         //     run();
         // });
         import rhino3dm from 'rhino3dm'
-        const rhino = await rhino3dm();
-
+        // const rhino = await rhino3dm();
+        rhino3dm().then(function(m) {
+            rhino = m; // global
+            run();
+        });
+        
         function getCanvas() { return document.getElementById('canvas'); }
 
         function clientXY(evt) {
