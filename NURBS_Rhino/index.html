@@ -57,6 +57,8 @@
         import rhino3dm from 'rhino3dm'
         const rhino = await rhino3dm()
 
+        console.log('rhino: '+rhino);
+
         function getCanvas() { return document.getElementById('canvas'); }
 
         function clientXY(evt) {
