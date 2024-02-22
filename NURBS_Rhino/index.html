@@ -100,7 +100,7 @@
                 // check if close to existing point
                 // if so move it, if not make new
                 activeidx = -1;
-                for(i=0; i<_points.count; i++) {
+                for(let i=0; i<_points.count; i++) {
                     let [px,py,pz] = _points.get(i);
                     if (Math.abs(px-x) < 15 && Math.abs(py-y) < 15) {
                         activeidx = i;
@@ -155,7 +155,7 @@
             let [t0,t1] = curve.domain;
             let [x,y,z] = curve.pointAt(t0);
             ctx.moveTo(x,y);
-            for(j=1; j<=divisions; j++) {
+            for(let j=1; j<=divisions; j++) {
                 let t = t0 + j / divisions * (t1-t0);
                 let [x,y,z] = curve.pointAt(t);
                 ctx.lineTo(x,y);
@@ -168,7 +168,7 @@
             ctx.beginPath();
             [x,y,z] = curve.pointAt(t0);
             ctx.moveTo(x,y);
-            for(j=1; j<=divisions; j++) {
+            for(let j=1; j<=divisions; j++) {
                 let t = t0 + j / divisions * (t1-t0);
                 let [x,y,z] = curve.pointAt(t);
                 let [cx,cy,cz] = curve.curvatureAt(t);
@@ -187,7 +187,7 @@
             ctx.lineWidth = 1;
             ctx.setLineDash([3,6]);
             ctx.beginPath();
-            for(i=0; i<controlPoints.count; i++) {
+            for(let i=0; i<controlPoints.count; i++) {
                 let [x,y,z] = controlPoints.get(i);
                 if(0==i)
                 ctx.moveTo(x, y);
@@ -199,7 +199,7 @@
             ctx.setLineDash([]);
             ctx.fillStyle = 'white';
             ctx.strokeStyle = 'black';
-            for(i=0; i<controlPoints.count; i++) {
+            for(let i=0; i<controlPoints.count; i++) {
                 let [x,y,z] = controlPoints.get(i);
                 ctx.fillRect(x-1,y-1, 3, 3);
                 ctx.strokeRect(x-2, y-2, 5, 5);
