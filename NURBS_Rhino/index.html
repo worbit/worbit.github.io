@@ -55,9 +55,7 @@
         //     run();
         // });
         import rhino3dm from 'rhino3dm'
-        const rhino = await rhino3dm()
-
-        console.log('rhino: '+rhino);
+        const rhino = await rhino3dm();
 
         function getCanvas() { return document.getElementById('canvas'); }
 
@@ -79,6 +77,7 @@
             _points.add(500,50,0);
             _points.add(610,30,0);
             let canvas = getCanvas();
+            console.log('points: '+_points);
             canvas.addEventListener('mousedown', onMouseDown);
             canvas.addEventListener("mousemove", onMouseMove);
             canvasDraw();
