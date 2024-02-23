@@ -51,7 +51,7 @@ function draw() {
       line(width/2,p.y,p.x,p.y);
       setLineDash([]);
       ellipse(p.x,p.y, d,d);
-      text(round(p.x)+" / "+round(p.y),p.x+d,p.y);
+      text("x: "+round(p.x)+", y: "+round(p.y),p.x+d,p.y);
     }
     pop();
   }
