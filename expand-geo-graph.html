@@ -1,0 +1,213 @@
+<<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geo-Graph</title>
+  <style>
+    body { margin: 0; }
+    #gui {
+            position: absolute;
+            display:block;
+            bottom: 10px;
+            right: 10px;
+        }
+  </style>
+  <script src="//unpkg.com/force-graph"></script>
+</head>
+<body>
+  <div id="graph"></div>
+  <div id="gui"><button id="all" onclick="doSth()">X</button></div>
+  
+  <script>
+    function doSth() {
+      getemall = true;
+      Graph.graphData(getPrunedTree());
+    }
+    const rootId = 0;
+    let getemall = false;
+
+    // Random tree
+    //const N = 300;
+    const big = 16;
+    const med = 12;
+    const sml = 9;
+    const gData = {
+      nodes: [{id:0, name:"Geometry", val:big, collapsed: true, childLinks: []},
+        {id:1, name:"3-Dimensional", val:med, collapsed: true, childLinks: []},
+        {id:2, name:"Trigonometry", val:med, collapsed: true, childLinks: []},
+        {id:3, name:"Fields", val:med, collapsed: true, childLinks: []},
+        {id:4, name:"Uncertainty", val:med, collapsed: true, childLinks: []},
+        {id:5, name:"Empty", val:med, collapsed: true, childLinks: []},
+        {id:6, name:"Typology", val:med, collapsed: true, childLinks: []},
+        {id:7, name:"Fluid Topology", val:med, collapsed: true, childLinks: []},
+        {id:8, name:"Approximation", val:med, collapsed: true, childLinks: []},
+        {id:9, name:"Discrete", val:med, collapsed: true, childLinks: []},
+        //{id:10, name:"Dual", val:med, collapsed: true, childLinks: []},
+
+        {id:11, name:"Aggregation", val:sml, collapsed: true, childLinks: []},
+        {id:12, name:"Angle", val:sml, collapsed: true, childLinks: []},
+        {id:13, name:"Boolean", val:sml, collapsed: true, childLinks: []},
+        {id:14, name:"LLM", val:sml, collapsed: true, childLinks: []},
+        {id:15, name:"Cylinder", val:sml, collapsed: true, childLinks: []},
+        {id:16, name:"Distance Function", val:sml, collapsed: true, childLinks: []},
+        {id:17, name:"Epicycle", val:sml, collapsed: true, childLinks: []},
+        {id:18, name:"Fourier 2D", val:sml, collapsed: true, childLinks: []},
+        {id:19, name:"Hyperbolic", val:sml, collapsed: true, childLinks: []},
+        {id:20, name:"NURBS", val:sml, collapsed: true, childLinks: []},
+        {id:21, name:"Offset", val:sml, collapsed: true, childLinks: []},
+        {id:22, name:"Point", val:sml, collapsed: true, childLinks: []},
+        {id:23, name:"Polar", val:sml, collapsed: true, childLinks: []},
+        {id:24, name:"Probability", val:sml, collapsed: true, childLinks: []},
+        {id:25, name:"Projection", val:sml, collapsed: true, childLinks: []},
+        {id:26, name:"Sphere", val:sml, collapsed: true, childLinks: []},
+        {id:27, name:"Superellipse", val:sml, collapsed: true, childLinks: []},
+        {id:28, name:"Tile", val:sml, collapsed: true, childLinks: []},
+        {id:29, name:"Tile", val:sml, collapsed: true, childLinks: []},
+        {id:30, name:"Voronoi", val:sml, collapsed: true, childLinks: []},
+        {id:31, name:"Pointcloud", val:sml, collapsed: true, childLinks: []},
+        {id:32, name:"Turtle", val:sml, collapsed: true, childLinks: []},
+        ],
+
+      links: [{source: 0, target: 1},
+        {source: 0, target: 2},
+        {source: 0, target: 3},
+        {source: 0, target: 4},
+        {source: 0, target: 5},
+        {source: 0, target: 6},
+        {source: 0, target: 7},
+        {source: 0, target: 8},
+        {source: 0, target: 9},
+        //{source: 0, target: 10},
+
+        {source: 1, target: 15}, // 3D
+        {source: 1, target: 30},
+        {source: 1, target: 16},
+        {source: 1, target: 25},
+        {source: 1, target: 26},
+
+        {source: 2, target: 23}, // Trigonometry
+        {source: 2, target: 17},
+        {source: 2, target: 18},
+        {source: 2, target: 26},
+
+        {source: 3, target: 18}, // Fields
+        {source: 3, target: 16},
+        {source: 3, target: 24},
+        {source: 3, target: 11},
+        {source: 3, target: 15},
+        {source: 3, target: 30},
+        {source: 3, target: 13},
+
+        {source: 4, target: 31}, // Uncertainty
+        {source: 4, target: 24},
+        {source: 4, target: 14},
+        
+        {source: 5, target: 29}, // Empty
+        {source: 5, target: 27},
+        {source: 5, target: 22},
+        {source: 5, target: 12},
+        {source: 5, target: 17},
+        {source: 5, target: 21},
+        {source: 5, target: 31},
+        {source: 5, target: 23},
+        {source: 5, target: 14},
+        {source: 5, target: 26},
+        {source: 5, target: 32},
+        {source: 5, target: 11},
+        {source: 5, target: 15},
+        {source: 5, target: 30},
+        {source: 5, target: 13},
+
+        {source: 6, target: 29}, // Typology
+        {source: 6, target: 21},
+        {source: 6, target: 22},
+        {source: 6, target: 12},
+        {source: 6, target: 13},
+        {source: 6, target: 32},
+
+        {source: 7, target: 30}, // Fluid Topology
+        {source: 7, target: 24},
+        {source: 7, target: 16},
+        {source: 7, target: 31},
+
+        {source: 8, target: 11}, // Approximation
+        {source: 8, target: 27},
+        {source: 8, target: 24},
+        {source: 8, target: 17},
+        {source: 8, target: 18},
+
+        {source: 9, target: 29}, // Discrete
+        {source: 9, target: 11},
+        {source: 9, target: 24},
+
+        //{source: 10, target: 30}, // Dual
+
+        ]
+      // nodes: [...Array(N).keys()].map(i => ({ id: i, collapsed: i !== rootId, childLinks: [] })),
+      // links: [...Array(N).keys()]
+      //   .filter(id => id)
+      //   .map(id => ({
+      //     source: Math.round(Math.random() * (id - 1)),
+      //     target: id
+      //   }))
+    };
+
+    // link parent/children
+    const nodesById = Object.fromEntries(gData.nodes.map(node => [node.id, node]));
+    gData.links.forEach(link => {
+      nodesById[link.source].childLinks.push(link);
+    });
+
+    const getPrunedTree = () => {
+      if (getemall) return gData;
+      const visibleNodes = [];
+      const visibleLinks = [];
+
+      (function traverseTree(node = nodesById[rootId]) {
+        visibleNodes.push(node);
+        if (node.collapsed) return;
+        visibleLinks.push(...node.childLinks);
+        node.childLinks
+          .map(link => ((typeof link.target) === 'object') ? link.target : nodesById[link.target]) // get child node
+          .forEach(traverseTree);
+      })(); // IIFE
+
+      return { nodes: visibleNodes, links: visibleLinks };
+    };
+
+    const elem = document.getElementById('graph');
+    const Graph = ForceGraph()(elem)
+      .graphData(getPrunedTree())
+      .onNodeHover(node => elem.style.cursor = node && node.childLinks.length ? 'pointer' : null)
+      .onNodeClick(node => {
+        if (node.childLinks.length) {
+          if (getemall) getemall = false;
+          node.collapsed = !node.collapsed; // toggle collapse state
+          Graph.graphData(getPrunedTree());
+        }
+      })
+      .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.name;
+          const fontSize = 2*node.val/globalScale;
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width;
+          const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+          ctx.fillStyle = 'rgba(255, 200, 255, 0.8)';
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'; //node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .nodeLabel(() => '')
+      //.linkDirectionalParticles(1)
+      //.linkDirectionalParticleWidth(2.5)
+      //.nodeColor(node => !node.childLinks.length ? 'green' : node.collapsed ? 'red' : 'yellow');
+  </script>
+</body>
+</html>
