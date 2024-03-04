@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -13,7 +13,8 @@
             right: 10px;
         }
   </style>
-  <script src="//unpkg.com/force-graph"></script>
+  <!-- <script src="/Users/bernham/Documents/worbit/code/worbit.github.io/globals/force-graph.min.js"></script> -->
+  <script src="https://unpkg.com/force-graph"></script>
 </head>
 <body>
   <div id="graph"></div>
@@ -62,7 +63,6 @@
         {id:25, name:"Projection", val:sml, collapsed: true, childLinks: []},
         {id:26, name:"Sphere", val:sml, collapsed: true, childLinks: []},
         {id:27, name:"Superellipse", val:sml, collapsed: true, childLinks: []},
-        {id:28, name:"Tile", val:sml, collapsed: true, childLinks: []},
         {id:29, name:"Tile", val:sml, collapsed: true, childLinks: []},
         {id:30, name:"Voronoi", val:sml, collapsed: true, childLinks: []},
         {id:31, name:"Pointcloud", val:sml, collapsed: true, childLinks: []},
@@ -85,6 +85,7 @@
         {source: 1, target: 16},
         {source: 1, target: 25},
         {source: 1, target: 26},
+        {source: 1, target: 19},
 
         {source: 2, target: 23}, // Trigonometry
         {source: 2, target: 17},
@@ -118,6 +119,8 @@
         {source: 5, target: 15},
         {source: 5, target: 30},
         {source: 5, target: 13},
+        {source: 5, target: 19},
+        {source: 5, target: 20},
 
         {source: 6, target: 29}, // Typology
         {source: 6, target: 21},
@@ -125,6 +128,7 @@
         {source: 6, target: 12},
         {source: 6, target: 13},
         {source: 6, target: 32},
+        {source: 6, target: 20},
 
         {source: 7, target: 30}, // Fluid Topology
         {source: 7, target: 24},
@@ -194,12 +198,14 @@
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
 
-          ctx.fillStyle = 'rgba(255, 200, 255, 0.8)';
+          ctx.fillStyle = 'skyblue';
+          // ctx.fillStyle = 'rgba(255, 200, 255, 0.8)';
           ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
 
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'; //node.color;
+          ctx.fillStyle = 'white'; //node.color;
+          // ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'; //node.color;
           ctx.fillText(label, node.x, node.y);
 
           node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
