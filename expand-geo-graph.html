@@ -34,7 +34,7 @@
     const med = 16;
     const sml = 14;
     const gData = {
-      nodes: [{id:0, name:"Geometry", val:big, collapsed: true, childLinks: []},
+      nodes: [{id:0, name:"O", val:big, collapsed: true, childLinks: []},
         {id:1, name:"3-Dimensional", val:med, collapsed: true, childLinks: []},
         {id:2, name:"Trigonometry", val:med, collapsed: true, childLinks: []},
         {id:3, name:"Fields", val:med, collapsed: true, childLinks: []},
@@ -43,8 +43,8 @@
         {id:6, name:"Typology", val:med, collapsed: true, childLinks: []},
         {id:7, name:"Fluid Topology", val:med, collapsed: true, childLinks: []},
         {id:8, name:"Approximation", val:med, collapsed: true, childLinks: []},
-        {id:9, name:"Discrete", val:med, collapsed: true, childLinks: []},
-        //{id:10, name:"Dual", val:med, collapsed: true, childLinks: []},
+        // {id:9, name:"Discrete", val:med, collapsed: true, childLinks: []},
+        // {id:10, name:"Dual", val:med, collapsed: true, childLinks: []},
 
         {id:11, name:"Aggregation", val:sml, collapsed: true, childLinks: []},
         {id:12, name:"Angle", val:sml, collapsed: true, childLinks: []},
@@ -77,8 +77,8 @@
         {source: 0, target: 6},
         {source: 0, target: 7},
         {source: 0, target: 8},
-        {source: 0, target: 9},
-        //{source: 0, target: 10},
+        // {source: 0, target: 9},
+        // {source: 0, target: 10},
 
         {source: 1, target: 15}, // 3D
         {source: 1, target: 30},
@@ -140,10 +140,11 @@
         {source: 8, target: 24},
         {source: 8, target: 17},
         {source: 8, target: 18},
+        {source: 8, target: 29},
 
-        {source: 9, target: 29}, // Discrete
-        {source: 9, target: 11},
-        {source: 9, target: 24},
+        // {source: 9, target: 29}, // Discrete
+        // {source: 9, target: 11},
+        // {source: 9, target: 24},
 
         //{source: 10, target: 30}, // Dual
 
