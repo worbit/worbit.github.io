@@ -164,6 +164,9 @@ function keyPressed() {
   if (keyCode === UP_ARROW) {
       save_pic();
   }
+  if (key === 'g') {
+    save_gif(5);
+  }
 }
 
 function save_pic() {
@@ -171,6 +174,13 @@ function save_pic() {
   let c = str(checkbox.checked());
   let v = str(slider.value());
   save(n+'_'+c+'_'+v+'.png');
+}
+
+function save_gif(d) {
+  let n = get_name();
+  let c = str(checkbox.checked());
+  let v = str(slider.value());
+  saveGif(n+'_'+c+'_'+v, d);
 }
 
 function get_name() {
