@@ -129,7 +129,7 @@ function draw() {
 
   if (checkbox.checked()) {
     //debug view
-    stroke(sal);
+    stroke('salmon');
     strokeWeight(3);
   }
 
