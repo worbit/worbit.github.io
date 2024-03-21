@@ -60,6 +60,7 @@ function draw() {
   background(sky);
   
   let val = slider.value();
+  val *= 2.5;
   let ptsdef = []
   for (let i=0; i<pts.length; i++) {
     let dir = p5.Vector.sub(pts[i], cen);
