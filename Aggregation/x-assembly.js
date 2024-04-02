@@ -24,6 +24,7 @@ function setup() {
 function draw() {
   val = slider.value();
   translate(width/2, height/2);
+  // background('skyblue');
   tree.set_level(val);
   tree.divide(tree.root);
   tree.display();
@@ -69,6 +70,9 @@ class QuadTree {
       noStroke();
       if (checkbox.checked()) stroke(0);
       fill('salmon');
+      // if (l.dist < 0) {
+      //   ellipse(l.x, l.y, l.edge);
+      // }
       if (l.dist > 0) fill('skyblue');
       rect(l.x, l.y, l.edge, l.edge);
       if (checkbox.checked() && l.level<7) {
