@@ -1,4 +1,4 @@
-let slider, checkbox, button;
+let slider, checkbox, button, desc;
 let rot;
 function setup() {
   createCanvas(500, 500);
@@ -9,8 +9,15 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
+  desc = createButton('desc');
+  desc.mousePressed(toggleDesc);
+  let lab = createElement('label', get_name());
 
-  createElement('label', get_name());
+  slider.parent('gui');
+  checkbox.parent('gui');
+  button.parent('gui');
+  desc.parent('gui');
+  lab.parent('gui');
 
   rot = 340.0/360.0*TWO_PI;
 }
@@ -115,4 +122,13 @@ function get_name() {
   let elems = loc.split('/');
   let dir = elems[elems.length-2];
   return dir;
+}
+
+function toggleDesc() {
+  var x = document.getElementById("description");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }
