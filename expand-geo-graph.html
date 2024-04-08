@@ -35,7 +35,7 @@
     const sml = 14;
     const gData = {
       nodes: [{id:0, name:"O", val:big, collapsed: true, childLinks: []},
-        {id:1, name:"3-Dimensional", val:med, collapsed: true, childLinks: []},
+        {id:1, name:"3D", val:med, collapsed: true, childLinks: []},
         {id:2, name:"Trigonometry", val:med, collapsed: true, childLinks: []},
         {id:3, name:"Fields", val:med, collapsed: true, childLinks: []},
         {id:4, name:"Uncertainty", val:med, collapsed: true, childLinks: []},
@@ -152,13 +152,6 @@
         //{source: 10, target: 30}, // Dual
 
         ]
-      // nodes: [...Array(N).keys()].map(i => ({ id: i, collapsed: i !== rootId, childLinks: [] })),
-      // links: [...Array(N).keys()]
-      //   .filter(id => id)
-      //   .map(id => ({
-      //     source: Math.round(Math.random() * (id - 1)),
-      //     target: id
-      //   }))
     };
 
     // link parent/children
@@ -198,11 +191,12 @@
       .nodeCanvasObject((node, ctx, globalScale) => {
           const label = node.name;
           const fontSize = 2*node.val/globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
+          ctx.font = `${fontSize}px Serif`;
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
 
-          ctx.fillStyle = 'skyblue';
+          // ctx.fillStyle = 'skyblue';
+          ctx.fillStyle = !node.childLinks.length ? 'skyblue' : node.collapsed ? 'salmon' : 'salmon';
           // ctx.fillStyle = 'rgba(255, 200, 255, 0.8)';
           ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
 
@@ -217,7 +211,7 @@
         .nodeLabel(() => '')
       //.linkDirectionalParticles(1)
       //.linkDirectionalParticleWidth(2.5)
-      //.nodeColor(node => !node.childLinks.length ? 'green' : node.collapsed ? 'red' : 'yellow');
+      // .nodeColor(node => !node.childLinks.length ? 'skyblue' : node.collapsed ? 'salmon' : 'salmon');
   </script>
 </body>
 </html>
