@@ -40,13 +40,20 @@ function draw() {
     rectMode(CENTER);
     fill(100,128);
     translate(250,250);
+
     push();
     rotate(-1/9*PI);
     rect(0,0,1000,200);
+    stroke(0);
+    line(0,-100,0,100);
+    noStroke();
     pop();
+
     push();
     rotate((-val/180)*PI);
     rect(0,0,300,1000);
+    stroke(0);
+    line(-150,0,150,0);
     pop();
   } else {
     fill('salmon');

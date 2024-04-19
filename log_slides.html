@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<title>LOG - Language of Geometry</title>
-		<link rel="stylesheet" href="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/dist/reset.css">
-		<link rel="stylesheet" href="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/dist/reveal.css">
-		<link rel="stylesheet" href="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/dist/theme/serif.css">
+		<link rel="stylesheet" href="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/dist/reset.css">
+		<link rel="stylesheet" href="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/dist/reveal.css">
+		<link rel="stylesheet" href="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/dist/theme/serif.css">
 
 		<style>
 			.leftcol {
@@ -22,7 +22,7 @@
 		</style>
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/plugin/highlight/monokai.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -37,6 +37,9 @@
 							<iframe data-autoplay width="510" height="550" src="/Users/bernham/Documents/worbit/code/worbit.github.io/Boolean/index.html" frameborder="0"></iframe>
 						</div>
 					</div>
+					<aside class="notes">
+						Shhh, these are your private notes 📝
+					</aside>
 				</section>
 				<section>
 					<div class="r-hstack">
@@ -123,13 +126,22 @@
 				<section data-background-image="http://cf.fresh.li/1831/1279/default_1320162120_b3.jpg">
 					<h3>Cynthia CHENUT : Diagonal Section/HVAC Analysis</h3>
 				</section>
+				<section>
+					<h2>The Lorenz Equations</h2>
+					\[\begin{aligned}
+					\dot{x} &amp; = \sigma(y-x) \\
+					\dot{y} &amp; = \rho x - y - xz \\
+					\dot{z} &amp; = -\beta z + xy
+					\end{aligned} \]
+				</section>
 			</div>
 		</div>
 
-		<script src="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/dist/reveal.js"></script>
-		<script src="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/plugin/notes/notes.js"></script>
-		<script src="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/plugin/markdown/markdown.js"></script>
-		<script src="/Users/bernham/Library/CloudStorage/Dropbox/Mac (3)/Documents/Resources/frameworks/reveal.js-master/plugin/highlight/highlight.js"></script>
+		<script src="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/dist/reveal.js"></script>
+		<script src="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/plugin/notes/notes.js"></script>
+		<script src="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/plugin/markdown/markdown.js"></script>
+		<script src="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/plugin/highlight/highlight.js"></script>
+		<script src="/Users/bernham/Documents/Resources/frameworks/reveal.js-master/plugin/math/math.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
@@ -138,7 +150,7 @@
 				hash: true,
 				transition: 'fade',
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
 			});
 		</script>
 	</body>
