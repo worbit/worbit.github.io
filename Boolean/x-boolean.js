@@ -4,6 +4,8 @@ let slider, checkbox;
 function setup() {
   createCanvas(500, 500);
   noStroke();
+  textSize(24);
+
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
@@ -46,7 +48,13 @@ function draw() {
     rect(0,0,1000,200);
     stroke(0);
     line(0,-100,0,100);
+    line(0,-100,10,-90);
+    line(0,-100,-10,-90);
+    line(0,100,10,90);
+    line(0,100,-10,90);
     noStroke();
+    fill(255);
+    text('200', 10,70);
     pop();
 
     push();
@@ -54,6 +62,12 @@ function draw() {
     rect(0,0,300,1000);
     stroke(0);
     line(-150,0,150,0);
+    line(-150,0,-140,10);
+    line(-150,0,-140,-10);
+    line(150,0,140,10);
+    line(150,0,140,-10);
+    fill(255);
+    text('300', 90,25);
     pop();
   } else {
     fill('salmon');

@@ -4,7 +4,7 @@ function setup() {
   createCanvas(500, 500);
   fill('salmon');
   noStroke();
-  textSize(16);
+  textSize(24);
   slider = createSlider(-30,30,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
