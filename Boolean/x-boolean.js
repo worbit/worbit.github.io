@@ -38,18 +38,7 @@ function draw() {
     rotate(val/100.0);
     arc(200,100,730,730,PI,-HALF_PI,PIE);
     pop();
-    // push();
-    // noStroke();
-    // clip(mask);
-    // arc(150,100,750,750,PI,-HALF_PI,PIE);
-    // pop();
   }
-}
-
-function mask() {
-  arc(-150,-100,750,750,0,HALF_PI,PIE);
-  //rect(-250,-250,500,500);
-  //rect(200,200,300,300);
 }
 
 function rotate_c(cx, cy, x, y, angle) {
