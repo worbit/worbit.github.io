@@ -8,7 +8,7 @@ function setup() {
   sal = color(250, 128, 114);
   noStroke();
   fill(sal);
-  textSize(16);
+  textSize(20);
 
   radius = 180.278;
   let a = 13.690;
@@ -61,7 +61,7 @@ function draw() {
       line(0,0,px,py);
       setLineDash([]);
       ellipse(px,py, d,d);
-      text("r: "+round(r)+", ɑ: "+round(a),px+d,py);
+      text("r: "+round(r)+"\nɑ: "+round(360-a),px+d,py);
     }
     pop();
   }

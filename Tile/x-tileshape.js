@@ -13,7 +13,7 @@ function setup() {
   sal = color(250, 128, 114);
   noStroke();
   fill(sal);
-  textSize(18);
+  textSize(20);
   textAlign(CENTER,CENTER);
   rectMode(CENTER);
 

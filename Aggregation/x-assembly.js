@@ -15,7 +15,7 @@ function setup() {
   fill('salmon');
   noStroke();
   rectMode(CENTER);
-  textSize(12);
+  textSize(20);
   textAlign(CENTER,CENTER);
 
   tree = new QuadTree(0,0, 500);
@@ -75,7 +75,7 @@ class QuadTree {
       // }
       if (l.dist > 0) fill('skyblue');
       rect(l.x, l.y, l.edge, l.edge);
-      if (checkbox.checked() && l.level<7) {
+      if (checkbox.checked() && l.level<6) {
         fill(255);
         text(l.level, l.x, l.y);
       }

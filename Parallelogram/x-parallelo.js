@@ -4,7 +4,7 @@ let slider, checkbox;
 function setup() {
   createCanvas(500, 500);
   noStroke();
-  textSize(24);
+  textSize(20);
 
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);

@@ -8,7 +8,7 @@ function setup() {
   sal = color(250, 128, 114);
   noStroke();
   fill(sal);
-  textSize(16);
+  textSize(20);
 
   pts = [];
   pts.push(createVector(74.844,207.334));
@@ -51,7 +51,9 @@ function draw() {
       line(width/2,p.y,p.x,p.y);
       setLineDash([]);
       ellipse(p.x,p.y, d,d);
-      text("x: "+round(p.x)+", y: "+round(p.y),p.x+d,p.y);
+      let tx = round(p.x-250);
+      let ty = round((500-p.y)-250);
+      text("x: "+tx+"\ny: "+ty,p.x+d,p.y);
     }
     pop();
   }
