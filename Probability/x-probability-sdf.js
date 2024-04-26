@@ -71,8 +71,8 @@ function calcImage() {
       }
       // debug view
       if (checkbox.checked()) {
-        let c = (abs(d)/220.0);
-        img.set(i,j, color(c*255));
+        let c = (abs(d)/230.0);
+        img.set(i,j, color((1-c)*255));
         // let f = abs(sin(d/8));
         // if (d > 0)
         //   img.set(i,j, color(135*f, 206*f, 235*f));
