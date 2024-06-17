@@ -63,6 +63,7 @@ function calcImage() {
       let d = rectDist(rp[0],rp[1]);
       let dice = random();
       let r = val + influence * pow(abs(d)/220.0, 0.8) > dice;
+      // let r = (i-30)/350.0 > dice; //linear gradient
       let c1 = sal;
       let c2 = sky;
       if (!r) {
