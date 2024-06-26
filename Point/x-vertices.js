@@ -3,7 +3,8 @@ let sky, sal;
 let pts;
 
 function setup() {
-  createCanvas(windowWidth, 500);
+  createCanvas(500, 500);
+  // createCanvas(windowWidth, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   noStroke();
@@ -25,9 +26,9 @@ function setup() {
   button.mousePressed(resetinitial);
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, 500);
-}
+// function windowResized() {
+//   resizeCanvas(windowWidth, 500);
+// }
 
 function draw() {
   background(sky);
