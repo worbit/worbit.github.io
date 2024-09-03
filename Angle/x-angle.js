@@ -16,7 +16,7 @@ function setup() {
   slider.parent('gui');
   checkbox.parent('gui');
   button.parent('gui');
-  desc.parent('gui');
+  // desc.parent('gui');
   lab.parent('gui');
 
   rot = 340.0/360.0*TWO_PI;
