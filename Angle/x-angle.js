@@ -9,8 +9,8 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-  desc = createButton('desc');
-  desc.mousePressed(toggleDesc);
+  // desc = createButton('desc');
+  // desc.mousePressed(toggleDesc);
   let lab = createElement('label', get_name());
 
   slider.parent('gui');
