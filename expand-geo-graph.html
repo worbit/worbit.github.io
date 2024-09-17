@@ -203,7 +203,7 @@
       })
       .nodeCanvasObject((node, ctx, globalScale) => {
           const label = node.name;
-          const fontSize = 2*node.val/globalScale;
+          const fontSize = 1*node.val/globalScale;
           ctx.font = `${fontSize}px Serif`;
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
