@@ -1,6 +1,7 @@
 let slider, checkbox, button;
 let sky, sal;
 let w,h;
+let arrowSize = 20;
 
 function setup() {
   createCanvas(500, 500);
@@ -10,6 +11,7 @@ function setup() {
   noStroke();
   fill(sal);
   textSize(20);
+  textAlign(LEFT, CENTER);
   rectMode(CENTER);
 
   w = 300;
@@ -39,7 +41,20 @@ function draw() {
 
   if (checkbox.checked()) {
     //debug view
-    
+    push();
+    stroke(0);
+    strokeWeight(2);
+    line(0,-h/2, 0, h/2);
+    //line(-w/2, 0, w/2, 0);
+    noStroke();
+    fill(0);
+    translate(0,h/2-arrowSize);
+    triangle(arrowSize / 2, 0, -arrowSize / 2, 0, 0, arrowSize);
+    translate(0,-h+arrowSize*2);
+    triangle(arrowSize / 2, 0, -arrowSize / 2, 0, 0, -arrowSize);
+    translate(10, h/2-arrowSize);
+    text('h = '+str(h), 0,0);
+    pop();
   }
 }
 
