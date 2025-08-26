@@ -85,7 +85,7 @@ function setLineDash(list) {
 }
 
 function resetinitial() {
-    slider.value(3);
+    slider.value(1);
   }
   
   function keyPressed() {
