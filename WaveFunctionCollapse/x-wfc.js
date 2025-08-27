@@ -14,7 +14,9 @@ const tileImages = [];
 let grid = [];
 
 // Width and height of each cell
-const DIM = 7;
+//const DIM = 7;
+const DIMX = 6;
+const DIMY = 7;
 
 // Load images
 /*function preload() {
@@ -29,7 +31,7 @@ async function setup() {
   createCanvas(500, 500);
   
   const path = "rosetta";
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     tileImages[i] = await loadImage(`${path}/${i}.png`);
   }
 
@@ -38,10 +40,11 @@ async function setup() {
   tiles[1] = new Tile(tileImages[1], ["BB", "BB", "BB", "BB"]);
   tiles[2] = new Tile(tileImages[2], ["AB", "BB", "BB", "BA"]);
   tiles[3] = new Tile(tileImages[3], ["AA", "AB", "BB", "BA"]);
+  tiles[4] = new Tile(tileImages[4], ["AA", "AB", "BA", "AA"]);
 
   // Rotate tiles
   // TODO: eliminate redundancy
-  for (let i = 2; i < 5; i++) {
+  for (let i = 2; i < 6; i++) {
     for (let j = 1; j < 4; j++) {
       tiles.push(tiles[i].rotate(j));
     }
@@ -53,23 +56,44 @@ async function setup() {
     tile.analyze(tiles);
   }
 
-  // Start over
-  startOver();
-
-  slider = createSlider(0,20,10);
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  slider = createSlider(0,1,0,0.01);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
   createElement('label', get_name());
 
   button.mousePressed(startOver);
+  slider.mouseReleased(startOver);
+  // Start over
+  startOver();
+
 
 }
 
 function startOver() {
   // Create cell for each spot on the grid
-  for (let i = 0; i < DIM * DIM; i++) {
-    grid[i] = new Cell(tiles.length);
+  let initix = Array(DIMX * DIMY).fill(1);
+  initix[13] = 14;
+  initix[14] = 9;
+  initix[15] = 9;
+  initix[16] = 7;
+  initix[19] = 8;
+  initix[20] = 0;
+  initix[21] = 0;
+  initix[22] = 10;
+  initix[25] = 5;
+  initix[26] = 3;
+  initix[27] = 3;
+  initix[28] = 2;
+  for (let i = 0; i < DIMX * DIMY; i++) {
+    let r = random();
+    if (r < slider.value()) {
+        grid[i] = new Cell(tiles.length);
+    } else {
+        grid[i] = new Cell([initix[i]]);
+    }
   }
 }
 
@@ -89,22 +113,33 @@ function checkValid(arr, valid) {
 
 
 function draw() {
-  background(0);
-  translate(-166.5557, 55.756);
+  background('skyblue');
+  // empirical adjustment to center and rotate the output
+  // specific to this example
+  translate(-179.728, 7.874);
   rotate(-PI/9);
   
   // Draw the grid
-  const w = 650 / DIM;
-  const h = 650 / DIM;
-  for (let j = 0; j < DIM; j++) {
-    for (let i = 0; i < DIM; i++) {
-      let cell = grid[i + j * DIM];
+  const w = 642 / DIMX;
+  const h = 749 / DIMY;
+  for (let j = 0; j < DIMY; j++) {
+    for (let i = 0; i < DIMX; i++) {
+      let ix = i + j * DIMX;
+      let cell = grid[ix];
+      let index = -1
       if (cell.collapsed) {
-        let index = cell.options[0];
+        index = cell.options[0];
         image(tiles[index].img, i * w, j * h, w, h);
       } else {
         fill(0);
         stroke(100);
+        rect(i * w, j * h, w, h);
+      }
+      if (checkbox.checked()) {
+        fill(0);
+        text('#: '+ix +"\nID: "+index, i * w + w / 2, j * h + h / 2);
+        noFill();
+        stroke(0);
         rect(i * w, j * h, w, h);
       }
     }
@@ -117,7 +152,7 @@ function draw() {
   gridCopy = gridCopy.filter((a) => !a.collapsed);
   
   // The algorithm has completed if everything is collapsed
-  if (grid.length == 0) {
+  if (gridCopy.length == 0) {
     return;
   }
   
@@ -152,16 +187,16 @@ function draw() {
   
   // Calculate entropy
   const nextGrid = [];
-  for (let j = 0; j < DIM; j++) {
-    for (let i = 0; i < DIM; i++) {
-      let index = i + j * DIM;
+  for (let j = 0; j < DIMY; j++) {
+    for (let i = 0; i < DIMX; i++) {
+      let index = i + j * DIMX;
       if (grid[index].collapsed) {
         nextGrid[index] = grid[index];
       } else {
         let options = new Array(tiles.length).fill(0).map((x, i) => i);
         // Look up
         if (j > 0) {
-          let up = grid[i + (j - 1) * DIM];
+          let up = grid[i + (j - 1) * DIMX];
           let validOptions = [];
           for (let option of up.options) {
             let valid = tiles[option].down;
@@ -170,8 +205,8 @@ function draw() {
           checkValid(options, validOptions);
         }
         // Look right
-        if (i < DIM - 1) {
-          let right = grid[i + 1 + j * DIM];
+        if (i < DIMX - 1) {
+          let right = grid[i + 1 + j * DIMX];
           let validOptions = [];
           for (let option of right.options) {
             let valid = tiles[option].left;
@@ -180,8 +215,8 @@ function draw() {
           checkValid(options, validOptions);
         }
         // Look down
-        if (j < DIM - 1) {
-          let down = grid[i + (j + 1) * DIM];
+        if (j < DIMY - 1) {
+          let down = grid[i + (j + 1) * DIMX];
           let validOptions = [];
           for (let option of down.options) {
             let valid = tiles[option].up;
@@ -191,7 +226,7 @@ function draw() {
         }
         // Look left
         if (i > 0) {
-          let left = grid[i - 1 + j * DIM];
+          let left = grid[i - 1 + j * DIMX];
           let validOptions = [];
           for (let option of left.options) {
             let valid = tiles[option].right;
