@@ -12,7 +12,7 @@ function setup() {
   // desc = createButton('desc');
   // desc.mousePressed(toggleDesc);
   let dir = get_name();
-  createElement('label', dir);
+  let lab = createElement('label', dir);
   createA("https://worbit.github.io/"+dir+"/", ' X', '_top');
 
   slider.parent('gui');
