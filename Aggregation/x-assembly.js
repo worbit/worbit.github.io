@@ -11,6 +11,7 @@ function setup() {
 
   let dir = get_name();
   createElement('label', dir);
+  createA("https://worbit.github.io/"+dir+"/", ' X');
 
   fill('salmon');
   noStroke();
