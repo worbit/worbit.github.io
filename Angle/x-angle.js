@@ -11,8 +11,9 @@ function setup() {
   button.mousePressed(resetinitial);
   // desc = createButton('desc');
   // desc.mousePressed(toggleDesc);
-  let lab = createElement('label', get_name());
-  createA("https://worbit.github.io/"+dir+"/", ' X');
+  let dir = get_name();
+  createElement('label', dir);
+  createA("https://worbit.github.io/"+dir+"/", ' X', '_top');
 
   slider.parent('gui');
   checkbox.parent('gui');
