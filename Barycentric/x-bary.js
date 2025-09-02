@@ -1,3 +1,5 @@
+// https://copilot.microsoft.com/shares/ze9DMgHuGyN1Sitna8V2N
+
 let Vs;
 let cons;
 let slider, checkbox, button;
