@@ -104,6 +104,12 @@ function draw() {
                 r = ((r + 3.9) / 7.1) * 255;
                 g = ((g + 3.9) / 7.1) * 255;
                 b = ((b + 3.9) / 7.1) * 255;
+                if (barys[1].some(v => abs(v)%0.3333<0.005)) {
+                    r = g = b = 255;
+                }
+                // if (r%20<1 || g%20<1 || b%20<1) {
+                //     r = g = b = 255;
+                // }
                 mycol = color(r, g, b);
             }
             set(x, y, mycol);
@@ -116,6 +122,7 @@ function draw() {
         let moy = mouseY;
         let P = createVector(mox, moy);
         stroke(0);
+        strokeWeight(2);
         for (let i = 0; i < 5; i++) {
             line(lerpos[i].x, lerpos[i].y, mox, moy);
         }
@@ -145,6 +152,11 @@ function draw() {
             console.log(i,bary);
             noStroke();
             textAlign(LEFT, CENTER);
+            fill(255);
+            text(['A','B','C'][i],mox+i*70,moy-18);
+            // ['a','b','c'].forEach((n,j)=>{
+            //     text(n, mox + i*70, moy + j*18);
+            // });
             bary.forEach((n, j) => {
                 if (n >= 0 && n <= 1) {
                     fill('limeGreen');
