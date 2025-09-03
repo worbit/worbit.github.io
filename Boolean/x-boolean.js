@@ -6,13 +6,13 @@ function setup() {
   fill('salmon');
   //noStroke();
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,300,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-  let dir = get_name();
   createElement('label', dir);
-  createA("https://worbit.github.io/"+dir+"/", ' X', '_top');
 }
 
 function draw() {

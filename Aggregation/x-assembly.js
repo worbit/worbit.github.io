@@ -4,14 +4,14 @@ let tree;
 
 function setup() {
   createCanvas(500, 500);
-  slider = createSlider(3,10,8);
+
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+  slider = createSlider(3,10,10);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-
-  let dir = get_name();
   createElement('label', dir);
-  createA("https://worbit.github.io/"+dir+"/", ' X', '_top');
 
   fill('salmon');
   noStroke();

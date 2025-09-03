@@ -5,15 +5,16 @@ function setup() {
   fill('salmon');
   noStroke();
   textSize(20);
+
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-30,30,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
+  let lab = createElement('label', dir);
   // desc = createButton('desc');
   // desc.mousePressed(toggleDesc);
-  let dir = get_name();
-  let lab = createElement('label', dir);
-  createA("https://worbit.github.io/"+dir+"/", ' X', '_top');
 
   slider.parent('gui');
   checkbox.parent('gui');

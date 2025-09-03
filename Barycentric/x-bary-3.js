@@ -10,13 +10,13 @@ function setup() {
     //pixelDensity(1);
     //noLoop();
 
+    let dir = get_name();
+    createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
     slider = createSlider(0, 1, 0, 0.01);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
-    let dir = get_name();
     let lab = createElement('label', dir);
-    createA("https://worbit.github.io/" + dir + "/", ' X', '_top');
 
     // Triangle from rectangle (rotated -20°)
     let w = 300;
@@ -140,6 +140,8 @@ function draw() {
             vertex(B.x, B.y);
             vertex(C.x, C.y);
             endShape(CLOSE);
+            let ax = (A.x + B.x + C.x) / 3;
+            let ay = (A.y + B.y + C.y) / 3;
 
             // Draw lines from vertices to mouse
             // line(A.x, A.y, mox, moy);
@@ -151,6 +153,10 @@ function draw() {
             let bary = getCoefficients(P, A, B, C);
             console.log(i,bary);
             noStroke();
+            textAlign(CENTER, CENTER);
+            fill(0);
+            text(['A','B','C'][i],ax,ay);
+
             textAlign(LEFT, CENTER);
             fill(255);
             text(['A','B','C'][i],mox+i*70,moy-18);
