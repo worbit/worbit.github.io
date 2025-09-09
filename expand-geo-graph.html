@@ -70,10 +70,13 @@
         {id:32, name:"Turtle", val:sml, collapsed: true, childLinks: []},
         {id:33, name:"Parallelogram", val:sml, collapsed: true, childLinks: []},
         {id:34, name:"Cellular", val:sml, collapsed: true, childLinks: []},
+        {id:35, name:"Rectangle", val:sml, collapsed: true, childLinks: []},
+        {id:36, name:"WaveFunctionCollapse", val:sml, collapsed: true, childLinks: []},
+        {id:37, name:"BarycentricCoordinates", val:sml, collapsed: true, childLinks: []},
         ],
 
       links: [{source: 0, target: 1},
-        {source: 0, target: 2},
+        {source: 0, target: 2}, // root node
         {source: 0, target: 3},
         {source: 0, target: 4},
         {source: 0, target: 5},
@@ -104,11 +107,15 @@
         {source: 3, target: 13},
         {source: 3, target: 34},
         {source: 3, target: 29},
+        {source: 3, target: 36},
+        {source: 3, target: 37},
 
         {source: 4, target: 31}, // Uncertainty
         {source: 4, target: 24},
         {source: 4, target: 14},
         {source: 4, target: 34},
+        {source: 4, target: 36},
+        {source: 4, target: 37},
         
         // {source: 5, target: 29},
         {source: 5, target: 27}, // Empty
@@ -129,7 +136,8 @@
         {source: 5, target: 20},
         {source: 5, target: 25},
         {source: 5, target: 33},
-
+        {source: 5, target: 35},
+        
         {source: 6, target: 29}, // Typology
         {source: 6, target: 21},
         {source: 6, target: 22},
@@ -138,6 +146,7 @@
         {source: 6, target: 32},
         {source: 6, target: 20},
         {source: 6, target: 33},
+        {source: 6, target: 35},
 
         {source: 7, target: 30}, // Fluid Topology
         {source: 7, target: 24},
