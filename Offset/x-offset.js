@@ -7,7 +7,6 @@ function setup() {
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-
   createElement('label', get_name());  
   
   strokeCap(SQUARE);
