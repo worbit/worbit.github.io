@@ -11,7 +11,7 @@
 */
 
 let W = 500, H = 500;
-let NX = 128, NY = 128;      // grid resolution (tune for perf/quality)
+let NX = 100, NY = 100;      // grid resolution (tune for perf/quality)
 let rectParams = { w: 1.2, h: 0.8, angleDeg: -20 };
 let ringParams = { R: 0.5, thickness: 0.2 }; // torus in 2D (annulus)
 let epsSigma = 9.0;        // base Gaussian sigma in grid cells for Sinkhorn kernel
@@ -25,7 +25,7 @@ let lastComputed = 0;
 
 let slider, button, checkbox, linot;
 
-function setup() {
+async function setup() {
   createCanvas(W, H);
   //pixelDensity(1);
   noStroke();
@@ -63,6 +63,14 @@ function setup() {
   // Build densities
   rho0 = new Float32Array(NX * NY);
   rho1 = new Float32Array(NX * NY);
+
+  // await loadImage('imgs/01.png').then(img => {
+  //   makeDensityFromImage(rho0, img);
+  // });
+  // await loadImage('imgs/02.png').then(img => {
+  //   makeDensityFromImage(rho1, img);
+  // });
+  // console.log(Math.min(...rho0), Math.max(...rho0));
   makeRectangleDensity(rho0, rectParams);
   makeRingDensity(rho1, ringParams);
 
@@ -141,13 +149,30 @@ function draw() {
   if (!checkbox.checked()) { 
     renderDensity(rhoT);
   } else {
-    background(220);
+    // background(220);
     renderDensityD(rhoT);
   }
   //overlayInfo('Entropic OT (Schrödinger interpolation)');
 }
 
 // ---------------------- Geometry -> density fields ------------------------
+// not true signed distance functions
+// 1 if inside, 0 if outside, smoothed a bit (low value floor for stability)
+
+function makeDensityFromImage(out, img) {
+  out.fill(1e-12); // strictly positive to keep Sinkhorn stable
+  img.loadPixels();
+  for (let j = 0; j < NY; j++) {
+    for (let i = 0; i < NX; i++) {
+      let v = img.get(i, j);
+      let b = brightness(v);
+      out[idx(i, j)] = b > 0.2 ? 1.0 : 1e-12;
+    }
+  }
+  // for (let i=0; i<out.length; i++) {
+  //   out[i] = brightness(img.pixels[i])>0.5 ? 1.0 : 1e-12;
+  // }
+}
 
 function makeRectangleDensity(out, params) {
   out.fill(1e-12); // strictly positive to keep Sinkhorn stable
