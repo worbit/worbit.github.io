@@ -31,11 +31,13 @@ async function setup() {
   noStroke();
 
   // UI
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0, 1, 0.0, 0.001);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-  createElement('label', get_name());
+  createElement('label', dir);
   linot = createCheckbox('lin/ot', false);
 
   // createP('t (interpolation)').style('margin:8px 0 0 0');
