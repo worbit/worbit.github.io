@@ -58,9 +58,9 @@ function cylinderDist(p) {
 }
 
 function rotate_c(cx, cy, x, y, angle) {
-  var radians = (PI / 180) * angle,
-    cosa = cos(radians),
-    sina = sin(radians),
+  var rads = (PI / 180) * angle,
+    cosa = cos(rads),
+    sina = sin(rads),
     nx = (cosa * (x - cx)) + (sina * (y - cy)) + cx,
     ny = (cosa * (y - cy)) - (sina * (x - cx)) + cy;
   return { x: nx, y: ny, z: 0 };

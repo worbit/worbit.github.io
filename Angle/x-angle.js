@@ -16,13 +16,13 @@ function setup() {
   // desc = createButton('desc');
   // desc.mousePressed(toggleDesc);
 
-  slider.parent('gui');
-  checkbox.parent('gui');
-  button.parent('gui');
-  // desc.parent('gui');
-  lab.parent('gui');
+  // slider.parent('gui');
+  // checkbox.parent('gui');
+  // button.parent('gui');
+  // // desc.parent('gui');
+  // lab.parent('gui');
 
-  rot = 340.0/360.0*TWO_PI;
+  rot = radians(-20);//340.0/360.0*TWO_PI;
 }
 
 function draw() {

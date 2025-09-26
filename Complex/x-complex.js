@@ -49,7 +49,7 @@ function setup() {
     button = createButton('reset');
     button.mousePressed(resetinitial);
 
-  createElement('label', get_name());
+    createElement('label', get_name());
 
     pixelDensity(1);
     
