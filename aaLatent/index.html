@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latent</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/vae"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="../globals/style.css">
+</head>
+<body>
+    <p id="log">...</p>
+    <script>
+        const myArr = [1,2,3,4,5,6];
+        const shape = [3,2];
+        const tensorA = tf.tensor(myArr, shape);
+        // tensorA.data().then(data => display(data));
+        const r = tensorA.rank;
+        display(`rank: ${r}`);
+
+        function display(data) {
+            document.getElementById("log").innerHTML = data;
+        }
+    </script>
+</body>
+</html>
