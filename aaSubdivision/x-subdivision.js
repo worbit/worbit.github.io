@@ -1,38 +1,69 @@
 let slider, checkbox, button;
 let polys = [];
+let originalPoly;
 
 function setup() {
     createCanvas(500, 500);
 
     let dir = get_name();
     createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
-    slider = createSlider(3, 10, 10);
+    slider = createSlider(0.0000,1.0000,0.5308,0.0001); //0.53085
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
     createElement('label', dir);
 
     fill('skyblue');
+    textSize(20);
+    textAlign(CENTER,CENTER);
+    strokeWeight(2);
     // noStroke();
 
-    let p = new Polygon([createVector(-150, -100), createVector(150, -100), createVector(150, 100), createVector(-150, 100)]);
+    // let p = new Polygon([createVector(-150, -100), createVector(150, -100), createVector(150, 100), createVector(-150, 100)]);
     // polys.push(p);
-    let o = new Polygon([]);
-    o.addVertex(createVector(0,0));
-    o.addVertex(createVector(width,0));
-    o.addVertex(createVector(width,height));
-    o.addVertex(createVector(0,height));
+    originalPoly = new Polygon([]);
+    originalPoly.addVertex(createVector(0,0));
+    originalPoly.addVertex(createVector(width,0));
+    originalPoly.addVertex(createVector(width,height));
+    originalPoly.addVertex(createVector(0,height));
 
-    let [sub1, sub2] = subdividePolygon(o, [1,3], [0.5,0.1]);
-    polys.push(sub1);
-    polys.push(sub2);
+    createPolys(0.53085);
 }
 
 function draw() {
     background('salmon');
+    fill('skyblue');
     // translate(width / 2, height / 2);
-    polys[0].display();
+    polys.forEach((p,i) => p.display(i));
+    // polys[0].display();
     // polys[1].display();
+
+    let v = slider.value();
+    createPolys(v);
+
+    translate(width / 2, height / 2);
+    rotate(-20 * Math.PI / 180);
+    noFill();
+    rectMode(CENTER);
+    rect(0, 0, 300, 200);
+}
+
+function createPolys(f) {
+    polys = [];
+    // calculated in rhino gh
+    let [sub1, sub2] = subdividePolygon(originalPoly, [1,3], [f, 0.105179]);
+    // polys.push(sub1);
+    polys.push(sub2);
+
+    // approximated by eye
+    let [sub3, sub4] = subdividePolygon(sub1, [1,3], [0.15,0.64]);
+    polys.push(sub3);
+
+    let [sub5, sub6] = subdividePolygon(sub4, [1,3], [0.35,0.47]);
+    polys.push(sub5);
+
+    let [sub7, sub8] = subdividePolygon(sub6, [1,3], [0.21,0.66]);
+    polys.push(sub7);
 }
 
 function get_name() {
@@ -43,7 +74,7 @@ function get_name() {
 }
 
 function resetinitial() {
-    slider.value(10);
+    slider.value(0.53085);
 }
 
 class Polygon {
@@ -55,12 +86,27 @@ class Polygon {
         this.vertices.push(v);
     }
 
-    display() {
+    display(ind) {
         beginShape();
         for (let v of this.vertices) {
             vertex(v.x, v.y);
         }
         endShape(CLOSE);
+
+        push();
+        fill('black');
+        let p = this.center;
+        text(ind, p.x, p.y);
+        pop();
+    }
+
+    get center() {
+        let c = createVector(0, 0);
+        for (let v of this.vertices) {
+            c.add(v);
+        }
+        c.div(this.vertices.length);
+        return c;
     }
 }
 
