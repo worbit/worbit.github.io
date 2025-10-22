@@ -33,6 +33,10 @@ function setup() {
 function draw() {
     background('salmon');
     fill('skyblue');
+    noStroke();
+    if (checkbox.checked()) {
+        stroke('black');
+    }
     // translate(width / 2, height / 2);
     polys.forEach((p,i) => p.display(i));
     // polys[0].display();
@@ -41,11 +45,17 @@ function draw() {
     let v = slider.value();
     createPolys(v);
 
-    translate(width / 2, height / 2);
-    rotate(-20 * Math.PI / 180);
-    noFill();
-    rectMode(CENTER);
-    rect(0, 0, 300, 200);
+    if (checkbox.checked()) {
+        noStroke();
+        fill('black');
+        text(v, width-40, v*500);
+    }
+
+    // translate(width / 2, height / 2);
+    // rotate(-20 * Math.PI / 180);
+    // noFill();
+    // rectMode(CENTER);
+    // rect(0, 0, 300, 200);
 }
 
 function createPolys(f) {
@@ -56,13 +66,13 @@ function createPolys(f) {
     polys.push(sub2);
 
     // approximated by eye
-    let [sub3, sub4] = subdividePolygon(sub1, [1,3], [0.15,0.64]);
+    let [sub3, sub4] = subdividePolygon(sub1, [1,3], [0.149688,0.637268]);
     polys.push(sub3);
 
-    let [sub5, sub6] = subdividePolygon(sub4, [1,3], [0.35,0.47]);
+    let [sub5, sub6] = subdividePolygon(sub4, [1,3], [0.35784,0.475705]);
     polys.push(sub5);
 
-    let [sub7, sub8] = subdividePolygon(sub6, [1,3], [0.21,0.66]);
+    let [sub7, sub8] = subdividePolygon(sub6, [1,3], [0.209793,0.663069]);
     polys.push(sub7);
 }
 
@@ -93,11 +103,14 @@ class Polygon {
         }
         endShape(CLOSE);
 
-        push();
-        fill('black');
-        let p = this.center;
-        text(ind, p.x, p.y);
-        pop();
+        if (checkbox.checked()) {
+            push();
+            fill('black');
+            noStroke();
+            let p = this.center;
+            text(ind, p.x, p.y);
+            pop();
+        }
     }
 
     get center() {
