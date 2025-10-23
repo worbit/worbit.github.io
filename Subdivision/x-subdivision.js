@@ -108,7 +108,7 @@ class Polygon {
             fill('black');
             noStroke();
             let p = this.center;
-            text(ind, p.x, p.y);
+            text(ind+1, p.x, p.y);
             pop();
         }
     }

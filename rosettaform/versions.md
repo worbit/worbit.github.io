@@ -1,8 +1,8 @@
-| iframe | index.html | p5.js URL | p5.js version |
-|---|---|---|---|
+| iframe | index.html | p5.js URL | p5.js version | comments |
+|---|---|---|---|---|
 | Aggregation | https://worbit.github.io/Aggregation/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
 | Angle | https://worbit.github.io/Angle/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
-| Barycentric | https://worbit.github.io/Barycentric/index.html | https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js | 1.5.0 |
+| Barycentric | https://worbit.github.io/Barycentric/index.html | https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js | 1.5.0 | 2.0.5 works but very slow |
 | Boolean | https://worbit.github.io/Boolean/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js | 1.8.0 |
 | Cellular | https://worbit.github.io/Cellular/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
 | Complex | https://worbit.github.io/Complex/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
@@ -27,5 +27,5 @@
 | Superellipse | https://worbit.github.io/Superellipse/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
 | Tessellation | https://worbit.github.io/Tessellation/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
 | Tile | https://worbit.github.io/Tile/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
-| Turtle | https://worbit.github.io/Turtle/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
+| Turtle | https://worbit.github.io/Turtle/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.9.0 | 205 problem with svg loading |
 | WaveFunctionCollapse | https://worbit.github.io/WaveFunctionCollapse/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.4/lib/p5.js | 2.0.4 |

@@ -64,12 +64,17 @@ async function setup() {
   
   createElement('label', get_name());
 
-  button.mousePressed(startOver);
+  button.mousePressed(resetInitial);
   slider.mouseReleased(startOver);
   // Start over
   startOver();
 
 
+}
+
+function resetInitial() {
+  startOver();
+  slider.value(0);
 }
 
 function startOver() {

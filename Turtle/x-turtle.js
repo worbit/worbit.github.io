@@ -4,20 +4,22 @@ let startpoint;
 let lengths, angles;
 let trtl;
 
-function preload() {
-  trtl = loadImage('turtle.svg');
-}
+// function preload() {
+//   trtl = loadImage('turtle.svg');
+// }
 
-function setup() {
+async function setup() {
   createCanvas(500, 500);
+
+  trtl = await loadImage('./turtle.svg');
 
   // library from: https://github.com/bohnacker/p5js-screenPosition
   addScreenPositionFunction();
 
-  sky = color(135, 206, 235);
-  sal = color(250, 128, 114);
+  // sky = color(135, 206, 235);
+  // sal = color(250, 128, 114);
   noStroke();
-  fill(sal);
+  fill('salmon');
   textSize(16);
 
   startpoint = createVector(74.844,207.334);
@@ -34,7 +36,7 @@ function setup() {
 }
 
 function draw() {
-  background(sky);
+  background('skyBlue'); // sky blue
   
   let val = slider.value();
   angles[1] = val;
@@ -85,7 +87,7 @@ function draw() {
     image(trtl,-d/2,-d/2, d,d);
 
     noStroke();
-    fill(sal);
+    fill('salmon');
   }
 }
 
