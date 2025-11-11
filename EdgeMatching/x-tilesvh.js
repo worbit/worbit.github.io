@@ -24,7 +24,7 @@ function setup() {
   noStroke();
   
   textAlign(CENTER, CENTER);
-  textSize(20);
+  textSize(24);
 }
 
 function draw() {
