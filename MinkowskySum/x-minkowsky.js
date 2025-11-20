@@ -45,12 +45,23 @@ function draw() {
     rotate(-PI/9);
 
     let v = slider.value();
-    ptsA[2].x = 100 + v;
-    ptsA[2].y = 50 + v;
+    let tempB = []; //ptsB.slice();
+    if (rot.checked()) { 
+        for (let p of ptsB) {
+            let rotated = rotate_c(0, 0, p.x, p.y, v);
+            tempB.push(createVector(rotated[0], rotated[1]));
+            // p.x = rotated[0];
+            // p.y = rotated[1];
+        }
+    } else {
+        tempB = ptsB.slice();
+        ptsA[2].x = 100 + v;
+        ptsA[2].y = 50 + v;
+    }
     // Compute Minkowski sum
     minkowskiPts = [];
     for (let pA of ptsA) {
-        for (let pB of ptsB) {
+        for (let pB of tempB) {
             minkowskiPts.push(createVector(pA.x + pB.x, pA.y + pB.y));
         }
     }
@@ -61,9 +72,6 @@ function draw() {
         push();
         fill(255);
         stroke(0);
-        for (let p of minkowskiPts) {
-            ellipse(p.x, p.y, r,r);
-        }
         noFill();
         beginShape();
         for (let p of ptsA) {
@@ -71,18 +79,28 @@ function draw() {
         }
         endShape(CLOSE);
         for (let p of ptsA) {
-            ellipse(p.x, p.y, r,r);
             push();
             translate(p.x, p.y);
             beginShape();
-            for (let pB of ptsB) {
+            for (let pB of tempB) {
                 vertex(pB.x, pB.y, r,r);
             }
             endShape(CLOSE);
             pop();
+            fill(255);
+            ellipse(p.x, p.y, r,r);
+            noFill();
         }
-            for (let pB of ptsB) {
-            pop();
+        for (let i=0; i<4; i++) { 
+            for (let j=0; j<4; j++) { 
+                let p1 = minkowskiPts[i*4 + j];
+                let p2 = minkowskiPts[((i+1)%4)*4 + j];
+                line(p1.x, p1.y, p2.x, p2.y);
+            }
+        }
+        fill(255);
+        for (let p of minkowskiPts) {
+            ellipse(p.x, p.y, r,r);
         }
         pop();
 
@@ -97,6 +115,15 @@ function draw() {
 
 
     //rect(0,0,300,200);
+}
+
+function rotate_c(cx, cy, x, y, angle) {
+    var radians = (PI / 180) * angle,
+        cosa = cos(radians),
+        sina = sin(radians),
+        nx = (cosa * (x - cx)) + (sina * (y - cy)) + cx,
+        ny = (cosa * (y - cy)) - (sina * (x - cx)) + cy;
+    return [nx, ny];
 }
 
 function resetinitial() {

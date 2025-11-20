@@ -158,7 +158,6 @@ function rotate_c(cx, cy, x, y, angle) {
     return [nx, ny];
 }
 
-
 function resetinitial() {
   slider.value(50);
 }
