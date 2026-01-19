@@ -13,6 +13,13 @@ function setup() {
   button.mousePressed(resetinitial);
   createElement('label', dir);
 
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('description text, check mathjax availability');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   colors = ['skyblue', 'salmon'];
 
   // hard coded cellular automaton with
