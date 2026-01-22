@@ -5,6 +5,13 @@ let tree;
 function setup() {
   createCanvas(500, 500);
 
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Aggregation: The base language is a signed distance function (SDF) (see DistanceFunction), but instead of sampling space in a uniform, dense grid (raster), the function is evaluated sparsely with a quadtree. Squares are recursively subdivided into four smaller squares if the absolute distance value d at the center is smaller than half the square’s diagonal, meaning the form’s boundary passes through the respective square.<br>a) The parameter controls the level of recursions, with lower numbers resulting in a coarse approximation, and higher numbers in a more accurate definition of the form with smaller leaf nodes.<br>b) The assembly of a big form from small discrete elements is the core and essence of most architecture, from simple brick walls to highly elaborate mosaics. Unlike with Tiles, this aggregation type uses differently sized elements and thereby allows for an adaptive resolution [26]. Concepts like recursion and hierarchical data structure are also fundamental in computer science, and quadtree subdivision for rendering (z-buffer) is one of the oldest algorithms in computer graphics [27].<br>c) Empty, Field, Approximation');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   let dir = get_name();
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(3,10,10);
@@ -13,12 +20,6 @@ function setup() {
   button.mousePressed(resetinitial);
   createElement('label', dir);
 
-  // create a ? with tooltip describing the pattern
-  let d = createDiv('&nbsp;&nbsp;?');
-  d.class('tooltip');
-  let tt = createSpan('Aggregation: The base language is a signed distance function (SDF) (see DistanceFunction), but instead of sampling space in a uniform, dense grid (raster), the function is evaluated sparsely with a quadtree. Squares are recursively subdivided into four smaller squares if the absolute distance value d at the center is smaller than half the square’s diagonal, meaning the form’s boundary passes through the respective square.<br>a) The parameter controls the level of recursions, with lower numbers resulting in a coarse approximation, and higher numbers in a more accurate definition of the form with smaller leaf nodes.<br>b) The assembly of a big form from small discrete elements is the core and essence of most architecture, from simple brick walls to highly elaborate mosaics. Unlike with Tiles, this aggregation type uses differently sized elements and thereby allows for an adaptive resolution [26]. Concepts like recursion and hierarchical data structure are also fundamental in computer science, and quadtree subdivision for rendering (z-buffer) is one of the oldest algorithms in computer graphics [27].<br>c) Empty, Field, Approximation');
-  tt.class('tooltiptext');
-  tt.parent(d);
 
   fill('salmon');
   noStroke();

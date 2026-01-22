@@ -3,6 +3,13 @@ let slider, checkbox,button;
 function setup() {
   createCanvas(500, 500);
 
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('description goes here');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   let dir = get_name();
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0, 1, 0, 0.01);

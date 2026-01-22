@@ -6,6 +6,13 @@ function setup() {
   noStroke();
   textSize(20);
 
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Angle: This is, strictly speaking, the only real rectangle in the collection, as it is defined by constraining the interior angle α at three corners (the fourth being 2π-3α), along with two edge lengths a and b. A form with only right angles having four corners is true only in the Euclidean plane. On a sphere, such an object can have three corners and more than four corners on a hyperbolic surface.<br>a) Modifying the angle α turns the form into an arbitrary quadrilateral, with the fourth angle and lengths c and d calculated to close the shape.<br>b) The ability to construct precise angles or regular subdivisions of the full circle with a compass and ruler is a fundamental and foundational principle of all geometry. The “right” angle (90°, or π/2) has a particularly prominent position, is the subject of Euclid’s Elements’ 4th postulate, and is inseparably linked to human – especially “man” [28] – made structures, distinguishes the artificial from the natural and is important for civilization and industrialization.<br>c) Empty, Typology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   let dir = get_name();
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-30,30,0);
@@ -13,13 +20,6 @@ function setup() {
   button = createButton('reset');
   button.mousePressed(resetinitial);
   let lab = createElement('label', dir);
-
-  // create a ? with tooltip describing the pattern
-  let d = createDiv('&nbsp;&nbsp;?');
-  d.class('tooltip');
-  let tt = createSpan('Angle: This is, strictly speaking, the only real rectangle in the collection, as it is defined by constraining the interior angle α at three corners (the fourth being 2π-3α), along with two edge lengths a and b. A form with only right angles having four corners is true only in the Euclidean plane. On a sphere, such an object can have three corners and more than four corners on a hyperbolic surface.<br>a) Modifying the angle α turns the form into an arbitrary quadrilateral, with the fourth angle and lengths c and d calculated to close the shape.<br>b) The ability to construct precise angles or regular subdivisions of the full circle with a compass and ruler is a fundamental and foundational principle of all geometry. The “right” angle (90°, or π/2) has a particularly prominent position, is the subject of Euclid’s Elements’ 4th postulate, and is inseparably linked to human – especially “man” [28] – made structures, distinguishes the artificial from the natural and is important for civilization and industrialization.<br>c) Empty, Typology');
-  tt.class('tooltiptext');
-  tt.parent(d);
 
   // desc = createButton('desc');
   // desc.mousePressed(toggleDesc);
