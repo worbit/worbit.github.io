@@ -5,6 +5,7 @@ let verts;
 let dragging = -1;
 const handleR = 10;
 const np = 4;
+let bggl, fggl;
 
 async function setup() {
     pixelDensity(1);
@@ -18,13 +19,19 @@ async function setup() {
     tt.class('tooltiptext');
     tt.parent(d);
 
+    let cbg = color('skyblue');
+    let cfg = color('salmon');
+    bggl = [red(cbg) / 255.0, green(cbg) / 255.0, blue(cbg) / 255.0, 1.0];
+    fggl = [red(cfg) / 255.0, green(cfg) / 255.0, blue(cfg) / 255.0, 1.0];
     let dir = get_name();
     createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
     //slider = createSlider(0, 1, 0, 0.01);
+    createElement('label', '&#948;');
     deltaSlider = createSlider(0.1, 10, 1, 0.01);
+    createElement('label', '&#963;');
     sigmaSlider = createSlider(0.1, 10, 10, 0.01);
-    deltaSlider.style('width', '90px')
-    sigmaSlider.style('width', '90px')
+    deltaSlider.style('width', '80px')
+    sigmaSlider.style('width', '80px')
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
@@ -78,8 +85,8 @@ function draw() {
     shader(myShader);
     // Set shader uniforms
     myShader.setUniform('u_resolution', [width, height]);
-    myShader.setUniform('u_color', [1., 0., 1.]);     // orange fill
-    myShader.setUniform('u_bg', [0., 1., 1.]);         // dark bluish bg
+    myShader.setUniform('u_color', fggl);     // salmon
+    myShader.setUniform('u_bg', bggl);         // skyblue
     myShader.setUniform('u_delta', deltaSlider.value());    // softness/pointiness
     myShader.setUniform('u_sigma', sigmaSlider.value());    // edge hardness
     myShader.setUniform('u_B', BB);                          // float[5]

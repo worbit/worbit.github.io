@@ -14,7 +14,7 @@ precision mediump float;
   void main() {
     // Convert to y-up pixel coords to match CPU-side edge math
     vec2 p = vec2(u_resolution.x-gl_FragCoord.x, u_resolution.y - gl_FragCoord.y);
-    float near = 0.0;
+    float near = 1.0;
 
     float d[4];
     for (int i = 0; i < 4; ++i) {
@@ -23,8 +23,8 @@ precision mediump float;
       
       vec2 pt = vec2(211.*cos(float(i)*1.6), 211.*sin(float(i)*1.6));
       vec2 p2 = vec2(normal.x*10.,normal.y*10.);
-      if (d[i]<20.0) {
-        near = 1.0;
+      if (d[i]<0.0) {
+        near = 0.0;
       }
     }
 
@@ -40,8 +40,8 @@ precision mediump float;
       pd = min(pd, d[i]);
     }
     //pd += 1.0;
-    pd += 250.0;
-    pd /= 500.0;
+    pd += 200.0;
+    pd /= 400.0;
 
     float sumExp = 0.0;
     for (int i = 0; i < 4; ++i) {
@@ -52,8 +52,8 @@ precision mediump float;
     // Smooth convex indicator: inside when max(d_i) <= 0
     float C = 1.0 / (1.0 + exp(u_sigma * phi));   // 1 inside, 0 outside (smoothly)
     //C = (p.y+250.0)/500.0;
-    //C = near;
-    C = pd;
+    C = near;
+    //C = pd;
     vec3 col = mix(u_bg, u_color, C);
     //vec3 col = vec3(C,0,C);
     gl_FragColor = vec4(col, 1.0);
