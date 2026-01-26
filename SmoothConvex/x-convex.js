@@ -1,11 +1,12 @@
 let slider, checkbox, button;
 let deltaSlider, sigmaSlider;
 let myShader;
-let verts;
+let pts, verts;
 let dragging = -1;
 const handleR = 10;
-const np = 4;
+const np = 4; // number of polygon vertices
 let bggl, fggl;
+let NN, BB;
 
 async function setup() {
     pixelDensity(1);
@@ -27,9 +28,9 @@ async function setup() {
     createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
     //slider = createSlider(0, 1, 0, 0.01);
     createElement('label', '&#948;');
-    deltaSlider = createSlider(0.1, 10, 1, 0.01);
+    deltaSlider = createSlider(0.001, 0.5, 0.5, 0.0001);
     createElement('label', '&#963;');
-    sigmaSlider = createSlider(0.1, 10, 10, 0.01);
+    sigmaSlider = createSlider(0.01, 3, 3, 0.01);
     deltaSlider.style('width', '80px')
     sigmaSlider.style('width', '80px')
     checkbox = createCheckbox('info', false);
@@ -37,21 +38,14 @@ async function setup() {
     button.mousePressed(resetinitial);
     createElement('label', dir);
 
-    // Initial convex quad (CCW) in top-left coordinates (y down)
-    // (A slightly skewed rectangle so you can see rounding immediately)
-    // verts = [
-    //     createVector(120, 170),
-    //     createVector(360, 150),
-    //     createVector(380, 380),
-    //     createVector(222, 450),
-    //     createVector(40, 410),
-    // ];
-    verts = [];
-    let angle = TWO_PI / np;
-    for (let i = 0; i < np; i++) {
-        verts.push(createVector(150 * cos(i * angle + 2), 150 * sin(i * angle + 2)));
-    }
-    verts.reverse();
+      
+    pts = [];
+    pts.push(createVector(74.844,207.334));
+    pts.push(createVector(356.752,104.728));
+    pts.push(createVector(425.156,292.666));
+    pts.push(createVector(143.248,395.272));
+
+    verts = pts.map(v => createVector(v.x - width / 2, v.y - height / 2));
 
     let res = computeEdgesYup(verts, width, height);
     NN = [];
@@ -62,8 +56,6 @@ async function setup() {
     BB = res.B;
 }
 
-let v = 1.0;
-let NN, BB;
 function draw() {
     background('skyblue');
 
@@ -78,7 +70,7 @@ function draw() {
             NN.push(n[1]);
         }
         BB = res.B;
-        print(NN);
+        // NN = res.N;
     }
     //const { N, B } = computeEdgesYup(verts, width, height);
 
@@ -125,7 +117,8 @@ function drawVerts(N, B) {
     for (let i = 0; i < np; i++) {
         let di = B[i];
         //if (di < 0) di *= -1;
-        line(0, 0, NN[i*2] * di, NN[i*2+1] * di);
+        // line(0, 0, NN[i][0] * di, NN[i][1] * di);
+        line(0, 0, N[i*2] * di, N[i*2+1] * di);
     }
 }
 
@@ -194,8 +187,7 @@ function computeEdgesYup(vsDown, W, H) {
         N.push([nx, ny]);
         B.push(b);
     }
-    //print(N);
-    //print(B);
+
     return { N, B };
 }
 
@@ -238,7 +230,15 @@ function mouseReleased() {
 }
 
 function resetinitial() {
-    slider.value(0);
+    //slider.value(0);
+    verts = pts.map(v => createVector(v.x - width / 2, v.y - height / 2));
+    let res = computeEdgesYup(verts, width, height);
+    NN = [];
+    for (let n of res.N) {
+            NN.push(n[0]);
+            NN.push(n[1]);
+    }
+    BB = res.B;
 }
 
 function get_name() {
