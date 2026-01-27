@@ -28,9 +28,9 @@ async function setup() {
     createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
     //slider = createSlider(0, 1, 0, 0.01);
     createElement('label', '&#948;');
-    deltaSlider = createSlider(0.001, 0.5, 0.5, 0.0001);
+    deltaSlider = createSlider(0.2, 1, 1, 0.001);
     createElement('label', '&#963;');
-    sigmaSlider = createSlider(0.01, 3, 3, 0.01);
+    sigmaSlider = createSlider(0.001, 1, 1, 0.001);
     deltaSlider.style('width', '80px')
     sigmaSlider.style('width', '80px')
     checkbox = createCheckbox('info', false);
@@ -80,8 +80,8 @@ function draw() {
     myShader.setUniform('u_resolution', [width, height]);
     myShader.setUniform('u_color', fggl);     // salmon
     myShader.setUniform('u_bg', bggl);         // skyblue
-    myShader.setUniform('u_delta', (deltaSlider.value()));    // softness/pointiness
-    myShader.setUniform('u_sigma', (sigmaSlider.value()));    // edge hardness
+    myShader.setUniform('u_delta', pow(deltaSlider.value(), 3));    // softness/pointiness
+    myShader.setUniform('u_sigma', pow(sigmaSlider.value(), 4));    // edge hardness
     myShader.setUniform('u_B', BB);                          // float[5]
     myShader.setUniform('u_np', NN);                          // vec2[5]
     // myShader.setUniform('u_N', NN);                          // vec2[5]
