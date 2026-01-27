@@ -4,7 +4,8 @@ let myShader;
 let pts, verts;
 let dragging = -1;
 const handleR = 10;
-const np = 5; // number of polygon vertices
+const np = 5;
+let cp = 5; // number of polygon vertices
 let bggl, fggl;
 let NN, BB;
 
@@ -48,7 +49,10 @@ async function setup() {
 
     verts = pts.map(v => createVector(v.x - width / 2, v.y - height / 2));
 
-    let res = computeEdgesYup(verts, width, height);
+    //let res = computeEdgesYup(verts, width, height);
+    convverts = convexhull.makeHull(verts);
+    cp = convverts.length;
+    let res = computeEdgesYup(convverts, width, height);
     NN = [];
     for (let n of res.N) {
         NN.push(n[0]);
@@ -57,6 +61,8 @@ async function setup() {
     BB = res.B;
 }
 
+let convverts;
+
 function draw() {
     background('skyblue');
 
@@ -64,7 +70,9 @@ function draw() {
 
     // Compute edge half-spaces in y-up coordinates
     if (dragging >= 0) {
-        let res = computeEdgesYup(verts, width, height);
+        convverts = convexhull.makeHull(verts);
+        cp = convverts.length;
+        let res = computeEdgesYup(convverts, width, height);
         NN = [];
         for (let n of res.N) {
             NN.push(n[0]);
@@ -85,7 +93,7 @@ function draw() {
     myShader.setUniform('u_B', BB);                          // float[5]
     myShader.setUniform('u_np', NN);                          // vec2[5]
     // myShader.setUniform('u_N', NN);                          // vec2[5]
-    myShader.setUniform('numpts', np);
+    myShader.setUniform('numpts', cp);
 
     //noStroke();
     fill('salmon');
@@ -105,7 +113,7 @@ function drawVerts(N, B) {
     stroke('black');
     noFill();
     beginShape();
-    verts.forEach(v => {
+    convverts.forEach(v => {
         const xw = v.x;
         const yw = v.y;
         vertex(xw, yw);
@@ -149,8 +157,8 @@ function computeEdgesYup(vsDown, W, H) {
 
     const N = []; // array of [nx, ny]
     const B = []; // array of b
-    for (let i = 0; i < np; i++) {
-        const j = (i + 1) % np;
+    for (let i = 0; i < cp; i++) {
+        const j = (i + 1) % cp;
         const vi = vs[i];
         const vj = vs[j];
 
@@ -206,7 +214,7 @@ function computeEdgesYup(vsDown, W, H) {
 // area of a random polygon?
 function signedArea(vs) {
     let a = 0;
-    for (let i = 0; i < np; i++) {
+    for (let i = 0; i < cp; i++) {
         const j = (i + 1) % vs.length;
         a += vs[i].x * vs[j].y - vs[j].x * vs[i].y;
     }
