@@ -4,7 +4,7 @@ let myShader;
 let pts, verts;
 let dragging = -1;
 const handleR = 10;
-const np = 4; // number of polygon vertices
+const np = 5; // number of polygon vertices
 let bggl, fggl;
 let NN, BB;
 
@@ -38,20 +38,21 @@ async function setup() {
     button.mousePressed(resetinitial);
     createElement('label', dir);
 
-      
+
     pts = [];
-    pts.push(createVector(74.844,207.334));
-    pts.push(createVector(356.752,104.728));
-    pts.push(createVector(425.156,292.666));
-    pts.push(createVector(143.248,395.272));
+    pts.push(createVector(74.844, 207.334));
+    pts.push(createVector(356.752, 104.728));
+    pts.push(createVector(425.156, 292.666));
+    pts.push(createVector(143.248, 395.272));
+    pts.push(p5.Vector.sub(pts[3], pts[0]).mult(0.5).add(pts[0])); // mid pt between pt0 and pt1
 
     verts = pts.map(v => createVector(v.x - width / 2, v.y - height / 2));
 
     let res = computeEdgesYup(verts, width, height);
     NN = [];
     for (let n of res.N) {
-            NN.push(n[0]);
-            NN.push(n[1]);
+        NN.push(n[0]);
+        NN.push(n[1]);
     }
     BB = res.B;
 }
@@ -79,11 +80,12 @@ function draw() {
     myShader.setUniform('u_resolution', [width, height]);
     myShader.setUniform('u_color', fggl);     // salmon
     myShader.setUniform('u_bg', bggl);         // skyblue
-    myShader.setUniform('u_delta', deltaSlider.value());    // softness/pointiness
-    myShader.setUniform('u_sigma', sigmaSlider.value());    // edge hardness
+    myShader.setUniform('u_delta', (deltaSlider.value()));    // softness/pointiness
+    myShader.setUniform('u_sigma', (sigmaSlider.value()));    // edge hardness
     myShader.setUniform('u_B', BB);                          // float[5]
     myShader.setUniform('u_np', NN);                          // vec2[5]
     // myShader.setUniform('u_N', NN);                          // vec2[5]
+    myShader.setUniform('numpts', np);
 
     //noStroke();
     fill('salmon');
@@ -93,14 +95,14 @@ function draw() {
         drawVerts(NN, BB);
     }
     // } else {
-        //quad(-v, -v, v, -v, v, v, -v, v);
+    //quad(-v, -v, v, -v, v, v, -v, v);
     // }
 
     resetShader();
 }
 
 function drawVerts(N, B) {
-    stroke('white');
+    stroke('black');
     noFill();
     beginShape();
     verts.forEach(v => {
@@ -110,15 +112,24 @@ function drawVerts(N, B) {
     });
     endShape(CLOSE);
 
+    fill(0);
     for (let v of verts) {
-        ellipse(v.x, v.y, 8, 8);
+        ellipse(v.x, v.y, 10, 10);
     }
 
+    stroke(255);
     for (let i = 0; i < np; i++) {
         let di = B[i];
         //if (di < 0) di *= -1;
         // line(0, 0, NN[i][0] * di, NN[i][1] * di);
-        line(0, 0, N[i*2] * di, N[i*2+1] * di);
+        let pn = createVector(N[i * 2], N[i * 2 + 1]);
+        let pp = p5.Vector.mult(pn, di);
+        pn.mult(10);
+        let vperp = createVector(-pn.y, pn.x);
+        line(0, 0, pp.x, pp.y);
+        // draw perp icon
+        line(pp.x - pn.x, pp.y - pn.y, pp.x - pn.x + vperp.x, pp.y - pn.y + vperp.y);
+        line(pp.x + vperp.x, pp.y + vperp.y, pp.x - pn.x + vperp.x, pp.y - pn.y + vperp.y);
     }
 }
 
@@ -235,8 +246,8 @@ function resetinitial() {
     let res = computeEdgesYup(verts, width, height);
     NN = [];
     for (let n of res.N) {
-            NN.push(n[0]);
-            NN.push(n[1]);
+        NN.push(n[0]);
+        NN.push(n[1]);
     }
     BB = res.B;
 }
@@ -246,4 +257,21 @@ function get_name() {
     let dirs = path.split('/');
     let name = dirs[dirs.length - 2];
     return name;
+}
+
+function keyPressed() {
+    if (key === "ArrowUp") {
+        print("saving pic");
+        save_pic();
+    }
+    //   if (key === 'g') {
+    //     save_gif(5);
+    //   }
+}
+
+function save_pic() {
+    let n = get_name();
+    let c = str(checkbox.checked());
+    let v = str(deltaSlider.value());
+    save(n + '_' + c + '_' + v + '.png');
 }
