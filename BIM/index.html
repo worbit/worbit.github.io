@@ -15,6 +15,15 @@
     }
   }
   </script>
+  <style>
+    .ifc-label {
+      color: #000;
+      font: 14px monospace;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1px 3px;
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -23,6 +32,7 @@
     import * as THREE from "three";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
     import { IfcAPI } from "web-ifc";
+    import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 
     //THREE.ColorManagement.enabled = true;
 
@@ -39,6 +49,15 @@
     //const dir = new THREE.DirectionalLight(0xffffff, 0.9); dir.position.set(1, 2, 1);
     //scene.add(dir);
 
+
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(500, 500);
+    labelRenderer.domElement.style.position = "absolute";
+    labelRenderer.domElement.style.top = "0";
+    labelRenderer.domElement.style.left = "0";
+    labelRenderer.domElement.style.pointerEvents = "none"; // so OrbitControls still gets the mouse
+    document.body.appendChild(labelRenderer.domElement);
+
     // orthographic TOP view by default
     const d = 2.5;
     const cam = new THREE.OrthographicCamera(-d, d, d, -d, 0.1, 100);
@@ -47,10 +66,27 @@
     cam.lookAt(0, 0, 0);
     const controls = new OrbitControls(cam, renderer.domElement); // mouse rotates out of plan
 
+    document.getElementById("reset").addEventListener("click", () => controls.reset());
+    let wireframe = false;
+
+    function applyWireframe() {
+      scene.traverse((obj) => {
+        if (obj.isMesh) obj.material.wireframe = wireframe;
+      });
+    }
+
+    document.getElementById("info").addEventListener("change", (e) => {
+      wireframe = e.target.checked;
+      applyWireframe();
+      labelRenderer.domElement.style.display = e.target.checked ? "" : "none";
+    });
+    labelRenderer.domElement.style.display = "none"; // start hidden, matching unchecked box
+
     // load + build meshes
     const buf = new Uint8Array(await (await fetch("./models/LoG_temple.ifc")).arrayBuffer());
     const modelID = ifcApi.OpenModel(buf);
     ifcApi.StreamAllMeshes(modelID, (mesh) => {
+      const box = new THREE.Box3();          // accumulate this element's extent
       const placed = mesh.geometries;
       for (let i = 0; i < placed.size(); i++) {
         const pg = placed.get(i);
@@ -72,20 +108,36 @@
         tjc.convertSRGBToLinear();
         const m = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({
           color: tjc, transparent: c.w !== 1, opacity: c.w,
-          flatShading: true
+          side: THREE.DoubleSide, wireframe: wireframe
         }));
         m.matrix.fromArray(pg.flatTransformation); // per-element placement
         m.matrixAutoUpdate = false;
         scene.add(m);
+        box.expandByObject(m);
       }
+
+      // one label for the whole element
+      const typeCode = ifcApi.GetLineType(modelID, mesh.expressID);
+      const typeName = ifcApi.GetNameFromTypeCode(typeCode);   // e.g. "IFCSLAB"
+      const div = document.createElement("div");
+      div.className = "ifc-label";
+      div.textContent = typeName;
+      const label = new CSS2DObject(div);
+      box.getCenter(label.position);
+      scene.add(label);
     });
 
-    (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, cam); })();
+    (function loop() { 
+      requestAnimationFrame(loop); 
+      controls.update(); 
+      renderer.render(scene, cam);
+      labelRenderer.render(scene, cam);
+    })();
   </script>
   <a href="https://worbit.github.io/BIM/" target="_top">→ </a>
-  <input type="range" min="0" max="10">
-  <div><label><input type="checkbox"><span>info</span></label></div>
-  <button>reset</button>
+  <input type="range" min="0" max="10" disabled="true">
+  <div><label><input type="checkbox" id="info"><span>info</span></label></div>
+  <button id="reset">reset</button>
   <label>BIM</label>
 </body>
 
