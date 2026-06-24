@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Embedded IFC Viewer</title>
+  <style>
+    html,
+    body,
+    bim-grid {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <bim-grid id="ifc-viewer"></bim-grid>
+
+  <script type="module">
+    import { IfcViewer } from "https://cdn.flinker.app/ifc-viewer/v3.3.2/ifc-viewer.es.js";
+
+    const viewer = new IfcViewer("#ifc-viewer");
+    await viewer.ready;
+
+    const response = await fetch("./models/LoG_temple.ifc");
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    await viewer.add("project.ifc", bytes);
+  </script>
+</body>
+</html>

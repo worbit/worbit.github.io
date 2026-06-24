@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../globals/style.css">
+  <title>BIM</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "web-ifc": "https://cdn.jsdelivr.net/npm/web-ifc@0.0.50/web-ifc-api.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div id="canvas"></div>
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import { IfcAPI } from "web-ifc";
+
+    const ifcApi = new IfcAPI();
+    ifcApi.SetWasmPath("https://unpkg.com/web-ifc@0.0.50/"); // pin a real version
+    await ifcApi.Init();
+
+    // scene
+    const scene = new THREE.Scene();
+    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    renderer.setSize(500, 500);
+    document.getElementById("canvas").appendChild(renderer.domElement);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.9); dir.position.set(1, 2, 1);
+    scene.add(dir);
+
+    // orthographic TOP view by default
+    const d = 2.5;
+    const cam = new THREE.OrthographicCamera(-d, d, d, -d, 0.1, 100);
+    cam.position.set(0, 10, 0);   // straight above
+    cam.up.set(0, 0, -1);          // so "up" on screen is +Z, a true plan view
+    cam.lookAt(0, 0, 0);
+    const controls = new OrbitControls(cam, renderer.domElement); // mouse rotates out of plan
+
+    // load + build meshes
+    const buf = new Uint8Array(await (await fetch("./models/LoG_temple.ifc")).arrayBuffer());
+    const modelID = ifcApi.OpenModel(buf);
+    ifcApi.StreamAllMeshes(modelID, (mesh) => {
+      const placed = mesh.geometries;
+      for (let i = 0; i < placed.size(); i++) {
+        const pg = placed.get(i);
+        const g = ifcApi.GetGeometry(modelID, pg.geometryExpressID);
+        const verts = ifcApi.GetVertexArray(g.GetVertexData(), g.GetVertexDataSize());   // [px,py,pz,nx,ny,nz,...]
+        const idx = ifcApi.GetIndexArray(g.GetIndexData(), g.GetIndexDataSize());
+        const pos = new Float32Array(verts.length / 2), nor = new Float32Array(verts.length / 2);
+        for (let v = 0; v < verts.length; v += 6) {
+          const k = v / 2;
+          pos[k] = verts[v]; pos[k + 1] = verts[v + 1]; pos[k + 2] = verts[v + 2];
+          nor[k] = verts[v + 3]; nor[k + 1] = verts[v + 4]; nor[k + 2] = verts[v + 5];
+        }
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        geom.setAttribute("normal", new THREE.BufferAttribute(nor, 3));
+        geom.setIndex(new THREE.BufferAttribute(new Uint32Array(idx), 1));
+        const c = pg.color;
+        const m = new THREE.Mesh(geom, new THREE.MeshLambertMaterial({
+          color: new THREE.Color(c.x, c.y, c.z), transparent: c.w !== 1, opacity: c.w
+        }));
+        m.matrix.fromArray(pg.flatTransformation); // per-element placement
+        m.matrixAutoUpdate = false;
+        scene.add(m);
+      }
+    });
+
+    (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, cam); })();
+  </script>
+  <a href="https://worbit.github.io/BIM/" target="_top">→ </a>
+  <input type="range" min="0" max="10">
+  <div><label><input type="checkbox"><span>info</span></label></div>
+  <button>reset</button>
+  <label>BIM</label>
+</body>
+
+</html>
