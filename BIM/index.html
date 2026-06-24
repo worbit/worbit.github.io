@@ -24,18 +24,20 @@
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
     import { IfcAPI } from "web-ifc";
 
+    //THREE.ColorManagement.enabled = true;
+
     const ifcApi = new IfcAPI();
     ifcApi.SetWasmPath("https://unpkg.com/web-ifc@0.0.50/"); // pin a real version
     await ifcApi.Init();
 
     // scene
     const scene = new THREE.Scene();
-    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(500, 500);
     document.getElementById("canvas").appendChild(renderer.domElement);
-    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
-    const dir = new THREE.DirectionalLight(0xffffff, 0.9); dir.position.set(1, 2, 1);
-    scene.add(dir);
+    //scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+    //const dir = new THREE.DirectionalLight(0xffffff, 0.9); dir.position.set(1, 2, 1);
+    //scene.add(dir);
 
     // orthographic TOP view by default
     const d = 2.5;
@@ -66,8 +68,11 @@
         geom.setAttribute("normal", new THREE.BufferAttribute(nor, 3));
         geom.setIndex(new THREE.BufferAttribute(new Uint32Array(idx), 1));
         const c = pg.color;
-        const m = new THREE.Mesh(geom, new THREE.MeshLambertMaterial({
-          color: new THREE.Color(c.x, c.y, c.z), transparent: c.w !== 1, opacity: c.w
+        let tjc = new THREE.Color(c.x, c.y, c.z);
+        tjc.convertSRGBToLinear();
+        const m = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({
+          color: tjc, transparent: c.w !== 1, opacity: c.w,
+          flatShading: true
         }));
         m.matrix.fromArray(pg.flatTransformation); // per-element placement
         m.matrixAutoUpdate = false;
