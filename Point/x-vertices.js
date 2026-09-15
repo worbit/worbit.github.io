@@ -17,11 +17,13 @@ function setup() {
   pts.push(createVector(425.156,292.666));
   pts.push(createVector(143.248,395.272));
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(50,500,395.272);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
-  createElement('label', get_name());
+  createElement('label', dir);
 
   button.mousePressed(resetinitial);
 }

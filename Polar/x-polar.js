@@ -16,12 +16,14 @@ function setup() {
   let d2 = 67.380;
   angles = [a, a+d1, a+d1+d2, a+d1+d2+d1];
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
 
-  createElement('label', get_name());  
+  createElement('label', dir);  
 }
 
 function draw() {

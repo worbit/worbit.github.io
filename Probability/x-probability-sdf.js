@@ -7,13 +7,15 @@ function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,100,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
   // debug = createP('');
 
-  createElement('label', get_name());  
+  createElement('label', dir);  
 
   img = createImage(250,250);
 }

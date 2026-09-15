@@ -17,12 +17,14 @@ function setup() {
     sky = color(135, 206, 235);
     sal = color(250, 128, 114);
     noStroke();
+    let dir = get_name();
+    createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(-50, 50, 0);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
 
-    createElement('label', get_name());
+    createElement('label', dir);
 
     verts = [];
     for (let i=0; i<txt.length; i++) {

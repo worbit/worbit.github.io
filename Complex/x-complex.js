@@ -44,12 +44,14 @@ function setup() {
     salmonColorP5 = color(250, 128, 114); 
     skyBlueColorP5 = color(135, 206, 235);
 
+    let dir = get_name();
+    createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(-15.0, 5.0, -5.0, 0.1);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
 
-    createElement('label', get_name());
+    createElement('label', dir);
 
     pixelDensity(1);
     

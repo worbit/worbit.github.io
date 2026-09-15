@@ -54,12 +54,15 @@ function setup() {
 
   fourier();
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+
   slider = createSlider(0,100,50);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
 
-  createElement('label', get_name());
+  createElement('label', dir);
 
   // fft from here: https://www.nayuki.io/page/free-small-fft-in-multiple-languages
   // previously done here: https://codepen.io/worbit/embed/YaLNWv

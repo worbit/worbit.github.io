@@ -58,11 +58,13 @@ async function setup() {
 
   textSize(20);
   textAlign(CENTER, CENTER);
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,1,0,0.01);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
-  createElement('label', get_name());
+  createElement('label', dir);
 
   button.mousePressed(resetInitial);
   slider.mouseReleased(startOver);

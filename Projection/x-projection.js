@@ -29,12 +29,14 @@ function setup() {
     planenormal = createVector(0, 0, 250);
     planepoint = createVector(width/2, height/2, 0);
   
+    let dir = get_name();
+    createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(0,360,0);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     button.mousePressed(resetinitial);
   
-    createElement('label', get_name());
+    createElement('label', dir);
     // noLoop();
   }
 

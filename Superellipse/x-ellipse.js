@@ -10,10 +10,12 @@ function setup() {
   createCanvas(500, 500);
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0.1, 50, 50, 0.1);
   checkbox = createCheckbox('info', false);
   
-  createElement('label', get_name());  
+  createElement('label', dir);
 
   noStroke();
   fill(sal);

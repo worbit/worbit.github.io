@@ -26,11 +26,13 @@ async function setup() {
   lengths = [300,200,300,200];
   angles = [-20, 90, 90, 90, 90];
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(70,110,90);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
-  createElement('label', get_name());
+  createElement('label', dir);
 
   button.mousePressed(resetinitial);
 }

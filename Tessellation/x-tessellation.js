@@ -12,12 +12,14 @@ function setup() {
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   fill(sal);
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(150,350,250);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
 
-  createElement('label', get_name());  
+  createElement('label', dir);  
 
   voronoi = new Voronoi();
   bbox = {xl: 0, xr: width, yt: 0, yb: height};

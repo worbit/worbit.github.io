@@ -12,6 +12,20 @@ input, div, button {
   margin-right: 12px;
 }
 
+.wrap {
+  width: 250px;
+  height: 272px;
+  padding: 0;
+  overflow: hidden;
+}
+.scaleframe {
+  width: 500px;
+  height: 543px;
+  border: 0;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;

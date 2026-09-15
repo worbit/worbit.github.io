@@ -13,7 +13,8 @@ function setup() {
   textFont('Andale Mono');
   textSize(11);
   d = 10;
-  
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,100,0);
   slider.elt.disabled = true;
   checkbox = createCheckbox('info', false);
@@ -21,7 +22,7 @@ function setup() {
   button.mousePressed(resetinitial);
   button.elt.disabled = true;
 
-  createElement('label', get_name());
+  createElement('label', dir);
 }
 
 function draw() {

@@ -14,11 +14,13 @@ function setup() {
     noStroke();
     rectMode(CENTER);
 
+    let dir = get_name();
+    createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(1,5,1);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
     
-    createElement('label', get_name());
+    createElement('label', dir);
   
     button.mousePressed(resetinitial);  
 }

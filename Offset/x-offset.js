@@ -3,11 +3,13 @@ let p1, p2, v;
 
 function setup() {
   createCanvas(500, 500);
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   button.mousePressed(resetinitial);
-  createElement('label', get_name());  
+  createElement('label', dir);  
   
   strokeCap(SQUARE);
   strokeWeight(200);

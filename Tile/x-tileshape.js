@@ -17,11 +17,13 @@ function setup() {
   textAlign(CENTER,CENTER);
   rectMode(CENTER);
 
+  let dir = get_name();
+  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(3,6,4);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
   
-  createElement('label', get_name());
+  createElement('label', dir);
 
   button.mousePressed(resetinitial);
 }
