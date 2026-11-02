@@ -52,8 +52,7 @@ Axolotl relies on these guarantees for correctness, not just speed. A wrong boun
 - **`ILipschitzBound.Lipschitz`**: an upper bound `L` with `|d(p) - d(q)| <= L |p - q|` for all points. Exact signed distance fields have `L = 1`; most "bound" distance functions (max of plane distances, etc.) too. Return `double.PositiveInfinity` if unknown. Fields that **jump** (e.g. using `%`, domain repetition, sector or cell boundaries) have no bound.
 - **`IHasBounds.TryGetBounds`**: a box `B` such that for every point `p` **outside** `B`, `GetDistance(p) >= distance(p, B)`. Inside `B` nothing is assumed. For an exact distance field this is the bounding box of the solid. Return `false` if unknown or unbounded.
 - **`IHasChildren.Children`**: the direct sub-objects (used to detect shared subtrees).
-- **`IIntervalBound.Bound(Region region, bool prune, out IHasDistance pruned)`**: a `ValueRange` that contains `GetDistance(p)` for **every** `p` in the closed box `region`. If `prune` is true, `pruned` may return a simpler object that gives **exactly the same values (bit for bit) everywhere inside `region`**, e.g. a union without the operands that cannot be the minimum there. Otherwise return `this`. Bound operands with `Distance.Bound(...)`: it falls back to the Lipschitz bound for operands without interval support and caches shared subtrees.
-  Fields without a Lipschitz bound can still get narrow band sampling through this interface alone. Example: `Fillet` and `GradientBlend` (base class `GradientCombination`) depend on the angle between the operand gradients, so no Lipschitz constant is known. Their values stay within `[min(a, b) - r, min(a, b)]` (union), and that interval is what they return.
+- **`IIntervalBound.Bound(Region region, bool prune, out IHasDistance pruned)`**: a `ValueRange` that contains `GetDistance(p)` for **every** `p` in the closed box `region`. If `prune` is true, `pruned` may return a simpler object that gives **exactly the same values (bit for bit) everywhere inside `region`**, e.g. a union without the operands that cannot be the minimum there. Otherwise return `this`. Bound operands with `Distance.Bound(...)`: it falls back to the Lipschitz bound for operands without interval support and caches shared subtrees. Fields without a Lipschitz bound can still get narrow band sampling through this interface alone. Example: `Fillet` and `GradientBlend` (base class `GradientCombination`) depend on the angle between the operand gradients, so no Lipschitz constant is known. Their values stay within `[min(a, b) - r, min(a, b)]` (union), and that interval is what they return.
 - **`IHasGradient.GetGradient(x, y, z, eps, out gx, out gy, out gz)`**: returns the value (same as `GetDistance`) and its gradient. `eps` is the step for finite differences of operands without gradients; pass it on with `Distance.Gradient(...)`.
 - **`IHasDistanceBatch.GetDistances(x, y, z, result, count)`**: same values as `count` calls of `GetDistance`. The arrays can be longer than `count`. Evaluate operands with `Distance.Evaluate(...)` (batch path of the operand plus the shared-subtree cache).
 
@@ -109,6 +108,8 @@ public class MyBall : IHasDistanceBatch, ILipschitzBound, IHasBounds, IIntervalB
 }
 ```
 
+> **Note:** If you create your own distance object class (like `MyBall` above) in a C# component inside Grasshopper, you want to add the line `#r "Axolotl.gha"` to the top of your `region Usings` and explicitly call the first argument in `ValueRange` with the namespace `Axolotl.Region` to disambiguate from `System.Drawing.Region`.
+
 For a primitive, `ILipschitzBound` alone already enables the narrow band (Axolotl derives `d(centre) ± L · radius` for every region). `IIntervalBound` is optional; implement it when it can be tighter, or for fields without a Lipschitz bound.
 
 ### Example: a combinator (with pruning)
@@ -150,6 +151,15 @@ public class MyMin : IHasDistanceBatch, ILipschitzBound, IHasChildren, IInterval
         IHasDistance winner = a.GetDistance(x, y, z) <= b.GetDistance(x, y, z) ? a : b;
         return Distance.Gradient(winner, x, y, z, eps, out gx, out gy, out gz);
     }
+}
+```
+
+> **Note:** if you create this new combination type in a C# component inside Grasshopper, you can cast the inputs (other Axolotl distance objects) to create the new object like so:
+
+``` csharp
+private void RunScript(object x, object y, ref object a)
+{
+    a = new MyMin((IHasDistance)x, (IHasDistance)y);
 }
 ```
 
