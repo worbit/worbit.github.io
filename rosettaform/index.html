@@ -1,70 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../globals/style.css">
-    <title>Rosetta Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rosetta Form</title>
+  <style>
+    :root {
+      --sky: #87CEEB;
+      --sky-soft: #e3f3fa;
+      --salmon: #FA8072;
+      --salmon-soft: #fde3df;
+      --ink: #1d2730;
+      --muted: #66737f;
+      --line: #d9e1e7;
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --s: 0.5; /* preview scale, set from slider */
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+    a { color: inherit; }
+
+    header { padding: 28px 24px 8px; max-width: 1100px; }
+    h1 { margin: 0; font-size: 30px; letter-spacing: -0.01em; }
+    h1 span { color: var(--salmon); }
+    .subtitle { margin: 4px 0 12px; color: var(--muted); font-size: 16px; }
+    header p { margin: 6px 0; font-size: 14px; }
+    details { font-size: 14px; margin: 8px 0; }
+    summary { cursor: pointer; color: var(--muted); }
+    details[open] summary { margin-bottom: 6px; }
+
+    /* toolbar */
+    .bar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(246, 248, 250, 0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+      padding: 10px 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+    .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    input[type=search] {
+      font: inherit; font-size: 14px; padding: 5px 10px; width: 180px;
+      border: 1px solid var(--line); border-radius: 6px; background: #fff;
+    }
+    select { font: inherit; font-size: 13px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+    .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
+    .seg button {
+      font: inherit; font-size: 13px; border: 0; background: transparent; padding: 4px 10px; cursor: pointer; color: var(--muted);
+    }
+    .seg button + button { border-left: 1px solid var(--line); }
+    .seg button[aria-pressed=true] { background: var(--ink); color: #fff; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font: inherit; font-size: 13px; cursor: pointer; user-select: none;
+      border: 1px solid var(--salmon); background: #fff; color: var(--ink);
+      border-radius: 999px; padding: 3px 10px;
+    }
+    .chip.new { border-style: dashed; }
+    .chip .n { color: var(--muted); font-size: 11px; margin-left: 3px; }
+    .chip.inc { background: var(--salmon); color: #fff; }
+    .chip.inc .n { color: rgba(255,255,255,0.85); }
+    .chip.exc { background: #fff; color: var(--muted); text-decoration: line-through; border-color: var(--muted); }
+    .chip.zero { opacity: 0.4; }
+    .linkbtn { font: inherit; font-size: 13px; border: 0; background: none; color: var(--muted); text-decoration: underline; cursor: pointer; padding: 0; }
+    .count { font-size: 13px; color: var(--muted); margin-left: auto; }
+    .hint { font-size: 12px; color: var(--muted); }
+    input[type=range] { width: 120px; vertical-align: middle; }
+
+    /* grid */
+    main { padding: 16px 24px 48px; }
+    .group-title { margin: 22px 0 10px; font-size: 18px; display: flex; align-items: baseline; gap: 8px; }
+    .group-title:first-child { margin-top: 4px; }
+    .group-title small { color: var(--muted); font-weight: normal; font-size: 13px; }
+    .grid {
+      display: grid; gap: 14px;
+      grid-template-columns: repeat(auto-fill, calc(500px * var(--s)));
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .frame {
+      width: calc(500px * var(--s)); height: calc(543px * var(--s));
+      overflow: hidden; position: relative; background: var(--sky);
+    }
+    .frame iframe {
+      width: 500px; height: 543px; border: 0; display: block;
+      transform: scale(var(--s)); transform-origin: 0 0;
+    }
+    .frame .ph {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      color: rgba(255,255,255,0.9); font-size: 13px;
+    }
+    .meta { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; }
+    .title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+    .title > * { white-space: nowrap; }
+    .title a.name { font-weight: bold; text-decoration: none; font-size: 15px; }
+    .title a.name:hover { text-decoration: underline; }
+    .badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; padding: 1px 5px; border-radius: 4px; }
+    .badge.paper { background: var(--sky-soft); color: #2b6d8a; }
+    .badge.np { background: #eef0f2; color: var(--muted); }
+    .title .num { margin-left: auto; color: var(--muted); font-size: 12px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag {
+      font: inherit; font-size: 11px; cursor: pointer; padding: 1px 7px; border-radius: 999px;
+      border: 1px solid var(--salmon); background: var(--salmon-soft); color: var(--ink);
+    }
+    .tag.suggested { background: #fff; border-style: dashed; }
+    .tag.optional { background: #fff; border-style: dotted; color: var(--muted); }
+    .tag.hit { background: var(--salmon); color: #fff; }
+    .empty { color: var(--muted); padding: 40px 0; }
+
+    /* compact cards when tiny */
+    .tiny .meta { padding: 5px 6px 6px; }
+    .tiny .tags, .tiny .badge, .tiny .title .num { display: none; }
+    .tiny .title a.name { font-size: 12px; }
+
+    .legend { font-size: 12px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .legend .tag { cursor: default; }
+
+    @media (max-width: 600px) {
+      header, .bar, main { padding-left: 12px; padding-right: 12px; }
+      .count { margin-left: 0; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Rosetta Form</h1>
-    <h2>Languages of Geometry: An anthology (or chrestomathy) of geometry encodings</h2>
-    <p>also see the <a href="../expand-geo-graph.html" target="_blank" rel="noopener noreferrer">genealogy project</a> (network of overarching topics) and the 
-        <a href="../illustrations/">illustrations</a> showing the inner workings of each language, a modification and a relevant example reference.</p>
-    <h3>Publication</h3>
-    <p>Bernhard, Mathias (2024). <b>Languages of Geometry.</b> pp 205–219 <br>
+  <header>
+    <h1>Rosetta <span>Form</span></h1>
+    <p class="subtitle">Languages of Geometry: an anthology (or chrestomathy) of geometry encodings</p>
+    <p>Also see the <a href="../expand-geo-graph.html" target="_blank" rel="noopener noreferrer">genealogy project</a> (network of overarching topics) and the
+      <a href="../illustrations/">illustrations</a> showing the inner workings of each language, a modification and a relevant example reference.</p>
+    <details>
+      <summary>Publication</summary>
+      <p>Bernhard, Mathias (2024). <b>Languages of Geometry.</b> pp 205–219<br>
         In: Eversmann, P., Gengnagel, C., Lienhard, J., Ramsgaard Thomsen, M., Wurm, J. (eds)
-        <i>Scalable Disruptors.</i> DMS 2024. Springer, Cham. <br>
-        <a href="https://doi.org/10.1007/978-3-031-68275-9_17" target="_blank" rel="noopener noreferrer">https://doi.org/10.1007/978-3-031-68275-9_17</a>
-    </p>
-    <p>Paper presentation recording: <a href="https://www.youtube.com/watch?v=LZmF0JFEJzc">YouTube</a></p>
-    <h3>Instructions</h3>
-    <p>move the slider to transform the object, check the "info" to see a behind-the-scenes view, click reset to go back to original shape, click the &rarr; to go to the individual view (faster), also try hovering and clicking - it might do something in some...</p>
-        
-    <!-- <div class="wrap"><iframe class="scaleframe" src="../Aggregation/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../Angle/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../Barycentric/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../BIM/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../Boolean/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../Cellular/" ></iframe></div> -->
-    <!-- <div class="wrap"></div><iframe class="scaleframe" src="../Complex/" ></iframe></div> -->
-    <iframe src="../Aggregation/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Angle/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Barycentric/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../BIM/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Boolean/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Cellular/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Complex/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Cylinder/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../DistanceFunction/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Dissect/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../EdgeMatching/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Epicycle/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Fourier2D/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Hyperbolic/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../LLM/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../MinkowskySum/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../NURBS/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Offset/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../OptimalTransport/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Parallelogram/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Physics/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Poincare/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Point/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Pointcloud/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Polar/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Probability/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Projection/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Rectangle/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../SmoothConvex/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Sphere/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Subdivision/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Superellipse/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Tessellation/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Tile/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../Turtle/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../VAE/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
-    <iframe src="../WaveFunctionCollapse/" frameborder="0" scrolling="no" style=" width: 500px; height: 543px;  overflow: hidden;"></iframe>
+        <i>Scalable Disruptors.</i> DMS 2024. Springer, Cham.<br>
+        <a href="https://doi.org/10.1007/978-3-031-68275-9_17" target="_blank" rel="noopener noreferrer">https://doi.org/10.1007/978-3-031-68275-9_17</a></p>
+      <p>Paper presentation recording: <a href="https://www.youtube.com/watch?v=LZmF0JFEJzc">YouTube</a></p>
+    </details>
+    <details>
+      <summary>Instructions</summary>
+      <p>Move the slider to transform the object, check "info" to see a behind-the-scenes view, click reset to go back to the original shape,
+        click the &rarr; (or the language name) to go to the individual view (faster). Also try hovering and clicking – it might do something in some…</p>
+      <p>Filtering: click a family once to <b>include</b> it, twice to <b>exclude</b> it (NOT), a third time to clear it.
+        With several families included, <b>any</b> shows languages with at least one of them (OR), <b>all</b> only those with every one (AND).
+        Clicking a family tag on a card toggles it the same way. The current view is stored in the URL, so it can be shared.</p>
+      <div class="legend">
+        <span><span class="tag">paper</span> family from the paper</span>
+        <span><span class="tag suggested">suggested</span> suggested for languages not in the paper</span>
+        <span><span class="tag optional">optional</span> optional link to a proposed new family</span>
+        <span>dashed family chip = proposed new family</span>
+      </div>
+    </details>
+  </header>
+
+  <div class="bar">
+    <div class="row">
+      <span class="label">Families</span>
+      <div class="chips" id="chips"></div>
+      <button class="linkbtn" id="clear">clear</button>
+    </div>
+    <div class="row">
+      <span class="label">Match</span>
+      <div class="seg" id="mode">
+        <button data-v="or" title="at least one of the included families (OR)">any</button>
+        <button data-v="and" title="all of the included families (AND)">all</button>
+      </div>
+      <span class="label">Links</span>
+      <div class="seg" id="level">
+        <button data-v="0" title="only families listed in the paper">paper</button>
+        <button data-v="1" title="plus suggested families for languages not in the paper">+ suggested</button>
+        <button data-v="2" title="plus optional links to the proposed new families">+ optional</button>
+      </div>
+      <span class="label">Status</span>
+      <div class="seg" id="status">
+        <button data-v="all">all</button>
+        <button data-v="paper">in paper</button>
+        <button data-v="new">not in paper</button>
+      </div>
+    </div>
+    <div class="row">
+      <input type="search" id="q" placeholder="search name…  ( / )">
+      <span class="label">Order</span>
+      <select id="sort">
+        <option value="az">A–Z</option>
+        <option value="nfam">most families first</option>
+        <option value="paper">in paper first</option>
+        <option value="group">group by family</option>
+      </select>
+      <span class="label">Size</span>
+      <input type="range" id="size" min="0.2" max="1" step="0.05" value="0.5" aria-label="preview size">
+      <label class="hint"><input type="checkbox" id="unload" checked> pause off-screen apps</label>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <main id="main"></main>
+
+  <script>
+  // ---- data (from LoG/languages_families.md) ----------------------------------
+  // paper: families from the paper's appendix; sugg: suggested (language not in paper);
+  // opt: optional links to proposed new families
+  const LANGS = [
+    { n: 'Aggregation',          paper: ['Empty', 'Field', 'Approximation'], opt: ['Process', 'Discrete'] },
+    { n: 'Angle',                paper: ['Empty', 'Typology'], opt: ['Non-Euclidean'] },
+    { n: 'Barycentric',          sugg: ['Empty', 'Field', 'Interpolation'] },
+    { n: 'BIM',                  sugg: ['3D', 'Typology', 'Empty'] },
+    { n: 'Boolean',              paper: ['Empty', 'Typology', 'Field', 'Fluid Topology'] },
+    { n: 'Cellular',             sugg: ['Field', 'Fluid Topology', 'Process', 'Discrete'] },
+    { n: 'Complex',              sugg: ['Empty', 'Trigonometry', 'Non-Euclidean'] },
+    { n: 'Cylinder',             paper: ['Empty', 'Field', '3D'], opt: ['Interpolation'] },
+    { n: 'DistanceFunction',     paper: ['Field', 'Fluid Topology', '3D'] },
+    { n: 'Dissect',              sugg: ['Empty', 'Typology', 'Discrete', 'Interpolation'] },
+    { n: 'EdgeMatching',         sugg: ['Typology', 'Approximation', 'Uncertainty', 'Discrete', 'Process'] },
+    { n: 'Epicycle',             paper: ['Empty', 'Trigonometry', 'Approximation'] },
+    { n: 'Fourier2D',            paper: ['Field', 'Approximation', 'Trigonometry', 'Fluid Topology'] },
+    { n: 'Hyperbolic',           paper: ['Empty', '3D'], opt: ['Non-Euclidean'] },
+    { n: 'LLM',                  paper: ['Empty', 'Uncertainty'] },
+    { n: 'MinkowskySum',         sugg: ['Empty', 'Typology', 'Fluid Topology'] },
+    { n: 'NURBS',                paper: ['Empty', 'Typology'] },
+    { n: 'Offset',               paper: ['Empty', 'Typology'] },
+    { n: 'OptimalTransport',     sugg: ['Field', 'Uncertainty', 'Fluid Topology', 'Interpolation'] },
+    { n: 'Parallelogram',        paper: ['Empty', 'Typology'] },
+    { n: 'Physics',              sugg: ['Empty', 'Uncertainty', 'Process', 'Discrete'] },
+    { n: 'Poincare',             sugg: ['Empty', 'Trigonometry', 'Non-Euclidean'] },
+    { n: 'Point',                paper: ['Empty', 'Typology'] },
+    { n: 'Pointcloud',           paper: ['Empty', 'Uncertainty', 'Fluid Topology'] },
+    { n: 'Polar',                paper: ['Empty', 'Trigonometry'] },
+    { n: 'Probability',          paper: ['Field', 'Approximation', 'Uncertainty'] },
+    { n: 'Projection',           paper: ['Empty', '3D'] },
+    { n: 'Rectangle',            sugg: ['Empty', 'Typology'] },
+    { n: 'SmoothConvex',         sugg: ['Field', 'Approximation', 'Uncertainty'] },
+    { n: 'Sphere',               paper: ['Empty', '3D', 'Trigonometry'], opt: ['Non-Euclidean'] },
+    { n: 'Subdivision',          sugg: ['Empty', 'Typology', 'Process', 'Discrete'] },
+    { n: 'Superellipse',         paper: ['Empty', 'Approximation'] },
+    { n: 'Tessellation',         paper: ['Field', 'Fluid Topology', '3D'] },
+    { n: 'Tile',                 paper: ['Empty', 'Typology', 'Approximation'], opt: ['Discrete'] },
+    { n: 'Turtle',               paper: ['Empty', 'Typology'], opt: ['Process'] },
+    { n: 'VAE',                  sugg: ['Field', 'Uncertainty', 'Approximation', 'Interpolation'] },
+    { n: 'WaveFunctionCollapse', sugg: ['Uncertainty', 'Fluid Topology', 'Process', 'Discrete'] },
+  ];
+  const FAMILIES = [
+    // the paper's eight, in its order, then the proposed new ones
+    { n: 'Empty', d: 'Basic geometric objects placed in an empty space with a coordinate system, explicitly connected to a predefined topology.' },
+    { n: 'Field', d: 'Space fully defined at every location as a scalar field, continuous or discrete.' },
+    { n: '3D', d: 'Primary domain is three-dimensional space; the form shown is a reduction to 2D.' },
+    { n: 'Typology', d: 'Operations commonly used by architects in conventional CAD environments on traditional typologies.' },
+    { n: 'Trigonometry', d: 'Related to circular motion and rotation, requiring trigonometric functions.' },
+    { n: 'Uncertainty', d: 'A certain fuzziness, where absolute precision is impossible – statistically close enough.' },
+    { n: 'Approximation', d: 'Selective resolutions and adaptive precision in approximating the result.' },
+    { n: 'Fluid Topology', d: 'Relationships between entities are not predefined but dynamically computed and variable.' },
+    { n: 'Process', d: 'Proposed: the form emerges from iteratively applying rules, constraints or a simulation.', isNew: true },
+    { n: 'Discrete', d: 'Proposed: the form is assembled from, or decomposed into, a finite set of discrete parts.', isNew: true },
+    { n: 'Interpolation', d: 'Proposed: the form is one state on a continuous path between other forms.', isNew: true },
+    { n: 'Non-Euclidean', d: 'Proposed: the form lives in a space where the parallel postulate does not hold.', isNew: true },
+  ];
+  LANGS.forEach((l, i) => { l.i = i; l.inPaper = !!l.paper; l.paper ||= []; l.sugg ||= []; l.opt ||= []; });
+
+  // ---- state ------------------------------------------------------------------
+  const state = { fam: {}, mode: 'or', level: 1, status: 'all', q: '', sort: 'az', size: 0.5, unload: true };
+
+  function readHash() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    state.fam = {};
+    (p.get('f') || '').split(',').filter(Boolean).forEach(t => {
+      const exc = t.startsWith('!'); const name = exc ? t.slice(1) : t;
+      if (FAMILIES.some(f => f.n === name)) state.fam[name] = exc ? -1 : 1;
+    });
+    if (['or', 'and'].includes(p.get('m'))) state.mode = p.get('m');
+    if (['0', '1', '2'].includes(p.get('l'))) state.level = +p.get('l');
+    if (['all', 'paper', 'new'].includes(p.get('st'))) state.status = p.get('st');
+    if (p.has('q')) state.q = p.get('q');
+    if (['az', 'nfam', 'paper', 'group'].includes(p.get('o'))) state.sort = p.get('o');
+  }
+  function writeHash() {
+    const p = new URLSearchParams();
+    const f = Object.entries(state.fam).map(([k, v]) => (v < 0 ? '!' : '') + k);
+    if (f.length) p.set('f', f.join(','));
+    if (state.mode !== 'or') p.set('m', state.mode);
+    if (state.level !== 1) p.set('l', state.level);
+    if (state.status !== 'all') p.set('st', state.status);
+    if (state.q) p.set('q', state.q);
+    if (state.sort !== 'az') p.set('o', state.sort);
+    const h = p.toString();
+    history.replaceState(null, '', h ? '#' + h : location.pathname + location.search);
+  }
+
+  // families of a language at the current link level, with their kind
+  function famsOf(l) {
+    const out = l.paper.map(f => [f, 'paper']);
+    if (state.level >= 1) l.sugg.forEach(f => out.push([f, 'suggested']));
+    if (state.level >= 2) l.opt.forEach(f => out.push([f, 'optional']));
+    return out;
+  }
+
+  function matches(l, ignoreFam) {
+    if (state.status === 'paper' && !l.inPaper) return false;
+    if (state.status === 'new' && l.inPaper) return false;
+    if (state.q && !l.n.toLowerCase().includes(state.q.toLowerCase())) return false;
+    if (ignoreFam) return true;
+    const has = new Set(famsOf(l).map(x => x[0]));
+    const inc = Object.keys(state.fam).filter(k => state.fam[k] > 0);
+    const exc = Object.keys(state.fam).filter(k => state.fam[k] < 0);
+    if (exc.some(f => has.has(f))) return false;
+    if (!inc.length) return true;
+    return state.mode === 'and' ? inc.every(f => has.has(f)) : inc.some(f => has.has(f));
+  }
+
+  // ---- iframe lazy loading ----------------------------------------------------
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      const fr = e.target, ifr = fr.querySelector('iframe');
+      if (e.isIntersecting) {
+        if (!ifr.getAttribute('src')) { ifr.src = ifr.dataset.src; fr.querySelector('.ph').hidden = true; }
+      } else if (state.unload && ifr.getAttribute('src')) {
+        ifr.removeAttribute('src'); fr.querySelector('.ph').hidden = false;
+      }
+    }
+  }, { rootMargin: '300px 0px' });
+
+  const cards = new Map(); // key -> element, reused so iframes don't reload on re-render
+  function card(l, key) {
+    if (cards.has(key)) return cards.get(key);
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.innerHTML = `
+      <div class="frame"><div class="ph">loading…</div>
+        <iframe data-src="../${l.n}/" title="${l.n}" scrolling="no" loading="lazy"></iframe></div>
+      <div class="meta">
+        <div class="title">
+          <a class="name" href="../${l.n}/" target="_blank" rel="noopener">${l.n}</a>
+          <span class="badge ${l.inPaper ? 'paper' : 'np'}">${l.inPaper ? 'paper' : 'not in paper'}</span>
+          <span class="num"></span>
+        </div>
+        <div class="tags"></div>
+      </div>`;
+    io.observe(el.querySelector('.frame'));
+    cards.set(key, el);
+    return el;
+  }
+  function fillTags(el, l) {
+    const fams = famsOf(l);
+    el.querySelector('.num').textContent = fams.length + (fams.length === 1 ? ' family' : ' families');
+    const box = el.querySelector('.tags');
+    box.innerHTML = '';
+    for (const [f, kind] of fams) {
+      const b = document.createElement('button');
+      b.className = 'tag' + (kind === 'paper' ? '' : ' ' + kind) + (state.fam[f] > 0 ? ' hit' : '');
+      b.textContent = f;
+      b.title = kind === 'paper' ? 'family from the paper' : kind === 'suggested' ? 'suggested family' : 'optional link to a proposed family';
+      b.onclick = () => cycle(f);
+      box.appendChild(b);
+    }
+  }
+
+  // ---- rendering --------------------------------------------------------------
+  const $ = s => document.querySelector(s);
+
+  function renderChips() {
+    const box = $('#chips'); box.innerHTML = '';
+    for (const f of FAMILIES) {
+      // count: languages that would show if this family were the only filter
+      const n = LANGS.filter(l => matches(l, true) && famsOf(l).some(x => x[0] === f.n)).length;
+      const b = document.createElement('button');
+      const v = state.fam[f.n] || 0;
+      b.className = 'chip' + (f.isNew ? ' new' : '') + (v > 0 ? ' inc' : v < 0 ? ' exc' : '') + (n ? '' : ' zero');
+      b.innerHTML = `${f.n}<span class="n">${n}</span>`;
+      b.title = f.d + '\n\nclick: include → exclude → off';
+      b.onclick = () => cycle(f.n);
+      box.appendChild(b);
+    }
+  }
+
+  function render() {
+    const vis = LANGS.filter(l => matches(l));
+    const main = $('#main'); main.innerHTML = '';
+    $('#count').textContent = `${vis.length} of ${LANGS.length} languages`;
+
+    if (!vis.length) {
+      main.innerHTML = '<p class="empty">No language matches this combination.</p>';
+    } else if (state.sort === 'group') {
+      const inc = Object.keys(state.fam).filter(k => state.fam[k] > 0);
+      const groups = FAMILIES.map(f => f.n).filter(f => !inc.length || inc.includes(f));
+      for (const g of groups) {
+        const members = vis.filter(l => famsOf(l).some(x => x[0] === g));
+        if (!members.length) continue;
+        const fam = FAMILIES.find(f => f.n === g);
+        const h = document.createElement('h2');
+        h.className = 'group-title';
+        h.innerHTML = `${g} <small>${members.length} · ${fam.d}</small>`;
+        main.appendChild(h);
+        main.appendChild(gridOf(members, l => g + '|' + l.n));
+      }
+    } else {
+      const sorted = [...vis];
+      if (state.sort === 'nfam') sorted.sort((a, b) => famsOf(b).length - famsOf(a).length || a.i - b.i);
+      if (state.sort === 'paper') sorted.sort((a, b) => b.inPaper - a.inPaper || a.i - b.i);
+      main.appendChild(gridOf(sorted, l => l.n));
+    }
+    renderChips();
+    syncControls();
+    writeHash();
+  }
+  function gridOf(list, keyOf) {
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    for (const l of list) { const el = card(l, keyOf(l)); fillTags(el, l); grid.appendChild(el); }
+    return grid;
+  }
+
+  function cycle(f) {
+    const v = state.fam[f] || 0;
+    if (v === 0) state.fam[f] = 1; else if (v === 1) state.fam[f] = -1; else delete state.fam[f];
+    render();
+  }
+
+  // ---- controls ---------------------------------------------------------------
+  function seg(id, key, parse = x => x) {
+    $(id).addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      state[key] = parse(b.dataset.v); render();
+    });
+  }
+  function syncControls() {
+    for (const [id, key] of [['#mode', 'mode'], ['#level', 'level'], ['#status', 'status']])
+      $(id).querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String(state[key]))));
+    $('#sort').value = state.sort;
+    if ($('#q').value !== state.q) $('#q').value = state.q;
+  }
+  seg('#mode', 'mode');
+  seg('#level', 'level', Number);
+  seg('#status', 'status');
+  $('#sort').onchange = e => { state.sort = e.target.value; render(); };
+  $('#q').oninput = e => { state.q = e.target.value.trim(); render(); };
+  $('#clear').onclick = () => { state.fam = {}; state.q = ''; state.status = 'all'; render(); };
+  $('#unload').onchange = e => { state.unload = e.target.checked; };
+
+  function applySize(s) {
+    state.size = s;
+    document.documentElement.style.setProperty('--s', s);
+    document.body.classList.toggle('tiny', s < 0.35);
+    try { localStorage.setItem('rosetta-size', s); } catch (e) {}
+  }
+  $('#size').oninput = e => applySize(+e.target.value);
+  try { const s = parseFloat(localStorage.getItem('rosetta-size')); if (s >= 0.2 && s <= 1) $('#size').value = s; } catch (e) {}
+  applySize(+$('#size').value);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== $('#q')) { e.preventDefault(); $('#q').focus(); }
+  });
+  window.addEventListener('hashchange', () => { readHash(); render(); });
+
+  readHash();
+  render();
+  </script>
 </body>
 </html>
