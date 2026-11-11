@@ -18,6 +18,13 @@ function setup() {
   rectMode(CENTER);
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Tile: The form is one discrete piece in a regular periodic tiling of the plane with identical elements.<br>a) The parameter switches between tiling with triangular, quadrangular, pentagonal and hexagonal elements.<br>b) Covering large surfaces by aligning small elements in a grid is ubiquitous in architecture at all scales, from thumbnail-sized mosaic stones to one-story high façade panels. Tiling is also an active field of research in geometry and has recently been extended by the discovery of an aperiodic monotile, a so-called “Einstein” [45].<br>c) Empty, Typology, Approximation');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(3,6,4);
   checkbox = createCheckbox('info', false);

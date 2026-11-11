@@ -17,6 +17,13 @@ function setup() {
   angles = [a, a+d1, a+d1+d2, a+d1+d2+d1];
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Polar: The form is also described as a quadrilateral with four corner points (like Point), but instead of x and y coordinates in a Cartesian coordinate system, they are encoded with radius r and angle α in a polar coordinate system.<br>a) The parameter modifies r (distance from the origin) of one of the points, thereby affecting both the visible x and y position, but not the angle α.<br>b) While switching to polar coordinates in a CAD environment would be easy to implement and very helpful for the planning of circular or arc-shaped buildings, they are relatively few. Polar coordinates are nevertheless important for planetary motion, rotational mechanics and the mathematics of complex numbers to name but a few.<br>c) Empty, Trigonometry');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);

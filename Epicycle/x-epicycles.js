@@ -55,6 +55,13 @@ function setup() {
   fourier();
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Epicycle: A series of points along the contour of the form is converted into complex numbers (x: real, y: imaginary) and transformed to the frequency domain using FFT where a low pass filter of size n is applied. The form is then created with a drawing machine, not unlike Dürer’s spider and snake [36, 37], consisting of circles on top of circles with fixed rotation frequencies i ∈ {1, …, n}, where the complex number specifies the radius (magnitude) and the phase shift (angle).<br>a) Changing the size of the low pass filter n alters the accuracy of the final form. Higher numbers for n include more and more of the higher frequencies and therefore render a closer approximation of the original form.<br>b) Epicycles have a long history as a model to explain planetary motion. Today, the concept of linked rotations is at the core of robotic motion planning, and Fourier descriptors (another term for Epicycles) are used as feature extractors for shape recognition using machine learning [38, 39].<br>c) Empty, Trigonometry, Approximation');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
 
   slider = createSlider(0,100,50);

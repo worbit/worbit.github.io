@@ -49,6 +49,13 @@ function setup() {
   console.log(pts.length);
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Pointcloud: The point cloud consists of arbitrarily many randomly distributed and unsorted points on the contour of the form. A closed contour (or surface in the 3d case) is reconstructed only afterward to best fit the points.<br>a) The parameter controls the dislocation factor of the points from the original form to simulate possible noise during retrieval.<br>b) Point clouds are the most basic output format of 3d scanning, a digitization method gaining importance and popularity with the increasing number of restoration and renovation projects in existing buildings. However, point clouds are not easy to work with. In their original state, they are flexible enough to contain any arbitrary distribution and, due to size, are bulky in terms of storage and computation intensity. They are often replaced with a series of best-fitting primitives, akin to new constructions (thereby losing all irregularity, patina or deformation time and use has added to the building components). The reality lays somewhere between, used building components are neither as regular and clean as industrial products, nor as random as the cloud format allows for. Instead, they have a certain degree of stochasticity, and maybe new exchange formats containing both the genotypical information of the ideal raw type, and the phenotypical local deformations.<br>c) Empty, Uncertainty, Fluid Topology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);

@@ -30,6 +30,13 @@ function setup() {
     planepoint = createVector(width/2, height/2, 0);
   
     let dir = get_name();
+    // create a ? with tooltip describing the pattern
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('Projection: The form results from a central projection from point P of the four corner points ABCD on a plane underneath, parallel to the projected plane, resulting in the quadrilateral A’B’C’D’.<br>a) P is moved along a circle parallel to the two planes, thereby distorting the quad. The topology is preserved, but lengths, angles, and parallelism change.<br>b) From the ascent of perspectival drawing in the Renaissance, curved beams and asymmetric column distribution to counteract viewpoint distortion in Greek temples and façade elevations to legal issues with shadows cast on neighboring plots by high rises, projections are ubiquitous in architectural design and the bedrock of geometry.<br>c) Empty, 3D');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
     createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(0,360,0);
     checkbox = createCheckbox('info', false);

@@ -4,6 +4,13 @@ let p1, p2, v;
 function setup() {
   createCanvas(500, 500);
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Offset: The form is considered a thick line, like a brush stroke, resulting from offsetting its medial axis (the spine) to either side by half the final width.<br>a) The parameter moves the positions of two of the control points on the spine polyline, thereby turning the form from straight to zig-zag.<br>b) Offsetting is not only a fundamental function in design (basically a form with a material thickness) but also a widespread architectural typology. The flexibility of the spine adapts to odd-shaped plot outlines, while the constant thickness guarantees sufficient daylight and ventilation.<br>c) Empty, Typology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(-50,50,0);
   checkbox = createCheckbox('info', false);

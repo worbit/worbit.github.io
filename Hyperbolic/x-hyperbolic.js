@@ -18,6 +18,13 @@ function setup() {
     sal = color(250, 128, 114);
     noStroke();
     let dir = get_name();
+    // create a ? with tooltip describing the pattern
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('Hyperbolic: The corner points of the form are projected on a hyperbolic paraboloid. For the edges to “look” straight, they are connected with outwards bulging lines. The shortest connections between points would curve inwards and meet at less than 90°.<br>a) The surface is rotated around the x-axis to reveal the three-dimensionality.<br>b) Hyperboloid or other anticlastic surfaces (curvatures at any point have opposite signs) are broadly used in architecture for membrane roofs made of textile. As mathematical models, hyperbolic and spherical spaces are the two non-Euclidean geometries where the parallel postulate does not hold true.<br>c) Empty, 3D');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
     createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(-50, 50, 0);
     checkbox = createCheckbox('info', false);

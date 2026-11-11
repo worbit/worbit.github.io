@@ -7,6 +7,13 @@ function setup() {
   //noStroke();
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Boolean: The shape is the Boolean intersection of two quarter discs. If they are rotated 180° relative to each other, the result is a rectangle.<br>a) Rotating one of the quarter discs results in different intersection shapes, with a varying number of control points and both linear and arc connections.<br>b) Combinations of basic primitives into more elaborate shapes through either Boolean union (or, ∪), intersection (and, ∩) or subtraction (not, –) or other operations are at the heart not only of any computational design environment (CSG) but also logic. With Boolean operations on boundary representation (BRep) objects, the necessary reconstruction of the topology can become difficult and prone to failure [29].<br>c) Empty, Typology, Field, Fluid Topology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
   slider = createSlider(0, 300, 0);
   checkbox = createCheckbox('info', false);

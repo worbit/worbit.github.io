@@ -15,6 +15,13 @@ function setup() {
     rectMode(CENTER);
 
     let dir = get_name();
+    // create a ? with tooltip describing the pattern
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('NURBS: The form is represented as in Point by four corners with specific coordinates. In non-uniform rational base splines (NURBS), the points can have different degrees, controlling the shape of the curve interpolated in between. If all points have degree 1, the form is a polyline with straight edges.<br>a) The parameter modifies the degree of the vertices between 1 and 5.<br>b) NURBS, a generalized form of Bézier-Splines invented for the car industry in the 1950s, was central for the Blobitecture of the 2000s, the curved shapes of ZHA and liked by many for their organic appearance. They have – for better or worse – become the figurehead of computational, parametric, digital architecture.<br>c) Empty, Typology');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
     createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(1,5,1);
     checkbox = createCheckbox('info', false);

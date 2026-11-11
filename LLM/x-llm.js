@@ -14,6 +14,13 @@ function setup() {
   textSize(11);
   d = 10;
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let tip = createDiv('&nbsp;&nbsp;?');
+  tip.class('tooltip');
+  let tt = createSpan('LLM: After verifying its familiarity with scalable vector graphics (SVG), a large language model (LLM, in this case ChatGPT v3.5) was prompted to generate SVG code for “a salmon-colored rectangle of 300 by 200, rotated by 20° on a sky-blue background, canvas size of 500 × 500” – which it provided after some initial misunderstandings.<br>a) n.a.<br>b) We are only at the beginning of grasping the future relevance of LLMs and other generative A.I. systems for architecture and design. Unlike for natural language, there is significantly less training data available for e.g. CAD or BIM file formats, and the physical meaning of a sequence of symbols is way more complex than a linear fairy tale. Combinations of natural language models with symbolic deduction engines like AlphaGeometry [41], achieving human gold-medalist accuracy at math Olympics questions are a promising solution.<br>c) Empty, Uncertainty');
+  tt.class('tooltiptext');
+  tt.parent(tip);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,100,0);
   slider.elt.disabled = true;

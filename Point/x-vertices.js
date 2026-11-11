@@ -18,6 +18,13 @@ function setup() {
   pts.push(createVector(143.248,395.272));
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Point: This is the most basic, most generic, least constrained language of all. Four points with specific coordinates A = (xA,yA), B = (xB,yB), … are positioned on a Cartesian coordinate system, connected with four edges a = (A,B), b = (B,C), … to a chain enclosing a quadrilateral face f = (a,b,c,d). It is the language of drawing with a ruler or tightening a string around nails.<br>a) The variable parameter is the y coordinate of one of the points. The topology (points in edges and sequence of edges) is fixed and self-intersection of edges is not prevented.<br>b) The point as the minimal 2- or 3-dimensional unit with no extension is the basis for all BRep modelers. Point- (or Vertex-) coordinates together with topology information on their connectivity, which can become arbitrarily complex [42, 43], is very versatile to represent arbitrary polygons such as plots of land that developed organically as a result of topography, street networks, inheritance-induced subdivision etc. Many common exchange formats only store this information and maintain no logic on e.g. angle, distance, or parallel constraints.<br>c) Empty, Typology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(50,500,395.272);
   checkbox = createCheckbox('info', false);

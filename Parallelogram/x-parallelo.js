@@ -7,6 +7,13 @@ function setup() {
   textSize(20);
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Parallelogram: The shape is the Boolean intersection of two infinite strips of constant widths, resulting in a parallelogram. The base form results when the strips are perpendicular to each other.<br>a) Rotating one of the strips maintains opposite sides to remain parallel.<br>b) Parallelograms are ubiquitous in architecture, urban planning and design, more common probably than irregular polygons. They result whenever two linear elements of constant width – beams, walls, streets – intersect.<br>c) Empty, Typology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,40,20);
   checkbox = createCheckbox('info', false);

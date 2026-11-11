@@ -19,6 +19,13 @@ function setup() {
     sal = color(250, 128, 114);
  
     let dir = get_name();
+    // create a ? with tooltip describing the pattern
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('Fourier2D: The form is the result of converting the signal (binary raster image) first from the space domain to the frequency domain using Fast Fourier Transformation FFT [40], applying a low-pass filter (masking high frequencies), transforming it back to the space domain, and converting it to a binary image using a threshold.<br>a) The parameter p adjusts the size of the square low-pass filter. Small values for p render a coarse approximate blob. High values for p include higher frequencies and hence a more accurate representation.<br>b) In addition to its relevance in almost all branches of engineering and technology (signal processing, compression, dimensionality reduction), FFT presents an analogy to an architectural design process, going from an overall big gesture (low-frequency sine waves) to ever more details and smaller elements (high-frequency sines).<br>c) Field, Approximation, Trigonometry, Fluid Topology');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
     createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
 
     slider = createSlider(1,77,77);

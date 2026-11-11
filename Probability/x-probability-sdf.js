@@ -8,6 +8,13 @@ function setup() {
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Probability: The form is a binary raster image, where each pixel’s state (0/1) depends on a virtual coin flip to simulate noise in the signal. The coin’s bias depends on the pixel’s distance from the form boundary.<br>a) The parameter p = [0,1] controls the level of noise affecting the binary conversion, where p = 0 means no noise (original form), p = 0.5 means maximum noise, complete randomness, and p = 1 means inverted binarization, resulting in the inverse form.<br>b) Vector graphics, the dominant representation in design modeling, are often praised as being superior to raster graphics for their unlimited scalability. However, their strict hard-edge binary boundary delimiting objects fail to account for continuous gradual differences or ambiguous states. An analogy can be drawn to a design process, where space attribution is initially vague, getting sharper, more distinct, and gaining confidence over time, like how the material distribution in a topology optimization process evolves and materializes from uniform abeyance over time.<br>c) Field, Approximation, Uncertainty');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,100,0);
   checkbox = createCheckbox('info', false);

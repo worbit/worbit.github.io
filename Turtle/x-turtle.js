@@ -27,6 +27,13 @@ async function setup() {
   angles = [-20, 90, 90, 90, 90];
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Turtle: The form is drawn by a little autonomous bot (virtual or physical) following a set of instructions consisting of drive (for a specific time or distance) and turn (by a specific angle) commands.<br>a) The parameter modifies the angle of the first turn command. With the other commands remaining unchanged, the form is no longer closed.<br>b) Turtle robots have been a famous class of educational devices since their invention in the 1940s, and they flourish in many versions today. Small autonomous robots with a local coordinate system and the orchestration and control of multiple of them are also increasingly important on construction sites.<br>c) Empty, Typology');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(70,110,90);
   checkbox = createCheckbox('info', false);

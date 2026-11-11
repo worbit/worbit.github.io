@@ -11,6 +11,13 @@ function setup() {
   sky = color(135, 206, 235);
   sal = color(250, 128, 114);
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Superellipse: This is an example of a class of purely mathematical descriptions, where the perceived form is the limit that the function (abcd) approaches asymptotically as the exponent n → ∞, but will never reach.<br>a) The modified parameter is the exponent n, where small numbers make the form bend inwards towards a cross shape, medium numbers result in ellipsoids of different roundness and as n gets very high, the “corners” of the form become sharper.<br>b) Superellipses, related but not identical to Squircles, are primarily theoretical constructs with few practical applications. However, there are two applications – a conference table and a public circulation space (avoiding the terms “roundabout” and “square”) – where a superellipse has the correct and continuously adjustable level of roundness as it blurs the binary distinction between a rectangle and an ellipse.<br>c) Empty, Approximation');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0.1, 50, 50, 0.1);
   checkbox = createCheckbox('info', false);

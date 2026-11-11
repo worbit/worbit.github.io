@@ -8,6 +8,13 @@ function setup() {
   sal = color(250, 128, 114);
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('DistanceFunction: In the history of computer graphics, alternative methods to the most widespread BReps have always existed [30], sometimes referred to as function representation FRep [31], implicit or volumetric modeling [21, 23]. Instead of placing points in the void, they describe space as a scalar field, mainly as the result of signed distance functions (SDF) of the form d = f(x,y,z), where d is the distance of point (x,y,z) to the object described by f with negative values being inside, positive values outside and the value 0 on the boundary of the object(s).<br>a) The parameter p is added (p > 0) to or subtracted (p < 0) from the result of the SDF, eroding or dilating the form respectively by shifting the iso-level 0. If p is negative, the offset form naturally has rounded corners – something difficult to achieve with other languages.<br>b) SDFs provide a very flexible and robust modeling experience with applications in architecture, design, medical or aerospace engineering [32], 3D-printing, and microstructure design [24]. They allow for smooth combinations, a compact and resolution-agnostic representation and effortless CSG operations, as forms are computed rather than constructed. Besides the creation of geometry, SDFs can serve as effective encoding for machine learning applications [33, 34] or collision control for robotics [35].<br>c) Field, Fluid Topology, 3D');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
   slider = createSlider(0,100,50);
   checkbox = createCheckbox('info', false);

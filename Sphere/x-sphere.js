@@ -18,6 +18,13 @@ function setup() {
     sal = color(250, 128, 114);
     noStroke();
     let dir = get_name();
+    // create a ? with tooltip describing the pattern
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('Sphere: The form is projected on a sphere and rendered in parallel projection. The corner points are not connected with great circles (the shortest distance between two points in spherical geometry) but with curved lines that meet at the corners at interior angles bigger than 90°.<br>a) The sphere is rotated around the x-axis to reveal the three-dimensionality. With the info mode turned on, a dynamic Mercator projection of the sphere is shown as a point overlay.<br>b) Spherical is a non-Euclidean geometry. As the planet we live on is close enough to a sphere and therefore theoretically impossible to lay out flat, it is of tremendous economic and political relevance, what projection method, basically what mode of distortion is chosen. Mercator projection for example lets countries further away from the equator appear gigantic [44].<br>c) Empty, 3D, Trigonometry');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
     createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
     slider = createSlider(-50, 50, 0);
     checkbox = createCheckbox('info', false);

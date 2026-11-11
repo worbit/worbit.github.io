@@ -10,6 +10,13 @@ function setup() {
   sal = color(250, 128, 114);
 
   let dir = get_name();
+  // create a ? with tooltip describing the pattern
+  let d = createDiv('&nbsp;&nbsp;?');
+  d.class('tooltip');
+  let tt = createSpan('Cylinder: The form is the cross section through a cylinder, initially having its axis in the cutting plane.<br>a) The axis of the cylinder is rotated out of the cutting plane, until being perpendicular to it. In this case, the resulting cross-section is a circle. This language has a rectangular and a circular form in the same solution space.<br>b) Two-dimensional sections through three-dimensional objects as a dimensionality reduction is at the heart of architectural representation and a very strongly codified language spoken (drawn) and interpreted by insiders. Convention has it, that a long narrow, rectangular shape stands for a cuboid object, where the section profile is invariant along the entire height. This assumption fails as soon as objects are more complex.<br>c) Empty, Field, 3D');
+  tt.class('tooltiptext');
+  tt.parent(d);
+
   createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top'); slider = createSlider(-31, 31, 0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');
