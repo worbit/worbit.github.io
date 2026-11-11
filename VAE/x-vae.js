@@ -16,14 +16,16 @@ let status = 'loading model …';
 function setup() {
   pixelDensity(1);
   createCanvas(SIZE, SIZE);
-  const gui = createDiv().id('gui');
-  slider = createSlider(0, 1, 0.5, 0.001).parent(gui);
+
+  let dir = get_name();
+  createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
+  slider = createSlider(0, 1, 0.5, 0.001)
   slider.input(update);
-  infoBox = createCheckbox(' info', false).parent(gui);
+  infoBox = createCheckbox(' info', false)
   infoBox.changed(() => redraw());
-  createButton('reset').parent(gui).mousePressed(() => { slider.value(0.5); infoBox.checked(false); update(); });
-  createSpan('VAE').parent(gui);
-  noLoop();
+  createButton('reset').mousePressed(() => { slider.value(0.5); infoBox.checked(false); update(); });
+  createElement('label', dir);
+  //noLoop();
   loadAll().catch(e => { status = 'could not load model: ' + e.message; redraw(); });
 }
 
@@ -147,4 +149,11 @@ function drawInfo() {
   text(`${L.A.label} → rectangle → ${L.B.label}`, 10, 26);
   text(`decoder output ${RES}×${RES}, form = p(inside) > 0.5`, 10, 42);
   */
+}
+
+function get_name() {
+  let path = document.location.pathname;
+  let dirs = path.split('/');
+  let name = dirs[dirs.length - 2];
+  return name;
 }
