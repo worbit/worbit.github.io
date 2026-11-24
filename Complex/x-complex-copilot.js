@@ -120,6 +120,14 @@ function setup(){
     const canvas = createCanvas(canvasWidth, canvasHeight);
     //canvas.parent('canvas-container');
 
+    let d = createDiv('&nbsp;&nbsp;?');
+    d.class('tooltip');
+    let tt = createSpan('Complex: ...');
+    tt.class('tooltiptext');
+    tt.parent(d);
+
+    createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
+
     slider = createSlider(-0.9, 0.9, 0, 0.01);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
