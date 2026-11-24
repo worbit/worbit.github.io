@@ -218,14 +218,14 @@
     { n: 'Boolean',              paper: ['Empty', 'Typology', 'Field', 'Fluid Topology'] },
     { n: 'Cellular',             sugg: ['Field', 'Fluid Topology', 'Process', 'Discrete'] },
     { n: 'Complex',              sugg: ['Empty', 'Trigonometry', 'Non-Euclidean'] },
-    { n: 'Conformal',            sugg: ['Empty', 'Interpolation', 'Approximation'] },
+    { n: 'Conformal',            sugg: ['Empty', 'Interpolation', 'Approximation', 'Non-Euclidean'] },
     { n: 'Cylinder',             paper: ['Empty', 'Field', '3D'], opt: ['Interpolation'] },
     { n: 'DistanceFunction',     paper: ['Field', 'Fluid Topology', '3D'] },
     { n: 'Dissect',              sugg: ['Empty', 'Typology', 'Discrete', 'Interpolation'] },
     { n: 'EdgeMatching',         sugg: ['Typology', 'Approximation', 'Uncertainty', 'Discrete', 'Process'] },
     { n: 'Epicycle',             paper: ['Empty', 'Trigonometry', 'Approximation'] },
     { n: 'Fourier2D',            paper: ['Field', 'Approximation', 'Trigonometry', 'Fluid Topology'] },
-    { n: 'Hyperbolic',           paper: ['Empty', '3D'], opt: ['Non-Euclidean'] },
+    { n: 'Hyperbolic',           paper: ['Empty', '3D', 'Non-Euclidean'] },
     { n: 'LLM',                  paper: ['Empty', 'Uncertainty'] },
     { n: 'MinkowskySum',         sugg: ['Empty', 'Typology', 'Fluid Topology'] },
     { n: 'NURBS',                paper: ['Empty', 'Typology'] },
@@ -241,13 +241,13 @@
     { n: 'Projection',           paper: ['Empty', '3D'] },
     { n: 'Rectangle',            sugg: ['Empty', 'Typology'] },
     { n: 'SmoothConvex',         sugg: ['Field', 'Approximation', 'Uncertainty'] },
-    { n: 'Sphere',               paper: ['Empty', '3D', 'Trigonometry'], opt: ['Non-Euclidean'] },
+    { n: 'Sphere',               paper: ['Empty', '3D', 'Trigonometry', 'Non-Euclidean'] },
     { n: 'Subdivision',          sugg: ['Empty', 'Typology', 'Process', 'Discrete'] },
     { n: 'Superellipse',         paper: ['Empty', 'Approximation'] },
     { n: 'Tessellation',         paper: ['Field', 'Fluid Topology', '3D'] },
     { n: 'Tile',                 paper: ['Empty', 'Typology', 'Approximation'], opt: ['Discrete'] },
     { n: 'Turtle',               paper: ['Empty', 'Typology'], opt: ['Process'] },
-    { n: 'VAE',                  sugg: ['Field', 'Uncertainty', 'Approximation', 'Interpolation'] },
+    { n: 'VAE',                  sugg: ['Field', 'Uncertainty', 'Approximation', 'Interpolation', 'Fluid Topology'] },
     { n: 'WaveFunctionCollapse', sugg: ['Uncertainty', 'Fluid Topology', 'Process', 'Discrete'] },
   ];
   const FAMILIES = [
@@ -260,10 +260,12 @@
     { n: 'Uncertainty', d: 'A certain fuzziness, where absolute precision is impossible – statistically close enough.' },
     { n: 'Approximation', d: 'Selective resolutions and adaptive precision in approximating the result.' },
     { n: 'Fluid Topology', d: 'Relationships between entities are not predefined but dynamically computed and variable.' },
+   
     { n: 'Process', d: 'Proposed: the form emerges from iteratively applying rules, constraints or a simulation.', isNew: true },
     { n: 'Discrete', d: 'Proposed: the form is assembled from, or decomposed into, a finite set of discrete parts.', isNew: true },
     { n: 'Interpolation', d: 'Proposed: the form is one state on a continuous path between other forms.', isNew: true },
     { n: 'Non-Euclidean', d: 'Proposed: the form lives in a space where the parallel postulate does not hold.', isNew: true },
+    { n: 'Coordinate System', d: 'Proposed: operating on and in the way coordinates are assigned, searched, measured, positioned.', isNew: true },
   ];
   LANGS.forEach((l, i) => { l.i = i; l.inPaper = !!l.paper; l.paper ||= []; l.sugg ||= []; l.opt ||= []; });
 
