@@ -45,7 +45,7 @@ function setup() {
     skyBlueColorP5 = color(135, 206, 235);
 
     let dir = get_name();
-    createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+    createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
     slider = createSlider(-15.0, 5.0, -5.0, 0.1);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');

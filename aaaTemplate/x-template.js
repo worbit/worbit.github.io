@@ -11,7 +11,7 @@ function setup() {
   tt.parent(d);
 
   let dir = get_name();
-  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+  createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
   slider = createSlider(0, 1, 0, 0.01);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');

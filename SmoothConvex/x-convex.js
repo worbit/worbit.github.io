@@ -26,7 +26,7 @@ async function setup() {
     bggl = [red(cbg) / 255.0, green(cbg) / 255.0, blue(cbg) / 255.0, 1.0];
     fggl = [red(cfg) / 255.0, green(cfg) / 255.0, blue(cfg) / 255.0, 1.0];
     let dir = get_name();
-    createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
+    createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
     //slider = createSlider(0, 1, 0, 0.01);
     createElement('label', '&#948;');
     deltaSlider = createSlider(0.2, 1, 1, 0.001);

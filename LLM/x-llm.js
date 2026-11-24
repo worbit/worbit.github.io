@@ -21,7 +21,7 @@ function setup() {
   tt.class('tooltiptext');
   tt.parent(tip);
 
-  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+  createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
   slider = createSlider(0,100,0);
   slider.elt.disabled = true;
   checkbox = createCheckbox('info', false);

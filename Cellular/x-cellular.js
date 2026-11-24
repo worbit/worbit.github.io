@@ -6,7 +6,7 @@ function setup() {
   createCanvas(500, 500);
   noStroke();
   let dir = get_name();
-  createA("https://worbit.github.io/"+dir+"/", '&rarr; ', '_top');
+  createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
   slider = createSlider(0,3,1);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');

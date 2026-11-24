@@ -34,7 +34,7 @@ async function setup() {
 
   // frameRate(10)
   let dir = get_name();
-  createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
+  createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
   slider = createSlider(-31, 31, 0);
   checkbox = createCheckbox('info', false);
   button = createButton('reset');

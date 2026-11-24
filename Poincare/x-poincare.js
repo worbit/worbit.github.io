@@ -17,7 +17,7 @@ function setup() {
     const cnv = createCanvas(SIZE, SIZE);
     cnv.mousePressed(onCanvasPress);
     let dir = get_name();
-    createA("https://worbit.github.io/" + dir + "/", '&rarr; ', '_top');
+    createA("https://worbit.github.io/rosettaform/", '&#8962; ', '_top');
     slider = createSlider(0, 100, 100, 0.1);
     checkbox = createCheckbox('info', false);
     button = createButton('reset');
