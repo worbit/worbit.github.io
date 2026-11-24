@@ -6,6 +6,7 @@
 | Boolean | https://worbit.github.io/Boolean/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js | 1.8.0 |
 | Cellular | https://worbit.github.io/Cellular/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
 | Complex | https://worbit.github.io/Complex/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
+| Conformal | https://worbit.github.io/Conformal/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
 | Cylinder | https://worbit.github.io/Cylinder/index.html | https://cdn.jsdelivr.net/npm/p5@2.0.5/lib/p5.js | 2.0.5 |
 | DistanceFunction | https://worbit.github.io/DistanceFunction/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
 | Epicycle | https://worbit.github.io/Epicycle/index.html | https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js | 1.6.0 |
