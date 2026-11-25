@@ -150,7 +150,7 @@
     <details>
       <summary>Instructions</summary>
       <p>Move the slider to transform the object, check "info" to see a behind-the-scenes view, click reset to go back to the original shape,
-        click the &rarr; (or the language name) to go to the individual view (faster). Also try hovering and clicking – it might do something in some…</p>
+        click the language name on the card to go to the individual view (faster). Also try hovering and clicking - it might do something in some… On the individual views, click the little &#8962; icon to return back to this overview page.</p>
       <p>Filtering: click a family once to <b>include</b> it, twice to <b>exclude</b> it (NOT), a third time to clear it.
         With several families included, <b>any</b> shows languages with at least one of them (OR), <b>all</b> only those with every one (AND).
         Clicking a family tag on a card toggles it the same way. The current view is stored in the URL, so it can be shared.</p>
@@ -192,7 +192,7 @@
       <input type="search" id="q" placeholder="search name…  ( / )">
       <span class="label">Order</span>
       <select id="sort">
-        <option value="az">A–Z</option>
+        <option value="az">A-Z</option>
         <option value="nfam">most families first</option>
         <option value="paper">in paper first</option>
         <option value="group">group by family</option>
@@ -213,19 +213,19 @@
   const LANGS = [
     { n: 'Aggregation',          paper: ['Empty', 'Field', 'Approximation'], opt: ['Process', 'Discrete'] },
     { n: 'Angle',                paper: ['Empty', 'Typology'], opt: ['Non-Euclidean'] },
-    { n: 'Barycentric',          sugg: ['Empty', 'Field', 'Interpolation'] },
+    { n: 'Barycentric',          sugg: ['Empty', 'Field', 'Interpolation', 'Coordinate System'] },
     { n: 'BIM',                  sugg: ['3D', 'Typology', 'Empty'] },
     { n: 'Boolean',              paper: ['Empty', 'Typology', 'Field', 'Fluid Topology'] },
     { n: 'Cellular',             sugg: ['Field', 'Fluid Topology', 'Process', 'Discrete'] },
     { n: 'Complex',              sugg: ['Empty', 'Trigonometry', 'Non-Euclidean'] },
-    { n: 'Conformal',            sugg: ['Empty', 'Interpolation', 'Approximation', 'Non-Euclidean'] },
+    { n: 'Conformal',            sugg: ['Empty', 'Interpolation', 'Approximation', 'Non-Euclidean', 'Coordinate System'] },
     { n: 'Cylinder',             paper: ['Empty', 'Field', '3D'], opt: ['Interpolation'] },
     { n: 'DistanceFunction',     paper: ['Field', 'Fluid Topology', '3D'] },
     { n: 'Dissect',              sugg: ['Empty', 'Typology', 'Discrete', 'Interpolation'] },
     { n: 'EdgeMatching',         sugg: ['Typology', 'Approximation', 'Uncertainty', 'Discrete', 'Process'] },
     { n: 'Epicycle',             paper: ['Empty', 'Trigonometry', 'Approximation'] },
     { n: 'Fourier2D',            paper: ['Field', 'Approximation', 'Trigonometry', 'Fluid Topology'] },
-    { n: 'Hyperbolic',           paper: ['Empty', '3D', 'Non-Euclidean'] },
+    { n: 'Hyperbolic',           paper: ['Empty', '3D', 'Non-Euclidean', 'Coordinate System'] },
     { n: 'LLM',                  paper: ['Empty', 'Uncertainty'] },
     { n: 'MinkowskySum',         sugg: ['Empty', 'Typology', 'Fluid Topology'] },
     { n: 'NURBS',                paper: ['Empty', 'Typology'] },
@@ -233,15 +233,15 @@
     { n: 'OptimalTransport',     sugg: ['Field', 'Uncertainty', 'Fluid Topology', 'Interpolation'] },
     { n: 'Parallelogram',        paper: ['Empty', 'Typology'] },
     { n: 'Physics',              sugg: ['Empty', 'Uncertainty', 'Process', 'Discrete'] },
-    { n: 'Poincare',             sugg: ['Empty', 'Trigonometry', 'Non-Euclidean'] },
+    { n: 'Poincare',             sugg: ['Empty', 'Trigonometry', 'Non-Euclidean', 'Coordinate System'] },
     { n: 'Point',                paper: ['Empty', 'Typology'] },
     { n: 'Pointcloud',           paper: ['Empty', 'Uncertainty', 'Fluid Topology'] },
-    { n: 'Polar',                paper: ['Empty', 'Trigonometry'] },
+    { n: 'Polar',                paper: ['Empty', 'Trigonometry', 'Coordinate System'] },
     { n: 'Probability',          paper: ['Field', 'Approximation', 'Uncertainty'] },
     { n: 'Projection',           paper: ['Empty', '3D'] },
     { n: 'Rectangle',            sugg: ['Empty', 'Typology'] },
     { n: 'SmoothConvex',         sugg: ['Field', 'Approximation', 'Uncertainty'] },
-    { n: 'Sphere',               paper: ['Empty', '3D', 'Trigonometry', 'Non-Euclidean'] },
+    { n: 'Sphere',               paper: ['Empty', '3D', 'Trigonometry', 'Non-Euclidean', 'Coordinate System'] },
     { n: 'Subdivision',          sugg: ['Empty', 'Typology', 'Process', 'Discrete'] },
     { n: 'Superellipse',         paper: ['Empty', 'Approximation'] },
     { n: 'Tessellation',         paper: ['Field', 'Fluid Topology', '3D'] },
